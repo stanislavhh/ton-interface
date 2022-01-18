@@ -1,0 +1,1 @@
+export { parseQueries } from './parseQueries'

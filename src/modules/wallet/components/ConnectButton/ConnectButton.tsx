@@ -4,10 +4,8 @@ import { useSelector } from 'react-redux'
 import { $isConnected, $address, $connecting } from 'modules/wallet/selectors'
 import { getWalletData } from 'modules/wallet/slice'
 import { useAppDispatch } from 'hooks'
-import { theme } from '../../../../helpers/themeHelper'
 
 const useStyles = makeStyles((theme) => ({
-  buttonContainer: {},
   iconBalance: {
     marginRight: theme.spacing(1),
   },
@@ -47,7 +45,7 @@ export const ConnectButton = (props: ButtonProps) => {
       {...props}
     >
       {connecting ? (
-        <CircularProgress />
+        <CircularProgress size={32} />
       ) : isConnected ? (
         <Typography variant="h3" className={classes.connectionText}>
           Connected: {address}
@@ -56,7 +54,7 @@ export const ConnectButton = (props: ButtonProps) => {
         <>
           <Icon className={classes.iconBalance}>account_balance_wallet</Icon>
           Connect Wallet
-          <BaseTooltip title="In order to make any blockchain transaction you need to connect a wallet">
+          <BaseTooltip title="In order to make any blockchain transaction you need to connect to a wallet">
             <Icon className={classes.iconInfo}>info_outlined</Icon>
           </BaseTooltip>
         </>

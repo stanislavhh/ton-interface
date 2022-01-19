@@ -32,7 +32,7 @@ export const Header = (): JSX.Element => {
       <Grid item xs={2}>
         <img src={HeaderLogo} className={classes.logoImage} alt="logo" />
       </Grid>
-      <Grid item xs={isTablet ? 10 : 7} className={classes.navContainer}>
+      <Grid item xs={10} md={7} className={classes.navContainer}>
         {!isTablet ? <NavTabs /> : <Icon onClick={() => dispatch(toggleDrawer(true))}>menu</Icon>}
       </Grid>
       {!isTablet && (

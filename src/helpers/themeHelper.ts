@@ -2,6 +2,7 @@ import { createTheme } from '@material-ui/core'
 
 export const COLOR_PRIMARY = '#0088CC'
 export const COLOR_SECONDARY = '#303757'
+export const COLOR_WHITE = '#FFFDFA'
 
 export const theme = createTheme({
   palette: {
@@ -16,9 +17,25 @@ export const theme = createTheme({
     fontFamily: 'Mulish',
   },
   overrides: {
+    MuiCard: {
+      root: {
+        borderRadius: '24px',
+      },
+    },
+    MuiTextField: {
+      root: {
+        '& input': {
+          textAlign: 'right',
+        },
+      },
+    },
     MuiButton: {
       root: {
         borderRadius: '16px',
+      },
+      containedPrimary: {
+        boxShadow:
+          '0px 3px 1px -2px rgb(0 0 0 / 20%), 0px 2px 2px 0px rgb(0 0 0 / 14%), 0px 1px 5px 0px rgb(0 0 0 / 12%)',
       },
       containedSizeLarge: {
         fontSize: '24px',
@@ -27,6 +44,10 @@ export const theme = createTheme({
           fontSize: '16px',
           lineHeight: '20px',
         },
+      },
+      outlined: {
+        borderColor: 'rgba(0,0,0,0.1)',
+        borderRadius: '8px',
       },
       outlinedSizeLarge: {
         padding: '8px 22px',
@@ -93,8 +114,8 @@ theme.typography.h5 = {
 
 theme.typography.body1 = {
   fontFamily: 'Mulish',
-  fontSize: '16px',
-  lineHeight: '20px',
+  fontSize: '20px',
+  lineHeight: '24px',
 }
 
 theme.typography.button = {

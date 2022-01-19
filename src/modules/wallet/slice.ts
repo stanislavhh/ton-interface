@@ -1,7 +1,8 @@
 import { CaseReducer, createSlice, createAsyncThunk } from '@reduxjs/toolkit'
 import { WalletState, WalletDataAction, WalletData } from './types'
 import { imitateFetch, MockedResponse } from 'utils'
-import { walletDataResponse } from './mocks/wallet'
+import { walletDataResponse } from 'mocks/wallet'
+import { toggleAlert } from 'modules/layout'
 
 export const INITIAL_STATE: WalletState = {
   connecting: false,
@@ -11,8 +12,10 @@ export const INITIAL_STATE: WalletState = {
 /*
  * I am not sure if we need to put wallet data to store, but for convenience I keep it here for now
  */
-export const getWalletData = createAsyncThunk('wallet/getWalletData', async () => {
+export const getWalletData = createAsyncThunk('wallet/getWalletData', async (_, { dispatch }) => {
   const { data } = (await imitateFetch(walletDataResponse)) as MockedResponse
+
+  dispatch(toggleAlert({ type: 'success', element: 'Wallet Connected!' }))
 
   return data as WalletData
 })

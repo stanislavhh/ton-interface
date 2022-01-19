@@ -1,2 +1,2 @@
 // Views
-export { Pools as PoolsView } from './views/pools'
+export { Pools as default } from './views/pools'

@@ -16,6 +16,28 @@ export const theme = createTheme({
     fontFamily: 'Mulish',
   },
   overrides: {
+    MuiButton: {
+      root: {
+        borderRadius: '16px',
+      },
+      containedSizeLarge: {
+        fontSize: '24px',
+        lineHeight: '36px',
+        '@media(min-width:600px)': {
+          fontSize: '16px',
+          lineHeight: '20px',
+        },
+      },
+      outlinedSizeLarge: {
+        padding: '8px 22px',
+        fontSize: '24px',
+        lineHeight: '36px',
+        '@media(min-width:600px)': {
+          fontSize: '16px',
+          lineHeight: '20px',
+        },
+      },
+    },
     MuiLink: {
       root: {
         cursor: 'pointer',

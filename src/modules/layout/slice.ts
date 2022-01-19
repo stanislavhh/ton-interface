@@ -1,12 +1,19 @@
-import { CaseReducer, createSlice, PayloadAction } from '@reduxjs/toolkit'
-import { INITIAL_STATE } from './constants'
+import { CaseReducer, createSlice } from '@reduxjs/toolkit'
+import { LayoutState, DrawerAction, AlertAction } from './types'
 
-export interface LayoutState {
-  mobileDrawerActive: boolean
+export const INITIAL_STATE: LayoutState = {
+  mobileDrawerActive: false,
+  alert: {
+    type: undefined,
+  },
 }
 
-const toggleDrawerReducer: CaseReducer<LayoutState, PayloadAction<boolean | undefined>> = (state, action) => {
-  state.mobileDrawerActive = typeof action === 'boolean' ? action : !state.mobileDrawerActive
+const toggleDrawerReducer: CaseReducer<LayoutState, DrawerAction> = (state, { payload }) => {
+  state.mobileDrawerActive = typeof payload === 'boolean' ? payload : !state.mobileDrawerActive
+}
+
+const toggleAlertReducer: CaseReducer<LayoutState, AlertAction> = (state, { payload }) => {
+  state.alert = payload
 }
 
 const layoutSlice = createSlice({
@@ -14,9 +21,10 @@ const layoutSlice = createSlice({
   initialState: INITIAL_STATE,
   reducers: {
     toggleDrawer: toggleDrawerReducer,
+    toggleAlert: toggleAlertReducer,
   },
 })
 
-export const { toggleDrawer } = layoutSlice.actions
+export const { toggleDrawer, toggleAlert } = layoutSlice.actions
 
 export const appReducer = layoutSlice.reducer

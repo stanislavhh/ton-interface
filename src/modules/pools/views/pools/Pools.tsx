@@ -1,3 +1,3 @@
 export const Pools = () => {
-  return <>POOLS HEPE</>
+  return <div>POOLS HEPE</div>
 }

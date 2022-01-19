@@ -1,10 +1,12 @@
 import { makeStyles, Drawer, Grid, Container, Icon } from '@material-ui/core'
-import { useAppDispatch, useRouter } from 'hooks'
-import { toggleDrawer } from 'modules/layout'
 import { useSelector } from 'react-redux'
+import { useAppDispatch, useRouter } from 'hooks'
+
+import { toggleDrawer, NAV_LINKS } from 'modules/layout'
+import ConnectWalletButton from 'modules/wallet'
 import { $mobileDrawerActive } from 'modules/layout/selectors'
+
 import { DrawerLink } from './DrawerLink'
-import { NAV_LINKS } from 'modules/layout'
 import HeaderLogo from 'assets/ton logo (light background).svg'
 
 const useStyles = makeStyles((theme) => ({
@@ -18,6 +20,9 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
     justifyContent: 'end',
     marginBottom: theme.spacing(6),
+  },
+  walletContainer: {
+    marginBottom: theme.spacing(2),
   },
   logoImage: {
     height: '36px',
@@ -42,6 +47,9 @@ export const MobileNavDrawer = (): JSX.Element => {
           </Grid>
           <Grid item xs={6} className={classes.closeContainer}>
             <Icon onClick={closeDrawer}>close</Icon>
+          </Grid>
+          <Grid item xs={12} className={classes.walletContainer}>
+            <ConnectWalletButton fullWidth />
           </Grid>
           <>
             {NAV_LINKS.map(({ text, href }) => (

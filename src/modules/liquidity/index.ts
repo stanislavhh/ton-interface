@@ -1,2 +1,2 @@
 // Views
-export { Liquidity as LiquidityView } from './views/liquidity'
+export { Liquidity as default } from './views/liquidity'

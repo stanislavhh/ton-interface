@@ -1,20 +1,17 @@
-import { makeStyles, Container } from '@material-ui/core'
-import { ReactChildren, ReactElement } from 'react'
+import { Container } from '@material-ui/core'
 
-import { Header } from 'modules/layout/components/Header'
-import { MobileNavDrawer } from 'modules/layout/components/MobileNavDrawer'
+import { Header } from '../Header'
+import { MobileNavDrawer } from '../MobileNavDrawer'
+import PageViewer from './PageViewer'
+import Alert from '../Alert'
 
-const useStyles = makeStyles(() => ({
-  content: {},
-}))
-
-export const Layout = ({ children }: { children: ReactChildren | ReactElement }): JSX.Element => {
-  const classes = useStyles()
+export const Layout = (): JSX.Element => {
   return (
-    <Container maxWidth="lg" className={classes.content}>
+    <Container maxWidth="lg">
       <MobileNavDrawer />
       <Header />
-      {children}
+      <PageViewer />
+      <Alert />
     </Container>
   )
 }

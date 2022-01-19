@@ -1,2 +1,2 @@
 // Views
-export { Swap as SwapView } from './views/swap'
+export { Swap as default } from './views/swap'

@@ -1,13 +1,13 @@
 import { Grid, Icon, makeStyles } from '@material-ui/core'
-import { HeaderLink } from './HeaderLink'
-import { useAppDispatch, useMobilePoint, useRouter } from 'hooks'
+import { useAppDispatch, useTabletPoint } from 'hooks'
+import NavTabs from 'modules/layout/components/DesktopNavTabs'
+import ConnectWalletButton from 'modules/wallet'
 import HeaderLogo from 'assets/ton logo (light background).svg'
 import { toggleDrawer } from 'modules/layout'
-import { NAV_LINKS } from 'modules/layout'
 
-const useStyles = makeStyles(() => ({
+const useStyles = makeStyles((theme) => ({
   headerContainer: {
-    paddingTop: '48px',
+    paddingTop: theme.spacing(6),
   },
   logoImage: {
     height: '36px',
@@ -16,30 +16,30 @@ const useStyles = makeStyles(() => ({
     display: 'flex',
     justifyContent: 'end',
   },
+  walletContainer: {
+    display: 'flex',
+    alignItem: 'center',
+  },
 }))
 
 export const Header = (): JSX.Element => {
   const classes = useStyles()
-  const isMobile = useMobilePoint()
-  const router = useRouter()
+  const isTablet = useTabletPoint()
   const dispatch = useAppDispatch()
 
   return (
-    <Grid container className={classes.headerContainer}>
-      <Grid item xs={6}>
+    <Grid container spacing={4} className={classes.headerContainer}>
+      <Grid item xs={2}>
         <img src={HeaderLogo} className={classes.logoImage} alt="logo" />
       </Grid>
-      <Grid item xs={6} className={classes.navContainer}>
-        {!isMobile ? (
-          <>
-            {NAV_LINKS.map(({ href, text }) => (
-              <HeaderLink to={href} text={text} key={href} isActive={router.pathname === href} />
-            ))}
-          </>
-        ) : (
-          <Icon onClick={() => dispatch(toggleDrawer(true))}>menu</Icon>
-        )}
+      <Grid item xs={isTablet ? 10 : 7} className={classes.navContainer}>
+        {!isTablet ? <NavTabs /> : <Icon onClick={() => dispatch(toggleDrawer(true))}>menu</Icon>}
       </Grid>
+      {!isTablet && (
+        <Grid item xs={3} className={classes.walletContainer}>
+          <ConnectWalletButton fullWidth />
+        </Grid>
+      )}
     </Grid>
   )
 }

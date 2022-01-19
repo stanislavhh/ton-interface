@@ -5,5 +5,7 @@ export { Layout } from './components/Layout'
 export * from './constants'
 
 // Slice
-export { appReducer, toggleDrawer } from './slice'
-export type { LayoutState } from './slice'
+export { appReducer, toggleDrawer, toggleAlert } from './slice'
+
+// Types
+export type { LayoutState, Alert, AlertAction, DrawerAction } from './types'

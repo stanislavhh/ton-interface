@@ -4,8 +4,11 @@ import { WalletState } from './types'
 
 export const wallet = (state: StoreState) => state.wallet
 
-export const $address = createSelector(wallet, (wallet: WalletState) => wallet.address)
+export const $walletTokens = createSelector(wallet, (wallet: WalletState) => wallet.walletTokens)
+
+// just for ui
+export const $selectedWToken = createSelector($walletTokens, (wTokens) => wTokens[0])
 
 export const $connecting = createSelector(wallet, (wallet: WalletState) => wallet.connecting)
 
-export const $isConnected = createSelector($address, (address: string) => Boolean(address))
+export const $isConnected = createSelector($walletTokens, (wTokens) => Boolean(wTokens.length))

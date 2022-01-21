@@ -1,13 +1,25 @@
-import { ChangeEventHandler } from 'react'
 import { Card, Grid, Icon, makeStyles, Typography } from '@material-ui/core'
-import BaseInput from 'components/BaseInput'
-import TokenButton from 'modules/swap/components/TokenButton'
-import TokensListDialog from 'modules/swap/components/TokensListDialog'
+import { Token, TokensListDialog } from 'modules/shared'
+import SwapInputs from 'modules/swap/components/SwapInputs'
+import SwapInfo from 'modules/swap/components/SwapInfo'
+import ConfirmTransactionButton from 'modules/shared/components/ConfirmTransactionButton'
+import TransactionSettingsIcon from 'modules/shared/components/TransactionSettings'
 import { useAppDispatch, useAppSelector } from 'hooks'
-import { setAmount, setDialog, swapInputs } from 'modules/swap/slice'
-import { InputType } from 'modules/swap/types'
-import { $dialog, $inputFrom, $inputTo } from 'modules/swap/selectors'
+import { setAmount, setDialog, setToken, swapInputs } from 'modules/swap/slice'
+import {
+  $canSwap,
+  $combinedInputFrom,
+  $combinedInputTo,
+  $dialog,
+  $insufficientBalance,
+  $selectedDialogToken,
+} from 'modules/swap/selectors'
 import { Dialogs, Inputs } from 'modules/swap/enums'
+import { $loadingTokens, $prices, $tokens } from 'modules/layout/selectors'
+import { iconsTransition } from 'helpers/themeHelper'
+import { useWatchPricesChange, useWatchTokenChange } from 'modules/swap/hooks'
+import { ChangeAmountEvent } from 'modules/swap/types'
+import { convertTokensAmount, selectedTokenPrice } from 'modules/swap//utils'
 
 const useStyles = makeStyles((theme) => ({
   title: {
@@ -21,43 +33,80 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: 'rgba(255, 255, 255, 0.6)',
     padding: theme.spacing(3),
   },
-  buttonContainer: {
+  transactionSettingsContainer: {
     display: 'flex',
-    alignItems: 'end',
-  },
-  refreshContainer: {
-    marginTop: theme.spacing(2),
+    justifyContent: 'end',
   },
   refreshIcon: {
     fontWeight: 'bold',
-    cursor: 'pointer',
-    transition: 'transform ease-in 0.15s',
-
-    '&:hover': {
-      transform: 'rotate(60deg)',
-    },
+    ...iconsTransition,
+  },
+  mainButtonContainer: {
+    marginTop: theme.spacing(2),
+  },
+  infoContainer: {
+    marginTop: theme.spacing(3),
+  },
+  swapButton: {
+    minHeight: '48px',
   },
 }))
 
 export const Swap = () => {
   const classes = useStyles()
   const dispatch = useAppDispatch()
-  const { token: tokenFrom, amount: amountFrom } = useAppSelector($inputFrom)
-  const { token: tokenTo, amount: amountTo } = useAppSelector($inputTo)
+  const inputFrom = useAppSelector($combinedInputFrom)
+  const inputTo = useAppSelector($combinedInputTo)
+  const selectedDialogToken = useAppSelector($selectedDialogToken)
+  const tokens = useAppSelector($tokens)
   const dialog = useAppSelector($dialog)
+  const loadingTokens = useAppSelector($loadingTokens)
+  const insufficientBalance = useAppSelector($insufficientBalance)
+  const canSwap = useAppSelector($canSwap)
+  const prices = useAppSelector($prices)
+  const inputs = { inputFrom, inputTo }
 
-  const getInputHandler =
-    (type: InputType): ChangeEventHandler<HTMLTextAreaElement | HTMLInputElement> =>
-    ({ target: { value } }) =>
-      dispatch(setAmount({ type, amount: value }))
-
-  const getTokenHandler = (type: InputType) => () => dispatch(setDialog({ input: type, type: Dialogs.TOKENS_LIST }))
+  useWatchTokenChange(inputFrom.token)
+  useWatchTokenChange(inputTo.token)
+  useWatchPricesChange()
 
   const closeDialog = () => dispatch(setDialog({ type: '' }))
 
+  const onTokenSelect = (token: Token) => {
+    const type = dialog.input as Inputs
+    const iFrom = { ...inputFrom }
+    const iTo = { ...inputTo }
+
+    if (type === Inputs.INPUT_FROM) {
+      iFrom.price = selectedTokenPrice(prices, token)?.price || 0
+    } else {
+      iTo.price = selectedTokenPrice(prices, token)?.price || 0
+    }
+
+    dispatch(setAmount({ type: Inputs.INPUT_TO, amount: convertTokensAmount(iFrom, iTo) }))
+    dispatch(setToken({ type, token }))
+  }
+
+  const handleAmountChange = ({ type, amount }: ChangeAmountEvent) => {
+    const invertedType = type === Inputs.INPUT_FROM ? Inputs.INPUT_TO : Inputs.INPUT_FROM
+    const t1 = inputs[type]
+    const t2 = inputs[invertedType]
+    const t2Amount = convertTokensAmount({ ...t1, amount: amount || t1.amount }, t2)
+
+    dispatch(setAmount({ type, amount }))
+    dispatch(setAmount({ type: invertedType, amount: String(t2Amount) }))
+  }
+
   return (
     <Grid container justifyContent="center">
-      <TokensListDialog open={dialog.type === Dialogs.TOKENS_LIST} onClose={closeDialog} />
+      <TokensListDialog
+        onTokenSelect={onTokenSelect}
+        selectedToken={selectedDialogToken}
+        open={dialog.type === Dialogs.TOKENS_LIST}
+        tokens={tokens}
+        onClose={closeDialog}
+        loading={loadingTokens}
+      />
       <Grid item xs={12} md={9}>
         <Typography variant="h1" className={classes.title}>
           Swap
@@ -65,38 +114,34 @@ export const Swap = () => {
       </Grid>
       <Grid item xs={12} md={9} className={classes.cardContainer}>
         <Card className={classes.card}>
-          <Grid container spacing={2} justifyContent="space-between">
-            <Grid item xs={8}>
-              <BaseInput
-                value={amountFrom}
-                onChange={getInputHandler(Inputs.INPUT_FROM)}
-                variant="outlined"
-                placeholder="0.0"
-                fullWidth
-                label="From"
-              />
+          <Grid container>
+            <Grid item xs={12} className={classes.transactionSettingsContainer}>
+              <TransactionSettingsIcon />
             </Grid>
-            <Grid item xs={4} className={classes.buttonContainer}>
-              <TokenButton onClick={getTokenHandler(Inputs.INPUT_FROM)} token={tokenFrom} />
-            </Grid>
-            <Grid item xs={6} />
-            <Grid item xs={6} className={classes.refreshContainer}>
+          </Grid>
+          <SwapInputs
+            fromInput={inputFrom}
+            toInput={inputTo}
+            onAmountChange={handleAmountChange}
+            onMaxClick={({ type }) => handleAmountChange({ type, amount: String(inputs[type].balance) })}
+            onTokenBtnClick={({ type }) => dispatch(setDialog({ input: type, type: Dialogs.TOKENS_LIST }))}
+            icon={
               <Icon color="primary" onClick={() => dispatch(swapInputs())} className={classes.refreshIcon}>
                 cached_sharp
               </Icon>
-            </Grid>
-            <Grid item xs={8}>
-              <BaseInput
-                value={amountTo}
-                onChange={getInputHandler(Inputs.INPUT_TO)}
-                variant="outlined"
-                placeholder="0.0"
-                fullWidth
-                label="To"
+            }
+          />
+          <Grid container>
+            <Grid item xs={12} sm={9} className={classes.mainButtonContainer}>
+              <ConfirmTransactionButton
+                className={classes.swapButton}
+                canConfirm={canSwap}
+                text={!insufficientBalance ? 'Swap' : 'Insufficient Balance'}
+                confirm={() => {}}
               />
             </Grid>
-            <Grid item xs={4} className={classes.buttonContainer}>
-              <TokenButton onClick={getTokenHandler(Inputs.INPUT_TO)} token={tokenTo} />
+            <Grid item xs={12} sm={9} className={classes.infoContainer}>
+              <SwapInfo />
             </Grid>
           </Grid>
         </Card>

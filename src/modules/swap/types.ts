@@ -7,6 +7,11 @@ export interface TokenInput {
   amount: string | null
 }
 
+export interface CombinedTokenInput extends TokenInput {
+  balance: number
+  price: number
+}
+
 export interface SwapDialog {
   type: Dialogs | ''
   input?: InputType
@@ -19,6 +24,8 @@ export interface SwapState {
 }
 
 export type InputType = Inputs
+
+export type ChangeAmountEvent = { type: Inputs; amount: string }
 
 // Actions
 export type setTokenAction = PayloadAction<{ type: InputType } & { token: Token | null }>

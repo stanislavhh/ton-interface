@@ -179,15 +179,6 @@ export const tokens = [
     logoURI: 'https://assets.coingecko.com/coins/images/4713/thumb/matic-token-icon.png?1624446912',
   },
   {
-    name: 'Maker',
-    address: '0x9f8F72aA9304c8B593d555F12eF6589cC3A579A2',
-    symbol: 'MKR',
-    decimals: 18,
-    chainId: 1,
-    logoURI:
-      'https://raw.githubusercontent.com/trustwallet/assets/master/blockchains/ethereum/assets/0x9f8F72aA9304c8B593d555F12eF6589cC3A579A2/logo.png',
-  },
-  {
     chainId: 1,
     address: '0xec67005c4E498Ec7f55E092bd1d35cbC47C91892',
     name: 'Melon',
@@ -292,14 +283,6 @@ export const tokens = [
       'https://raw.githubusercontent.com/trustwallet/assets/master/blockchains/ethereum/assets/0x04Fa0d235C4abf4BcF4787aF4CF447DE572eF828/logo.png',
   },
   {
-    name: 'Uniswap',
-    address: '0x1f9840a85d5aF5bf1D1762F925BDADdC4201F984',
-    symbol: 'UNI',
-    decimals: 18,
-    chainId: 1,
-    logoURI: 'ipfs://QmXttGpZrECX5qCyXbBQiqgQNytVGeZW5Anewvh2jc4psg',
-  },
-  {
     name: 'USDCoin',
     address: '0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48',
     symbol: 'USDC',
@@ -362,23 +345,6 @@ export const tokens = [
       'https://raw.githubusercontent.com/trustwallet/assets/master/blockchains/ethereum/assets/0xaD6D458402F60fD3Bd25163575031ACDce07538D/logo.png',
   },
   {
-    name: 'Uniswap',
-    address: '0x1f9840a85d5aF5bf1D1762F925BDADdC4201F984',
-    symbol: 'UNI',
-    decimals: 18,
-    chainId: 3,
-    logoURI: 'ipfs://QmXttGpZrECX5qCyXbBQiqgQNytVGeZW5Anewvh2jc4psg',
-  },
-  {
-    name: 'Wrapped Ether',
-    address: '0xc778417E063141139Fce010982780140Aa0cD5Ab',
-    symbol: 'WETH',
-    decimals: 18,
-    chainId: 3,
-    logoURI:
-      'https://raw.githubusercontent.com/trustwallet/assets/master/blockchains/ethereum/assets/0xc778417E063141139Fce010982780140Aa0cD5Ab/logo.png',
-  },
-  {
     name: 'Dai Stablecoin',
     address: '0xc7AD46e0b8a400Bb3C915120d284AafbA8fc4735',
     symbol: 'DAI',
@@ -388,23 +354,6 @@ export const tokens = [
       'https://raw.githubusercontent.com/trustwallet/assets/master/blockchains/ethereum/assets/0xc7AD46e0b8a400Bb3C915120d284AafbA8fc4735/logo.png',
   },
   {
-    name: 'Maker',
-    address: '0xF9bA5210F91D0474bd1e1DcDAeC4C58E359AaD85',
-    symbol: 'MKR',
-    decimals: 18,
-    chainId: 4,
-    logoURI:
-      'https://raw.githubusercontent.com/trustwallet/assets/master/blockchains/ethereum/assets/0xF9bA5210F91D0474bd1e1DcDAeC4C58E359AaD85/logo.png',
-  },
-  {
-    name: 'Uniswap',
-    address: '0x1f9840a85d5aF5bf1D1762F925BDADdC4201F984',
-    symbol: 'UNI',
-    decimals: 18,
-    chainId: 4,
-    logoURI: 'ipfs://QmXttGpZrECX5qCyXbBQiqgQNytVGeZW5Anewvh2jc4psg',
-  },
-  {
     name: 'Wrapped Ether',
     address: '0xc778417E063141139Fce010982780140Aa0cD5Ab',
     symbol: 'WETH',
@@ -412,14 +361,6 @@ export const tokens = [
     chainId: 4,
     logoURI:
       'https://raw.githubusercontent.com/trustwallet/assets/master/blockchains/ethereum/assets/0xc778417E063141139Fce010982780140Aa0cD5Ab/logo.png',
-  },
-  {
-    name: 'Uniswap',
-    address: '0x1f9840a85d5aF5bf1D1762F925BDADdC4201F984',
-    symbol: 'UNI',
-    decimals: 18,
-    chainId: 5,
-    logoURI: 'ipfs://QmXttGpZrECX5qCyXbBQiqgQNytVGeZW5Anewvh2jc4psg',
   },
   {
     name: 'Wrapped Ether',
@@ -438,15 +379,6 @@ export const tokens = [
     chainId: 42,
     logoURI:
       'https://raw.githubusercontent.com/trustwallet/assets/master/blockchains/ethereum/assets/0x4F96Fe3b7A6Cf9725f59d353F723c1bDb64CA6Aa/logo.png',
-  },
-  {
-    name: 'Maker',
-    address: '0xAaF64BFCC32d0F15873a02163e7E500671a4ffcD',
-    symbol: 'MKR',
-    decimals: 18,
-    chainId: 42,
-    logoURI:
-      'https://raw.githubusercontent.com/trustwallet/assets/master/blockchains/ethereum/assets/0xAaF64BFCC32d0F15873a02163e7E500671a4ffcD/logo.png',
   },
   {
     name: 'Uniswap',

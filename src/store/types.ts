@@ -1,9 +1,9 @@
-import { LayoutState } from 'modules/layout'
+import { AppState } from 'modules/layout'
 import { WalletState } from 'modules/wallet'
-import { SwapState } from 'modules/swap/types'
+import { SwapState } from 'modules/swap'
 
 export interface StoreState {
-  app: LayoutState
-  wallet: WalletState
+  app: AppState
   swap: SwapState
+  wallet: WalletState
 }

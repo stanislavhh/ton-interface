@@ -2,10 +2,13 @@ import { Tabs, Tab, makeStyles } from '@material-ui/core'
 import { BaseLink } from 'components/BaseLink'
 import { NAV_LINKS } from 'modules/layout/constants'
 import { useRouter } from 'hooks'
-import { COLOR_SECONDARY } from 'helpers/themeHelper'
+import { COLOR_TEXT } from 'helpers/themeHelper'
 
 const useStyles = makeStyles(() => ({
-  tabSelected: { color: COLOR_SECONDARY },
+  tabSelected: { color: COLOR_TEXT },
+  textColorInherit: {
+    opacity: 1,
+  },
 }))
 
 export const NavTabs = () => {
@@ -16,7 +19,13 @@ export const NavTabs = () => {
   return (
     <Tabs value={tabValue}>
       {NAV_LINKS.map(({ href, text }) => (
-        <Tab component={BaseLink} classes={{ selected: classes.tabSelected }} to={href} label={text} key={href} />
+        <Tab
+          component={BaseLink}
+          classes={{ selected: classes.tabSelected, textColorInherit: classes.textColorInherit }}
+          to={href}
+          label={text}
+          key={href}
+        />
       ))}
     </Tabs>
   )

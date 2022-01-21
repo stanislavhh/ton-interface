@@ -1,1 +1,1 @@
-export { default as store } from './createStore'
+export { default as store, injectReducer } from './createStore'

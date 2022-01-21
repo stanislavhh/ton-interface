@@ -1,4 +1,4 @@
 export { parseQueries } from './parseQueries'
 export { imitateFetch } from './fetchImitation'
-export { debounce } from './debounce'
+export { isEqual } from './isEqual'
 export type { MockedResponse } from './fetchImitation'

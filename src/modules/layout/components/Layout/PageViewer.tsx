@@ -1,7 +1,9 @@
+import { useEffect } from 'react'
 import { Route, Routes } from 'react-router-dom'
 import { makeStyles } from '@material-ui/core'
 import { TransitionGroup, CSSTransition } from 'react-transition-group'
 import { useRouter } from 'hooks'
+import { ROUTES } from 'modules/layout/constants'
 
 import './transition.css'
 
@@ -43,6 +45,14 @@ const useStyles = makeStyles((theme) => ({
 export const PageViewer = (): JSX.Element => {
   const router = useRouter()
   const { pageContent, ...rest } = useStyles()
+  const foundRoute = ROUTES.find(({ path }) => router.pathname === path)
+
+  useEffect(() => {
+    if (!foundRoute) {
+      router.navigate('/')
+    }
+  }, [])
+
   return (
     <TransitionGroup className={pageContent}>
       <CSSTransition key={router.pathname} classNames={rest} timeout={300}>

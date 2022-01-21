@@ -1,12 +1,18 @@
 import { PayloadAction } from '@reduxjs/toolkit'
 
-export type WalletData = {
+export type WalletToken = {
   address: string
+  balance: number
+  name: string
+}
+
+export type WalletData = {
+  walletTokens: WalletToken[]
 }
 
 export type WalletState = {
   connecting: boolean
-  address: string
+  walletTokens: WalletToken[]
 }
 
 // Actions

@@ -1,37 +1,65 @@
 import { createTheme } from '@material-ui/core'
 
+export const MAIN_BACKGROUND = 'linear-gradient(to top, #e6e9f0 0%, #eef1f5 100%)'
+
 export const COLOR_PRIMARY = '#0088CC'
-export const COLOR_SECONDARY = '#303757'
+export const COLOR_TEXT = '#303757'
 export const COLOR_WHITE = '#FFFDFA'
+export const COLOR_TEXT_GRAY = '#808080'
+
+export const BORDER_RADIUS1 = '24px'
+export const BORDER_RADIUS2 = '16px'
+export const BORDER_RADIUS3 = '12px'
+export const BORDER_RADIUS4 = '8px'
+export const BORDER_RADIUS5 = '6px'
+export const BORDER_RADIUS6 = '4px'
+
+export const iconsTransition = {
+  cursor: 'pointer',
+  transition: 'transform ease-out 0.05s',
+  '&:hover': {
+    transform: 'scale(1.2)',
+  },
+}
+
+export const xsButton = {
+  borderRadius: BORDER_RADIUS6,
+  minWidth: '40px',
+}
 
 export const theme = createTheme({
   palette: {
     primary: {
       main: COLOR_PRIMARY,
     },
-    secondary: {
-      main: COLOR_SECONDARY,
+    text: {
+      primary: COLOR_TEXT,
+      secondary: COLOR_TEXT_GRAY,
     },
-  },
-  typography: {
-    fontFamily: 'Mulish',
+    secondary: {
+      main: COLOR_TEXT,
+    },
   },
   overrides: {
     MuiCard: {
       root: {
-        borderRadius: '24px',
+        borderRadius: BORDER_RADIUS1,
       },
     },
-    MuiTextField: {
+    MuiFilledInput: {
       root: {
-        '& input': {
-          textAlign: 'right',
+        backgroundColor: 'rgba(0,0,0,0.05)',
+        '&:hover': {
+          backgroundColor: 'rgba(0,0,0,0.09)',
+        },
+        '&.Mui-focused': {
+          backgroundColor: 'rgba(0,0,0,0.07)',
         },
       },
     },
     MuiButton: {
       root: {
-        borderRadius: '16px',
+        borderRadius: BORDER_RADIUS2,
       },
       containedPrimary: {
         boxShadow:
@@ -47,7 +75,7 @@ export const theme = createTheme({
       },
       outlined: {
         borderColor: 'rgba(0,0,0,0.1)',
-        borderRadius: '8px',
+        borderRadius: BORDER_RADIUS4,
       },
       outlinedSizeLarge: {
         padding: '8px 22px',
@@ -67,16 +95,21 @@ export const theme = createTheme({
         transition: 'all ease-out 0.25s',
         '&:hover': {
           textDecoration: 'none',
-          color: COLOR_SECONDARY,
+          color: COLOR_TEXT,
         },
       },
     },
   },
 })
 
+const commonTypo = {
+  color: COLOR_TEXT,
+  fontFamily: 'Mulish',
+}
+
 // Typography
 theme.typography.h1 = {
-  fontFamily: 'Mulish',
+  ...commonTypo,
   fontSize: '32px',
   lineHeight: '40px',
   fontWeight: 900,
@@ -89,9 +122,12 @@ theme.typography.h1 = {
     lineHeight: '50px',
   },
 }
+theme.typography.h2 = {
+  ...commonTypo,
+}
 
 theme.typography.h3 = {
-  fontFamily: 'Mulish',
+  ...commonTypo,
   fontSize: '24px',
   lineHeight: '32px',
   fontWeight: 900,
@@ -105,28 +141,61 @@ theme.typography.h3 = {
   },
 }
 
+theme.typography.h4 = {
+  ...commonTypo,
+  fontSize: '20px',
+  lineHeight: '24px',
+}
+
 theme.typography.h5 = {
-  fontFamily: 'Mulish',
+  ...commonTypo,
   fontSize: '16px',
   lineHeight: '20px',
   fontWeight: 800,
 }
 
+theme.typography.h6 = {
+  ...commonTypo,
+}
+
 theme.typography.body1 = {
-  fontFamily: 'Mulish',
+  ...commonTypo,
   fontSize: '20px',
   lineHeight: '24px',
 }
 
+theme.typography.body2 = {
+  ...commonTypo,
+  fontSize: '14px',
+  lineHeight: '18px',
+  fontWeight: 400,
+  [theme.breakpoints.up('sm')]: {
+    fontSize: '16px',
+    lineHeight: '20px',
+  },
+}
+
+theme.typography.subtitle1 = {
+  ...commonTypo,
+}
+
+theme.typography.subtitle2 = {
+  ...commonTypo,
+}
+
 theme.typography.button = {
-  fontFamily: 'Mulish',
+  ...commonTypo,
   fontSize: '16px',
   lineHeight: '20px',
   fontWeight: 800,
 }
 
 theme.typography.caption = {
-  fontFamily: 'Mulish',
+  ...commonTypo,
   fontSize: '13px',
   lineHeight: '16px',
+}
+
+theme.typography.overline = {
+  ...commonTypo,
 }

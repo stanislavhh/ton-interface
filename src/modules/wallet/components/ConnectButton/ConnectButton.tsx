@@ -1,11 +1,15 @@
-import { Button, ButtonProps, Icon, makeStyles, Typography, CircularProgress } from '@material-ui/core'
+import { Icon, makeStyles, Typography } from '@material-ui/core'
 import BaseTooltip from 'components/BaseTooltip'
+import BaseButton, { BaseButtonProps } from 'components/BaseButton'
 import { useSelector } from 'react-redux'
-import { $isConnected, $address, $connecting } from 'modules/wallet/selectors'
+import { $isConnected, $selectedWToken, $connecting } from 'modules/wallet/selectors'
 import { getWalletData } from 'modules/wallet/slice'
 import { useAppDispatch } from 'hooks'
 
 const useStyles = makeStyles((theme) => ({
+  buttonConnect: {
+    minHeight: '48px',
+  },
   iconBalance: {
     marginRight: theme.spacing(1),
   },
@@ -26,29 +30,30 @@ const useStyles = makeStyles((theme) => ({
   },
 }))
 
-export const ConnectButton = (props: ButtonProps) => {
+export const ConnectButton = (props: BaseButtonProps) => {
   const classes = useStyles()
   const dispatch = useAppDispatch()
   const isConnected = useSelector($isConnected)
   const connecting = useSelector($connecting)
-  const address = useSelector($address)
+  const wToken = useSelector($selectedWToken)
+  const { className, ...rest } = props
 
   const connectWallet = () => dispatch(getWalletData())
 
   return (
-    <Button
+    <BaseButton
       variant={isConnected ? 'outlined' : 'contained'}
       disabled={isConnected || connecting}
       color="primary"
       size="large"
       onClick={connectWallet}
-      {...props}
+      loading={connecting}
+      className={`${classes.buttonConnect} ${className || ''}`}
+      {...rest}
     >
-      {connecting ? (
-        <CircularProgress size={32} />
-      ) : isConnected ? (
+      {isConnected ? (
         <Typography variant="h3" className={classes.connectionText}>
-          Connected: {address}
+          Connected: {wToken?.address}
         </Typography>
       ) : (
         <>
@@ -59,6 +64,6 @@ export const ConnectButton = (props: ButtonProps) => {
           </BaseTooltip>
         </>
       )}
-    </Button>
+    </BaseButton>
   )
 }

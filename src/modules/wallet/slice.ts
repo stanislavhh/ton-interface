@@ -6,11 +6,11 @@ import { toggleAlert } from 'modules/layout'
 
 export const INITIAL_STATE: WalletState = {
   connecting: false,
-  address: '',
+  walletTokens: [],
 }
 
 /*
- * I am not sure if we need to put wallet data to store, but for convenience I keep it here for now
+ * I am not sure if we need to put wallet data to store but I keep it here for now
  */
 export const getWalletData = createAsyncThunk('wallet/getWalletData', async (_, { dispatch }) => {
   const { data } = (await imitateFetch(walletDataResponse)) as MockedResponse
@@ -26,7 +26,7 @@ const setConnectingReducer: CaseReducer<WalletState, any> = (state) => {
 
 const setWalletDataReducer: CaseReducer<WalletState, WalletDataAction> = (state, { payload }) => {
   state.connecting = false
-  state.address = payload.address
+  state.walletTokens = payload.walletTokens
 }
 
 const walletSlice = createSlice({

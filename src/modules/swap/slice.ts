@@ -1,16 +1,26 @@
 import { CaseReducer, createSlice } from '@reduxjs/toolkit'
-import { SwapState, setTokenAction, setAmountAction, setDialogAction } from './types'
+import { setAmountAction, setDialogAction, setTokenAction, SwapState } from './types'
+import { Inputs } from './enums'
+import { isEqual } from 'utils'
 
 export const INITIAL_STATE: SwapState = {
   dialog: { type: '' },
-  inputFrom: { token: null, amount: '' },
-  inputTo: { token: null, amount: '' },
+  inputFrom: { token: null, amount: null },
+  inputTo: { token: null, amount: null },
 }
 
 const setTokenReducer: CaseReducer<SwapState, setTokenAction> = (state, { payload }) => {
   const { type, token } = payload
+  const invertedInput = type === Inputs.INPUT_FROM ? state.inputTo : state.inputFrom
+
+  // closing dialog and if other input has the same token selected - unselecting it
+  state.dialog.type = ''
 
   state[type].token = token
+
+  if (isEqual(invertedInput.token, token)) {
+    invertedInput.token = null
+  }
 }
 
 const setAmountReducer: CaseReducer<SwapState, setAmountAction> = (state, { payload }) => {

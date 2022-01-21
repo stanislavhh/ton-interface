@@ -8,7 +8,10 @@ export * from './constants'
 export { useLoadTokens } from './hooks'
 
 // Slice
-export { appReducer, toggleDrawer, toggleAlert } from './slice'
+export { appReducer, toggleDrawer, getTokenPrice, getTokensList, setTransactionSettings, toggleAlert } from './slice'
 
 // Types
-export type { LayoutState, Alert, AlertAction, DrawerAction } from './types'
+export type { AppState, Alert, AlertAction, DrawerAction, TransactionSettings } from './types'
+
+// Selectors
+export { app, $mobileDrawerActive, $alert } from './selectors'

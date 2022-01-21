@@ -68,6 +68,7 @@ export const SwapInput = ({
         <BaseInput
           rtl
           numeric
+          max={10000000}
           min={0}
           className={classes.input}
           value={amount}

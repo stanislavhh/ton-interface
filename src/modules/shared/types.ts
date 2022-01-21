@@ -6,3 +6,11 @@ export interface Token {
   decimals: number
   logoURI: string
 }
+
+export interface TokenWithPrice extends Token {
+  price: number
+}
+
+export interface TokenWithBalance extends Token {
+  balance: number
+}

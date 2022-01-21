@@ -2,7 +2,7 @@
 export { Swap as default } from './views/swap'
 
 // Slice
-export { swapReducer, setToken, setAmount, swapInputs, setDialog } from './slice'
+export { swapReducer, sendTransaction, setToken, setAmount, swapInputs, setDialog } from './slice'
 
 // Enums
 export * from './enums'

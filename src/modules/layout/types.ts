@@ -15,7 +15,7 @@ export interface Alert {
 }
 
 export interface TokenPrice {
-  price: number
+  price: string
   name: string
 }
 

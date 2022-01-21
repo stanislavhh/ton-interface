@@ -1,6 +1,14 @@
 export const tokens = [
   {
     chainId: 1,
+    address: '0x7Fc66500c83njn24A76Ad7e9c93437bFc5Ac33E2DDaE9',
+    name: 'Toncoin',
+    symbol: 'TON',
+    decimals: 18,
+    logoURI: 'https://ton.org/img/coin_logo_a.svg',
+  },
+  {
+    chainId: 1,
     address: '0x7Fc66500c84A76Ad7e9c93437bFc5Ac33E2DDaE9',
     name: 'Aave',
     symbol: 'AAVE',

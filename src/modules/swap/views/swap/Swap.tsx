@@ -2,6 +2,7 @@ import { Card, Grid, Icon, makeStyles, Typography } from '@material-ui/core'
 import { Token, TokensListDialog } from 'modules/shared'
 import SwapInputs from 'modules/swap/components/SwapInputs'
 import SwapInfo from 'modules/swap/components/SwapInfo'
+import SwapConfirmDialog from 'modules/swap/components/SwapConfirmDialog'
 import ConfirmTransactionButton from 'modules/shared/components/ConfirmTransactionButton'
 import TransactionSettingsIcon from 'modules/shared/components/TransactionSettings'
 import { useAppDispatch, useAppSelector } from 'hooks'
@@ -15,11 +16,12 @@ import {
   $selectedDialogToken,
 } from 'modules/swap/selectors'
 import { Dialogs, Inputs } from 'modules/swap/enums'
-import { $loadingTokens, $prices, $tokens } from 'modules/layout/selectors'
+import { $loadingTokens, $prices } from 'modules/layout/selectors'
 import { iconsTransition } from 'helpers/themeHelper'
 import { useWatchPricesChange, useWatchTokenChange } from 'modules/swap/hooks'
 import { ChangeAmountEvent } from 'modules/swap/types'
-import { convertTokensAmount, selectedTokenPrice } from 'modules/swap//utils'
+import { convertTokensAmount, getTokenPrice } from 'modules/swap//utils'
+import { $tokensWithBalances } from 'modules/wallet/selectors'
 
 const useStyles = makeStyles((theme) => ({
   title: {
@@ -58,7 +60,7 @@ export const Swap = () => {
   const inputFrom = useAppSelector($combinedInputFrom)
   const inputTo = useAppSelector($combinedInputTo)
   const selectedDialogToken = useAppSelector($selectedDialogToken)
-  const tokens = useAppSelector($tokens)
+  const tokens = useAppSelector($tokensWithBalances)
   const dialog = useAppSelector($dialog)
   const loadingTokens = useAppSelector($loadingTokens)
   const insufficientBalance = useAppSelector($insufficientBalance)
@@ -76,11 +78,12 @@ export const Swap = () => {
     const type = dialog.input as Inputs
     const iFrom = { ...inputFrom }
     const iTo = { ...inputTo }
+    const price = getTokenPrice(prices, token)?.price || '0'
 
     if (type === Inputs.INPUT_FROM) {
-      iFrom.price = selectedTokenPrice(prices, token)?.price || 0
+      iFrom.price = price
     } else {
-      iTo.price = selectedTokenPrice(prices, token)?.price || 0
+      iTo.price = price
     }
 
     dispatch(setAmount({ type: Inputs.INPUT_TO, amount: convertTokensAmount(iFrom, iTo) }))
@@ -99,6 +102,7 @@ export const Swap = () => {
 
   return (
     <Grid container justifyContent="center">
+      <SwapConfirmDialog onClose={closeDialog} open={dialog.type === Dialogs.SWAP_CONFIRM} />
       <TokensListDialog
         onTokenSelect={onTokenSelect}
         selectedToken={selectedDialogToken}
@@ -137,7 +141,7 @@ export const Swap = () => {
                 className={classes.swapButton}
                 canConfirm={canSwap}
                 text={!insufficientBalance ? 'Swap' : 'Insufficient Balance'}
-                confirm={() => {}}
+                confirm={() => dispatch(setDialog({ type: Dialogs.SWAP_CONFIRM }))}
               />
             </Grid>
             <Grid item xs={12} sm={9} className={classes.infoContainer}>

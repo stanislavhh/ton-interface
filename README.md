@@ -20,7 +20,8 @@ To build use:
 #### - app configuration
 #### - working ui for swap, pools, pool stats, add/remove liquidity
 
-*Some things may work incorrect, because I am aware of business logic for DEFI only partially, didn't have much time to deep into, and a lot of things were done just by my feeling. just hope it is not fully wrong:D
+*Some things may work incorrect in business context, because I am aware of business logic for DEFI only partially, didn't have much time to deep into, and a lot of things were done just by my feeling. 
+So there still will be a lot of work with integration, types changing etc
 
 
 ## Initial Code structure

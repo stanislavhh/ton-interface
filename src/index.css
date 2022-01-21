@@ -5,3 +5,32 @@ html {
 body {
     margin: 0;
 }
+
+
+/**
+3 dots animation
+ */
+.dot-carousel {
+    position: relative;
+    opacity: 0.9;
+    left: -9999px;
+    width: 8px;
+    height: 8px;
+    border-radius: 5px;
+    background-color: #FFFDFA;
+    color: #FFFDFA;
+    box-shadow: 9984px 0 0 0 #FFFDFA, 9999px 0 0 0 #FFFDFA, 10014px 0 0 0 #FFFDFA;
+    animation: dotCarousel 1.5s infinite linear;
+}
+
+@keyframes dotCarousel {
+    0% {
+        box-shadow: 9984px 0 0 -1px #FFFDFA, 9999px 0 0 1px #FFFDFA, 10014px 0 0 -1px #FFFDFA;
+    }
+    50% {
+        box-shadow: 10014px 0 0 -1px #FFFDFA, 9984px 0 0 -1px #FFFDFA, 9999px 0 0 1px #FFFDFA;
+    }
+    100% {
+        box-shadow: 9999px 0 0 1px #FFFDFA, 10014px 0 0 -1px #FFFDFA, 9984px 0 0 -1px #FFFDFA;
+    }
+}

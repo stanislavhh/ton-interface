@@ -17,3 +17,10 @@ export const $tokens = createSelector(app, (app: AppState) => app.tokens)
 export const $prices = createSelector(app, (app: AppState) => app.prices)
 
 export const $transactionSettings = createSelector(app, (app: AppState) => app.transactionSettings)
+
+export const $tokensWithPrices = createSelector([$tokens, $prices], (tokens, prices) =>
+  tokens.map((token) => ({
+    ...token,
+    price: prices.find(({ name }) => token.name === name)?.price || 0,
+  })),
+)

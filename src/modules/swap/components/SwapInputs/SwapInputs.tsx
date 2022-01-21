@@ -25,6 +25,9 @@ const useStyles = makeStyles((theme) => ({
     position: 'absolute',
     top: 'calc(50% + 4px)',
     left: '40%',
+    [theme.breakpoints.down('sm')]: {
+      left: '30%',
+    },
   },
 }))
 

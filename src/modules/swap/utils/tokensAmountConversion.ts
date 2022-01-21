@@ -9,10 +9,10 @@ export const convertTokensAmount = (t1: CombinedTokenInput, t2: CombinedTokenInp
     return ''
   }
 
-  const t2Amount = (t1Price * Number(t1Amount)) / t2Price
+  const t2Amount = (Number(t1Price) * Number(t1Amount)) / Number(t2Price)
 
   // Todo Calculate accuracy
   const precision = DEFAULT_PRECISION - Math.floor(String(Math.round(t2Amount)).length / 3)
 
-  return t2Amount.toFixed(precision)
+  return t2Amount.toFixed(precision >= 0 ? precision : 0)
 }

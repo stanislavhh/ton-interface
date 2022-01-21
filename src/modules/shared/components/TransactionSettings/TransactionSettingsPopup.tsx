@@ -14,8 +14,8 @@ const useStyles = makeStyles((theme) => ({
   },
   popover: {
     borderRadius: BORDER_RADIUS1,
-    background: 'rgba(255, 255, 255, 0.9)',
-    backdropFilter: 'blur(100px)',
+    background: 'rgba(255, 255, 255, 0.8)',
+    backdropFilter: 'blur(8px)',
     boxShadow: 'none',
   },
   boxContainer: {

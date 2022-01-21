@@ -1,13 +1,25 @@
-import { CaseReducer, createSlice } from '@reduxjs/toolkit'
-import { setAmountAction, setDialogAction, setTokenAction, SwapState } from './types'
+import { CaseReducer, createAsyncThunk, createSlice } from '@reduxjs/toolkit'
+import { ConfirmTransactionBody, setAmountAction, setDialogAction, setTokenAction, SwapState } from './types'
 import { Inputs } from './enums'
-import { isEqual } from 'utils'
+import { imitateFetch, isEqual } from 'utils'
+import { toggleAlert } from 'modules/layout'
 
 export const INITIAL_STATE: SwapState = {
   dialog: { type: '' },
   inputFrom: { token: null, amount: null },
   inputTo: { token: null, amount: null },
+  confirmingTransaction: false,
 }
+
+export const sendTransaction = createAsyncThunk(
+  'swap/confirmTransaction',
+  async ({ from, to }: ConfirmTransactionBody, { dispatch }) => {
+    console.log(from, to)
+    await imitateFetch({ data: {} }, true, 2000)
+    dispatch(toggleAlert({ type: 'success', element: 'Transaction sent!' }))
+    dispatch(setDialog({ type: '' }))
+  },
+)
 
 const setTokenReducer: CaseReducer<SwapState, setTokenAction> = (state, { payload }) => {
   const { type, token } = payload
@@ -39,6 +51,14 @@ const swapInputsReducer: CaseReducer<SwapState> = (state) => {
   state.inputFrom = inputTo
 }
 
+const sendTransactionPendingReducer: CaseReducer<SwapState> = (state) => {
+  state.confirmingTransaction = true
+}
+
+const sendTransactionFulfilledReducer: CaseReducer<SwapState> = (state) => {
+  state.confirmingTransaction = false
+}
+
 const swapSlice = createSlice({
   name: 'swap',
   initialState: INITIAL_STATE,
@@ -47,6 +67,10 @@ const swapSlice = createSlice({
     setToken: setTokenReducer,
     setAmount: setAmountReducer,
     setDialog: setDialogReducer,
+  },
+  extraReducers: (builder) => {
+    builder.addCase(sendTransaction.pending, sendTransactionPendingReducer)
+    builder.addCase(sendTransaction.fulfilled, sendTransactionFulfilledReducer)
   },
 })
 

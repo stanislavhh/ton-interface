@@ -1,22 +1,25 @@
-import React from 'react'
+import React, { ReactNode } from 'react'
 import { Dialog, DialogProps, Grid, Icon, Typography, makeStyles } from '@material-ui/core'
+import BackdropLoader from 'components/BackdropLoader'
 import { BORDER_RADIUS1, iconsTransition } from 'helpers/themeHelper'
 
 export interface BaseDialogProps extends DialogProps {
   onClose?: (event: {}, reason: 'closeIcon' | 'backdropClick' | 'escapeKeyDown') => void
+  showBackdropLoader?: boolean
+  backdropText?: ReactNode | string
 }
 
 const useStyles = makeStyles((theme) => ({
   dialog: {
     '& .MuiDialog-paper': {
       borderRadius: BORDER_RADIUS1,
-      background: 'rgba(255, 255, 255, 0.9)',
-      backdropFilter: 'blur(100px)',
+      background: 'rgba(255, 255, 255, 0.8)',
+      backdropFilter: 'blur(8px)',
     },
   },
   gridContainer: {
     paddingBlock: theme.spacing(2.5),
-    paddingInline: theme.spacing(2.5),
+    paddingInline: theme.spacing(3),
   },
   headContainer: {
     marginBottom: theme.spacing(2),
@@ -31,7 +34,7 @@ const useStyles = makeStyles((theme) => ({
 }))
 
 export const BaseDialog = (props: BaseDialogProps): JSX.Element => {
-  const { title, className, children, onClose, ...rest } = props
+  const { title, className, children, onClose, backdropText, showBackdropLoader, ...rest } = props
   const classes = useStyles()
 
   return (
@@ -45,6 +48,7 @@ export const BaseDialog = (props: BaseDialogProps): JSX.Element => {
         </Grid>
         {children}
       </Grid>
+      <BackdropLoader open={showBackdropLoader} text={backdropText} />
     </Dialog>
   )
 }

@@ -10,11 +10,11 @@ import {
   Fade,
   CircularProgress,
 } from '@material-ui/core'
-import { Token } from 'modules/shared'
+import { Token, TokenWithBalance } from 'modules/shared'
 import { TransitionGroup } from 'react-transition-group'
 
 interface TokensListProps {
-  tokens: Token[]
+  tokens: TokenWithBalance[]
   selected: Token | null
   loading?: boolean
   onSelect: (token: Token) => void
@@ -44,7 +44,7 @@ export const TokensList = (props: TokensListProps) => {
   const { tokens, selected, loading, onSelect } = props
   const classes = useStyles()
 
-  const renderTokenListItem = (token: Token) => (
+  const renderTokenListItem = (token: TokenWithBalance) => (
     <Fade key={`${token.address}_${token.name}`}>
       <ListItem
         onClick={() => onSelect(token)}
@@ -56,12 +56,15 @@ export const TokensList = (props: TokensListProps) => {
         </ListItemAvatar>
         <ListItemText
           primary={
-            <Box display="flex" justifyContent="space-between" alignItems="center">
-              <Typography variant="h6">{token.symbol}</Typography>
-              <Typography variant="caption">{token.name}</Typography>
-            </Box>
+            <>
+              <Box display="flex" justifyContent="space-between" alignItems="center">
+                <Typography variant="h6">{token.symbol}</Typography>
+              </Box>
+            </>
           }
+          secondary={<Typography variant="caption">{token.name}</Typography>}
         />
+        <Typography variant="caption">{token.balance.toFixed(2)}</Typography>
       </ListItem>
     </Fade>
   )

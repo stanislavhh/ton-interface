@@ -1,6 +1,7 @@
 import { StoreState } from 'store/types'
 import { createSelector } from '@reduxjs/toolkit'
 import { WalletState } from './types'
+import { $tokens } from 'modules/layout/selectors'
 
 export const wallet = (state: StoreState) => state.wallet
 
@@ -12,3 +13,10 @@ export const $selectedWToken = createSelector($walletTokens, (wTokens) => wToken
 export const $connecting = createSelector(wallet, (wallet: WalletState) => wallet.connecting)
 
 export const $isConnected = createSelector($walletTokens, (wTokens) => Boolean(wTokens.length))
+
+export const $tokensWithBalances = createSelector([$tokens, $walletTokens], (t, wt) =>
+  t.map((_) => ({
+    ..._,
+    balance: wt.find(({ name }) => _.name === name)?.balance || 0,
+  })),
+)

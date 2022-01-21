@@ -2,8 +2,8 @@ export type MockedResponse = {
   data: any
 }
 
-export const imitateFetch = async (response: MockedResponse, success = true) => {
+export const imitateFetch = async (response: MockedResponse, success = true, timeout = 2000) => {
   return new Promise((resolve, reject) => {
-    setTimeout(() => (success ? resolve(response) : reject(response)), 2000)
+    setTimeout(() => (success ? resolve(response) : reject(response)), timeout)
   })
 }

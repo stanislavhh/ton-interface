@@ -3,11 +3,11 @@ import { Grid, makeStyles, debounce } from '@material-ui/core'
 import BaseDialog, { BaseDialogProps } from 'components/BaseDialog'
 import BaseInput from 'components/BaseInput'
 import { BORDER_RADIUS3 } from 'helpers/themeHelper'
-import { Token } from 'modules/shared'
+import { Token, TokenWithBalance } from 'modules/shared'
 import { TokensList } from './TokensList'
 
 interface TokensListDialogProps extends BaseDialogProps {
-  tokens: Token[]
+  tokens: TokenWithBalance[]
   selectedToken: Token | null
   onTokenSelect: (token: Token) => void
   loading?: boolean
@@ -31,7 +31,7 @@ export const TokensListDialog = (props: TokensListDialogProps) => {
   const { tokens, onTokenSelect, selectedToken, loading, open, ...rest } = props
   const classes = useStyles()
 
-  const [searchableList, setList] = useState<Token[]>(tokens)
+  const [searchableList, setList] = useState<TokenWithBalance[]>(tokens)
   const [search, setSearch] = useState<string>('')
 
   const debounced = useRef(debounce((list) => setList(list), 350))

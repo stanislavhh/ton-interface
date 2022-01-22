@@ -2,13 +2,13 @@ export const ROUTES = [
   { path: '/' },
   { path: '/pools' },
   { path: '/pool' },
-  { path: '/add-liquidity' },
+  { path: '/liquidity' },
   { path: '/remove-liquidity' },
 ]
 
 export const NAV_LINKS = [
   { href: '/', text: 'Swap' },
-  { href: '/pools', text: 'Pools List' },
+  { href: '/pools', text: 'Pools' },
 ]
 
 export const SLIPPAGE_TOLERANCE_DEFAULT = '1'

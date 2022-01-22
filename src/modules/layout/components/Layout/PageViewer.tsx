@@ -31,9 +31,10 @@ const useStyles = makeStyles((theme) => ({
     transition: 'opacity 300ms, transform 300ms',
   },
   pageContent: {
-    marginTop: theme.spacing(8),
+    marginTop: theme.spacing(3),
     paddingInline: theme.spacing(0),
     [theme.breakpoints.up('sm')]: {
+      marginTop: theme.spacing(8),
       paddingInline: theme.spacing(2),
     },
     [theme.breakpoints.up('md')]: {

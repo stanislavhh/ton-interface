@@ -1,11 +1,11 @@
-import { Card, Grid, Icon, makeStyles, Typography } from '@material-ui/core'
+import { Grid, Icon, makeStyles } from '@material-ui/core'
+import { iconsTransition } from 'helpers/themeHelper'
 import { Token, TokensListDialog } from 'modules/shared'
-import SwapInputs from 'modules/swap/components/SwapInputs'
-import SwapInfo from 'modules/swap/components/SwapInfo'
-import SwapConfirmDialog from 'modules/swap/components/SwapConfirmDialog'
-import ConfirmTransactionButton from 'modules/shared/components/ConfirmTransactionButton'
-import TransactionSettingsIcon from 'modules/shared/components/TransactionSettings'
+import { ChangeAmountEvent } from 'modules/swap/types'
+import { Dialogs, Inputs } from 'modules/swap/enums'
 import { useAppDispatch, useAppSelector } from 'hooks'
+import { useWatchPricesChange, useWatchTokenChange } from 'modules/swap/hooks'
+import { convertTokensAmount, getTokenPrice } from 'modules/swap//utils'
 import { setAmount, setDialog, setToken, swapInputs } from 'modules/swap/slice'
 import {
   $canSwap,
@@ -15,26 +15,17 @@ import {
   $insufficientBalance,
   $selectedDialogToken,
 } from 'modules/swap/selectors'
-import { Dialogs, Inputs } from 'modules/swap/enums'
-import { $loadingTokens, $prices } from 'modules/layout/selectors'
-import { iconsTransition } from 'helpers/themeHelper'
-import { useWatchPricesChange, useWatchTokenChange } from 'modules/swap/hooks'
-import { ChangeAmountEvent } from 'modules/swap/types'
-import { convertTokensAmount, getTokenPrice } from 'modules/swap//utils'
 import { $tokensWithBalances } from 'modules/wallet/selectors'
+import { $loadingTokens, $prices } from 'modules/layout/selectors'
+import SwapInputs from 'modules/swap/components/SwapInputs'
+import SwapInfo from 'modules/swap/components/SwapInfo'
+import SwapConfirmDialog from 'modules/swap/components/SwapConfirmDialog'
+import { TransactionSettingsGridWrapper } from 'modules/shared/components/TransactionSettings'
+import ConfirmTransactionButton from 'modules/shared/components/ConfirmTransactionButton'
+import LiquiditySwapCardContainer from 'modules/shared/components/LiquiditySwapCardContainer'
+import LiquiditySwapTitle from 'modules/shared/components/LiquiditySwapTitle'
 
 const useStyles = makeStyles((theme) => ({
-  title: {
-    marginLeft: theme.spacing(3),
-  },
-  cardContainer: {
-    marginTop: theme.spacing(2),
-  },
-  card: {
-    boxShadow: 'none',
-    backgroundColor: 'rgba(255, 255, 255, 0.6)',
-    padding: theme.spacing(3),
-  },
   transactionSettingsContainer: {
     display: 'flex',
     justifyContent: 'end',
@@ -111,45 +102,36 @@ export const Swap = () => {
         onClose={closeDialog}
         loading={loadingTokens}
       />
-      <Grid item xs={12} md={9}>
-        <Typography variant="h1" className={classes.title}>
-          Swap
-        </Typography>
-      </Grid>
-      <Grid item xs={12} md={9} className={classes.cardContainer}>
-        <Card className={classes.card}>
-          <Grid container>
-            <Grid item xs={12} className={classes.transactionSettingsContainer}>
-              <TransactionSettingsIcon />
-            </Grid>
+      <Grid item md={1} />
+      <LiquiditySwapTitle title="Swap" to="/liquidity" secondaryTitle="+ Add Liquidity" />
+      <LiquiditySwapCardContainer>
+        <TransactionSettingsGridWrapper />
+        <SwapInputs
+          fromInput={inputFrom}
+          toInput={inputTo}
+          onAmountChange={handleAmountChange}
+          onMaxClick={({ type }) => handleAmountChange({ type, amount: String(inputs[type].balance) })}
+          onTokenBtnClick={({ type }) => dispatch(setDialog({ input: type, type: Dialogs.TOKENS_LIST }))}
+          icon={
+            <Icon color="primary" onClick={() => dispatch(swapInputs())} className={classes.refreshIcon}>
+              cached_sharp
+            </Icon>
+          }
+        />
+        <Grid container>
+          <Grid item xs={12} sm={9} className={classes.mainButtonContainer}>
+            <ConfirmTransactionButton
+              className={classes.swapButton}
+              canConfirm={canSwap}
+              text={!insufficientBalance ? 'Swap' : 'Insufficient Balance'}
+              confirm={() => dispatch(setDialog({ type: Dialogs.SWAP_CONFIRM }))}
+            />
           </Grid>
-          <SwapInputs
-            fromInput={inputFrom}
-            toInput={inputTo}
-            onAmountChange={handleAmountChange}
-            onMaxClick={({ type }) => handleAmountChange({ type, amount: String(inputs[type].balance) })}
-            onTokenBtnClick={({ type }) => dispatch(setDialog({ input: type, type: Dialogs.TOKENS_LIST }))}
-            icon={
-              <Icon color="primary" onClick={() => dispatch(swapInputs())} className={classes.refreshIcon}>
-                cached_sharp
-              </Icon>
-            }
-          />
-          <Grid container>
-            <Grid item xs={12} sm={9} className={classes.mainButtonContainer}>
-              <ConfirmTransactionButton
-                className={classes.swapButton}
-                canConfirm={canSwap}
-                text={!insufficientBalance ? 'Swap' : 'Insufficient Balance'}
-                confirm={() => dispatch(setDialog({ type: Dialogs.SWAP_CONFIRM }))}
-              />
-            </Grid>
-            <Grid item xs={12} sm={9} className={classes.infoContainer}>
-              <SwapInfo />
-            </Grid>
+          <Grid item xs={12} sm={9} className={classes.infoContainer}>
+            <SwapInfo />
           </Grid>
-        </Card>
-      </Grid>
+        </Grid>
+      </LiquiditySwapCardContainer>
     </Grid>
   )
 }

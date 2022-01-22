@@ -1,6 +1,7 @@
+import React, { LegacyRef } from 'react'
 import { Tabs, Tab, makeStyles } from '@material-ui/core'
 import { BaseLink } from 'components/BaseLink'
-import { NAV_LINKS } from 'modules/layout/constants'
+import { NAV_LINKS, ROUTES } from 'modules/layout/constants'
 import { useRouter } from 'hooks'
 import { COLOR_TEXT } from 'helpers/themeHelper'
 
@@ -9,12 +10,19 @@ const useStyles = makeStyles(() => ({
   textColorInherit: {
     opacity: 1,
   },
+  hiddenTab: {
+    display: 'none',
+  },
 }))
 
 export const NavTabs = () => {
   const classes = useStyles()
   const router = useRouter()
-  const tabValue = NAV_LINKS.findIndex(({ href }) => router.pathname === href)
+  let tabValue = NAV_LINKS.findIndex(({ href }) => router.pathname === href)
+
+  if (tabValue === -1) {
+    tabValue = 2
+  }
 
   return (
     <Tabs value={tabValue}>
@@ -27,6 +35,7 @@ export const NavTabs = () => {
           key={href}
         />
       ))}
+      <Tab className={classes.hiddenTab} />
     </Tabs>
   )
 }

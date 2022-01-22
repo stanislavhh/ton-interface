@@ -5,7 +5,7 @@ export { Liquidity as default } from './views/liquidity'
 export { liquidityReducer } from './slice'
 
 // Types
-export type { LiquidityState, Dialog, InputType } from './types'
+export type { LiquidityState, LiquidityDialog } from './types'
 
 // Enums
-export { Dialogs, Inputs } from './enums'
+export { Dialogs } from './enums'

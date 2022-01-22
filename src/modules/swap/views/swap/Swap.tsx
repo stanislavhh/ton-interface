@@ -2,22 +2,23 @@ import { Grid, Icon, makeStyles } from '@material-ui/core'
 import { iconsTransition } from 'helpers/themeHelper'
 import { Token, TokensListDialog } from 'modules/shared'
 import { ChangeAmountEvent } from 'modules/swap/types'
-import { Dialogs, Inputs } from 'modules/swap/enums'
+import { Dialogs } from 'modules/swap/enums'
+import { Inputs } from 'modules/shared/enums'
 import { useAppDispatch, useAppSelector } from 'hooks'
 import { useWatchPricesChange, useWatchTokenChange } from 'modules/swap/hooks'
 import { convertTokensAmount, getTokenPrice } from 'modules/swap//utils'
 import { setAmount, setDialog, setToken, swapInputs } from 'modules/swap/slice'
 import {
   $canSwap,
-  $combinedInputFrom,
-  $combinedInputTo,
+  $combinedInput0,
+  $combinedInput1,
   $dialog,
   $insufficientBalance,
   $selectedDialogToken,
 } from 'modules/swap/selectors'
 import { $tokensWithBalances } from 'modules/wallet/selectors'
 import { $loadingTokens, $prices } from 'modules/layout/selectors'
-import SwapInputs from 'modules/swap/components/SwapInputs'
+import SwapInputs from 'modules/shared/components/LiquiditySwapInputs'
 import SwapInfo from 'modules/swap/components/SwapInfo'
 import SwapConfirmDialog from 'modules/swap/components/SwapConfirmDialog'
 import { TransactionSettingsGridWrapper } from 'modules/shared/components/TransactionSettings'
@@ -26,10 +27,6 @@ import LiquiditySwapCardContainer from 'modules/shared/components/LiquiditySwapC
 import LiquiditySwapTitle from 'modules/shared/components/LiquiditySwapTitle'
 
 const useStyles = makeStyles((theme) => ({
-  transactionSettingsContainer: {
-    display: 'flex',
-    justifyContent: 'end',
-  },
   refreshIcon: {
     fontWeight: 'bold',
     ...iconsTransition,
@@ -48,8 +45,8 @@ const useStyles = makeStyles((theme) => ({
 export const Swap = () => {
   const classes = useStyles()
   const dispatch = useAppDispatch()
-  const inputFrom = useAppSelector($combinedInputFrom)
-  const inputTo = useAppSelector($combinedInputTo)
+  const input0 = useAppSelector($combinedInput0)
+  const input1 = useAppSelector($combinedInput1)
   const selectedDialogToken = useAppSelector($selectedDialogToken)
   const tokens = useAppSelector($tokensWithBalances)
   const dialog = useAppSelector($dialog)
@@ -57,32 +54,32 @@ export const Swap = () => {
   const insufficientBalance = useAppSelector($insufficientBalance)
   const canSwap = useAppSelector($canSwap)
   const prices = useAppSelector($prices)
-  const inputs = { inputFrom, inputTo }
+  const inputs = { input0, input1 }
 
-  useWatchTokenChange(inputFrom.token)
-  useWatchTokenChange(inputTo.token)
+  useWatchTokenChange(input0.token)
+  useWatchTokenChange(input1.token)
   useWatchPricesChange()
 
   const closeDialog = () => dispatch(setDialog({ type: '' }))
 
   const onTokenSelect = (token: Token) => {
     const type = dialog.input as Inputs
-    const iFrom = { ...inputFrom }
-    const iTo = { ...inputTo }
+    const iFrom = { ...input0 }
+    const iTo = { ...input1 }
     const price = getTokenPrice(prices, token)?.price || '0'
 
-    if (type === Inputs.INPUT_FROM) {
+    if (type === Inputs.INPUT_0) {
       iFrom.price = price
     } else {
       iTo.price = price
     }
 
-    dispatch(setAmount({ type: Inputs.INPUT_TO, amount: convertTokensAmount(iFrom, iTo) }))
+    dispatch(setAmount({ type: Inputs.INPUT_1, amount: convertTokensAmount(iFrom, iTo) }))
     dispatch(setToken({ type, token }))
   }
 
   const handleAmountChange = ({ type, amount }: ChangeAmountEvent) => {
-    const invertedType = type === Inputs.INPUT_FROM ? Inputs.INPUT_TO : Inputs.INPUT_FROM
+    const invertedType = type === Inputs.INPUT_0 ? Inputs.INPUT_1 : Inputs.INPUT_0
     const t1 = inputs[type]
     const t2 = inputs[invertedType]
     const t2Amount = convertTokensAmount({ ...t1, amount: amount || t1.amount }, t2)
@@ -107,8 +104,8 @@ export const Swap = () => {
       <LiquiditySwapCardContainer>
         <TransactionSettingsGridWrapper />
         <SwapInputs
-          fromInput={inputFrom}
-          toInput={inputTo}
+          input0={input0}
+          input1={input1}
           onAmountChange={handleAmountChange}
           onMaxClick={({ type }) => handleAmountChange({ type, amount: String(inputs[type].balance) })}
           onTokenBtnClick={({ type }) => dispatch(setDialog({ input: type, type: Dialogs.TOKENS_LIST }))}

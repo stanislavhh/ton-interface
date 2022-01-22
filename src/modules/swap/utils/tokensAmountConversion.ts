@@ -1,5 +1,5 @@
-import { CombinedTokenInput } from 'modules/swap/types'
-import { DEFAULT_PRECISION } from 'components/BaseInput/BaseInput'
+import { CombinedTokenInput } from 'modules/shared'
+import { DEFAULT_PRECISION } from 'components/BaseInput'
 
 export const convertTokensAmount = (t1: CombinedTokenInput, t2: CombinedTokenInput) => {
   const { price: t1Price, amount: t1Amount } = t1

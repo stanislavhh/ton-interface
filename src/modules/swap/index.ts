@@ -15,4 +15,4 @@ export * from './constants'
 export { useWatchTokenChange } from './hooks'
 
 // Types
-export type { SwapState } from './types'
+export type { SwapState, SwapDialog } from './types'

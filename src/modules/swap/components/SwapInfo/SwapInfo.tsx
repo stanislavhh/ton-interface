@@ -36,10 +36,10 @@ const useStyles = makeStyles((theme) => ({
 export const SwapInfo = ({ withEstimatedTotals }: SwapInfoProps) => {
   const classes = useStyles()
   const dispatch = useAppDispatch()
-  const { fee, fromSymbol, total, toSymbol, fromName, toName, rate, price, slipTolerance, loadingPrice } =
+  const { fee, i0Symbol, total, i1Symbol, i0Name, i1Name, rate, price, slipTolerance, loadingPrice } =
     useAppSelector($swapInfo)
 
-  const hide = !fromName || !toName
+  const hide = !i0Name || !i1Name
 
   const infoSections = {
     'Swap Fee': {
@@ -59,7 +59,7 @@ export const SwapInfo = ({ withEstimatedTotals }: SwapInfoProps) => {
     },
     'Estimated Total': {
       tooltip: 'The minimum total you receive after the fees',
-      valueEnding: toSymbol,
+      valueEnding: i1Symbol,
       value: total,
       typographyVariant: 'h5',
       className: '',
@@ -67,8 +67,8 @@ export const SwapInfo = ({ withEstimatedTotals }: SwapInfoProps) => {
   }
 
   const refreshPrices = () => {
-    dispatch(getTokenPrice(fromName as string))
-    dispatch(getTokenPrice(toName as string))
+    dispatch(getTokenPrice(i0Name as string))
+    dispatch(getTokenPrice(i1Name as string))
   }
 
   const renderRates = () => {
@@ -83,7 +83,7 @@ export const SwapInfo = ({ withEstimatedTotals }: SwapInfoProps) => {
     return (
       <>
         <Box>
-          <Typography variant="body2">{`1 ${fromSymbol} = ${rate} ${toSymbol}`}</Typography>
+          <Typography variant="body2">{`1 ${i0Symbol} = ${rate} ${i1Symbol}`}</Typography>
           <Typography variant="caption" color="textSecondary" className={classes.$text}>
             ≈ ${price}
           </Typography>

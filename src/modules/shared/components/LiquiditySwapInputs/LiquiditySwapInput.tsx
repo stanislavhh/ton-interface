@@ -3,9 +3,9 @@ import BaseInput from 'components/BaseInput'
 import BaseButton from 'components/BaseButton'
 import { TokenButton } from 'modules/shared'
 import { BORDER_RADIUS5, COLOR_WHITE, xsButton } from 'helpers/themeHelper'
-import { CombinedTokenInput } from 'modules/swap/types'
+import { CombinedTokenInput } from 'modules/shared/types'
 
-export interface SwapInputProps {
+export interface LiquiditySwapInputProps {
   onChange: (value: string) => void
   onBtnClick: () => void
   onMaxClick?: () => void
@@ -48,7 +48,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }))
 
-export const SwapInput = ({
+export const LiquiditySwapInput = ({
   onBtnClick,
   onMaxClick,
   className,
@@ -57,7 +57,7 @@ export const SwapInput = ({
   tokenInput,
   onChange,
   label,
-}: SwapInputProps) => {
+}: LiquiditySwapInputProps) => {
   const classes = useStyles()
 
   const { balance, amount, token } = tokenInput

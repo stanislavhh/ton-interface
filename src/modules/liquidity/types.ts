@@ -1,17 +1,15 @@
-import { TokenInput } from 'modules/shared'
-import { Dialogs, Inputs } from './enums'
+import { TokenInput, InputType } from 'modules/shared'
+import { Dialogs } from './enums'
 
-export type InputType = Inputs
-
-export interface Dialog {
-  dialog: Dialogs | ''
-  type?: InputType
+export interface LiquidityDialog {
+  type: Dialogs | ''
+  input?: InputType
 }
 
 export interface LiquidityState {
   input0: TokenInput
   input1: TokenInput
-  dialog: Dialog
+  dialog: LiquidityDialog
   confirmingTokenTransaction: boolean
   confirmingLiquidity: boolean
 }

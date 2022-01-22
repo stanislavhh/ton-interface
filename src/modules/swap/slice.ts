@@ -1,20 +1,20 @@
 import { CaseReducer, createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import { ConfirmTransactionBody, setAmountAction, setDialogAction, setTokenAction, SwapState } from './types'
-import { Inputs } from './enums'
 import { imitateFetch, isEqual } from 'utils'
 import { toggleAlert } from 'modules/layout'
+import { Inputs } from 'modules/shared'
 
 export const INITIAL_STATE: SwapState = {
   dialog: { type: '' },
-  inputFrom: { token: null, amount: null },
-  inputTo: { token: null, amount: null },
+  input0: { token: null, amount: null },
+  input1: { token: null, amount: null },
   confirmingTransaction: false,
 }
 
 export const sendTransaction = createAsyncThunk(
   'swap/confirmTransaction',
-  async ({ from, to }: ConfirmTransactionBody, { dispatch }) => {
-    console.log('TRANSACTION:', { from, to })
+  async ({ i0, i1 }: ConfirmTransactionBody, { dispatch }) => {
+    console.log('TRANSACTION:', { i0, i1 })
     await imitateFetch({ data: {} }, true, 2000)
     dispatch(toggleAlert({ type: 'success', element: 'Transaction sent!' }))
     dispatch(setDialog({ type: '' }))
@@ -23,7 +23,7 @@ export const sendTransaction = createAsyncThunk(
 
 const setTokenReducer: CaseReducer<SwapState, setTokenAction> = (state, { payload }) => {
   const { type, token } = payload
-  const invertedInput = type === Inputs.INPUT_FROM ? state.inputTo : state.inputFrom
+  const invertedInput = type === Inputs.INPUT_0 ? state.input1 : state.input0
 
   // closing dialog and if other input has the same token selected - unselecting it
   state.dialog.type = ''
@@ -46,9 +46,9 @@ const setDialogReducer: CaseReducer<SwapState, setDialogAction> = (state, { payl
 }
 
 const swapInputsReducer: CaseReducer<SwapState> = (state) => {
-  const inputTo = { ...state.inputTo }
-  state.inputTo = state.inputFrom
-  state.inputFrom = inputTo
+  const input1 = { ...state.input1 }
+  state.input1 = state.input0
+  state.input0 = input1
 }
 
 const sendTransactionPendingReducer: CaseReducer<SwapState> = (state) => {

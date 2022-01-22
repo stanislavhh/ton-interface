@@ -13,7 +13,7 @@ export const INITIAL_STATE: LiquidityState = {
     amount: '',
   },
   dialog: {
-    dialog: '',
+    type: '',
   },
   confirmingLiquidity: false,
   confirmingTokenTransaction: false,

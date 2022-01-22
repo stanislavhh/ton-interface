@@ -1,3 +1,5 @@
+import { Inputs } from './enums'
+
 export interface Token {
   chainId: number
   address: string
@@ -15,7 +17,16 @@ export interface TokenWithBalance extends Token {
   balance: number
 }
 
+export type InputType = Inputs
+
 export interface TokenInput {
   token: Token | null
   amount: string | null
 }
+
+export interface CombinedTokenInput extends TokenInput {
+  balance: number
+  price: string
+}
+
+export type ChangeAmountEvent = { type: InputType; amount: string }

@@ -1,7 +1,7 @@
 import { Grid, Icon, Avatar, Typography, makeStyles } from '@material-ui/core'
 import BaseDialog, { BaseDialogProps } from 'components/BaseDialog'
 import { useAppDispatch, useAppSelector } from 'hooks'
-import { $combinedInputFrom, $combinedInputTo, $confirmingTransaction } from 'modules/swap/selectors'
+import { $combinedInput0, $combinedInput1, $confirmingTransaction } from 'modules/swap/selectors'
 import { sendTransaction } from 'modules/swap/slice'
 import { Token } from 'modules/shared'
 import SwapInfo from 'modules/swap/components/SwapInfo'
@@ -45,8 +45,8 @@ const useStyles = makeStyles((theme) => ({
 export const SwapConfirmDialog = (props: SwapConfirmDialogProps) => {
   const classes = useStyles()
   const dispatch = useAppDispatch()
-  const from = useAppSelector($combinedInputFrom)
-  const to = useAppSelector($combinedInputTo)
+  const i0 = useAppSelector($combinedInput0)
+  const i1 = useAppSelector($combinedInput1)
   const confirming = useAppSelector($confirmingTransaction)
 
   const renderAmount = (amount: string | null) => (
@@ -73,16 +73,16 @@ export const SwapConfirmDialog = (props: SwapConfirmDialogProps) => {
     >
       <Grid container className={classes.mainContainer}>
         <Grid item xs={1} />
-        {renderAmount(from.amount)}
+        {renderAmount(i0.amount)}
         <Grid item xs={2} />
-        {renderAmount(to.amount)}
+        {renderAmount(i1.amount)}
         <Grid item xs={1} />
         <Grid item xs={1} />
-        {renderToken(from.token as Token)}
+        {renderToken(i0.token as Token)}
         <Grid item xs={2} className={classes.flexContainer}>
           <Icon color="primary">forward</Icon>
         </Grid>
-        {renderToken(to.token as Token)}
+        {renderToken(i1.token as Token)}
         <Grid item xs={1} />
 
         <Grid item xs={12} className={classes.swapInfoContainer}>
@@ -90,7 +90,7 @@ export const SwapConfirmDialog = (props: SwapConfirmDialogProps) => {
         </Grid>
 
         <Grid item xs={12} className={classes.confirmContainer}>
-          <ConfirmTransactionButton text="Confirm" canConfirm confirm={() => dispatch(sendTransaction({ from, to }))} />
+          <ConfirmTransactionButton text="Confirm" canConfirm confirm={() => dispatch(sendTransaction({ i0, i1 }))} />
         </Grid>
 
         <Grid item xs={12}>

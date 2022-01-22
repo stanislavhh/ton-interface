@@ -4,6 +4,7 @@ export type WalletToken = {
   address: string
   balance: number
   name: string
+  hasPermission: boolean
 }
 
 export type WalletData = {

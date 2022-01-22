@@ -27,6 +27,14 @@ const useStyles = makeStyles((theme) => ({
     alignItems: 'center',
     justifyContent: 'space-between',
   },
+  inputLabel: {
+    [theme.breakpoints.only('xs')]: {
+      display: 'block',
+      height: '24px',
+      width: ({ isSmallLabel }: { isSmallLabel: boolean }) => (isSmallLabel ? 'fit-content' : '1px'),
+      overflow: 'hidden',
+    },
+  },
   input: {
     background: COLOR_WHITE,
     borderRadius: BORDER_RADIUS5,
@@ -52,13 +60,13 @@ export const LiquiditySwapInput = ({
   onBtnClick,
   onMaxClick,
   className,
-  withBalanceLabel,
+  withBalanceLabel = true,
   withMax = true,
   tokenInput,
   onChange,
   label,
 }: LiquiditySwapInputProps) => {
-  const classes = useStyles()
+  const classes = useStyles({ isSmallLabel: label.length < 5 })
 
   const { balance, amount, token } = tokenInput
 
@@ -78,7 +86,9 @@ export const LiquiditySwapInput = ({
           fullWidth
           label={
             <Box className={classes.inputLabelBox}>
-              <Typography variant="body1">{label}</Typography>
+              <Typography variant="body1" className={classes.inputLabel}>
+                {label}
+              </Typography>
               <Box>
                 {token && withBalanceLabel ? (
                   <Typography variant="caption" color="textSecondary">

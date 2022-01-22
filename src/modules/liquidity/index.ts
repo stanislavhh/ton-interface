@@ -2,7 +2,7 @@
 export { Liquidity as default } from './views/liquidity'
 
 // Slice
-export { liquidityReducer } from './slice'
+export { liquidityReducer, setAmount, setToken, setDialog, setFees, clearState } from './slice'
 
 // Types
 export type { LiquidityState, LiquidityDialog } from './types'

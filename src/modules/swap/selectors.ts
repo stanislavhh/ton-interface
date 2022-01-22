@@ -21,7 +21,7 @@ export const $insufficientBalance = createSelector([$combinedInput0, $combinedIn
 })
 
 export const $canSwap = createSelector(
-  [$combinedInput0, $combinedInput0, $insufficientBalance],
+  [$combinedInput0, $combinedInput1, $insufficientBalance],
   (i0, i1, invalidBalance) => {
     const i0A = Number(i0.amount)
     const i1A = Number(i1.amount)

@@ -1,8 +1,16 @@
 import { CaseReducer, createAsyncThunk, createSlice } from '@reduxjs/toolkit'
-import { ConfirmTransactionBody, setAmountAction, setDialogAction, setTokenAction, SwapState } from './types'
-import { imitateFetch, isEqual } from 'utils'
+import { ConfirmTransactionBody, SwapState } from './types'
+import { imitateFetch } from 'utils'
 import { toggleAlert } from 'modules/layout'
-import { Inputs } from 'modules/shared'
+import {
+  setAmountAction,
+  setDialogAction,
+  setTokenAction,
+  setAmountReducer,
+  setDialogReducer,
+  setTokenReducer,
+  clearStateReducer,
+} from 'modules/shared'
 
 export const INITIAL_STATE: SwapState = {
   dialog: { type: '' },
@@ -20,30 +28,6 @@ export const sendTransaction = createAsyncThunk(
     dispatch(setDialog({ type: '' }))
   },
 )
-
-const setTokenReducer: CaseReducer<SwapState, setTokenAction> = (state, { payload }) => {
-  const { type, token } = payload
-  const invertedInput = type === Inputs.INPUT_0 ? state.input1 : state.input0
-
-  // closing dialog and if other input has the same token selected - unselecting it
-  state.dialog.type = ''
-
-  state[type].token = token
-
-  if (isEqual(invertedInput.token, token)) {
-    invertedInput.token = null
-  }
-}
-
-const setAmountReducer: CaseReducer<SwapState, setAmountAction> = (state, { payload }) => {
-  const { type, amount } = payload
-
-  state[type].amount = amount
-}
-
-const setDialogReducer: CaseReducer<SwapState, setDialogAction> = (state, { payload }) => {
-  state.dialog = payload
-}
 
 const swapInputsReducer: CaseReducer<SwapState> = (state) => {
   const input1 = { ...state.input1 }
@@ -64,9 +48,10 @@ const swapSlice = createSlice({
   initialState: INITIAL_STATE,
   reducers: {
     swapInputs: swapInputsReducer,
-    setToken: setTokenReducer,
-    setAmount: setAmountReducer,
-    setDialog: setDialogReducer,
+    setToken: setTokenReducer as CaseReducer<SwapState, setTokenAction>,
+    setAmount: setAmountReducer as CaseReducer<SwapState, setAmountAction>,
+    setDialog: setDialogReducer as CaseReducer<SwapState, setDialogAction>,
+    clearState: clearStateReducer(INITIAL_STATE) as CaseReducer<SwapState>,
   },
   extraReducers: (builder) => {
     builder.addCase(sendTransaction.pending, sendTransactionPendingReducer)
@@ -74,6 +59,6 @@ const swapSlice = createSlice({
   },
 })
 
-export const { setAmount, setToken, swapInputs, setDialog } = swapSlice.actions
+export const { setAmount, setToken, swapInputs, setDialog, clearState } = swapSlice.actions
 
 export const swapReducer = swapSlice.reducer

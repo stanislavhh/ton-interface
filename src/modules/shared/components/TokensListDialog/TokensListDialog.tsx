@@ -41,6 +41,10 @@ export const TokensListDialog = (props: TokensListDialogProps) => {
     debounced.current(
       tokens.filter((token) => token.name.toLowerCase().includes(lcs) || token.symbol.toLowerCase().includes(lcs)),
     )
+
+    return () => {
+      debounced.current.clear()
+    }
   }, [tokens, search])
 
   useEffect(() => {

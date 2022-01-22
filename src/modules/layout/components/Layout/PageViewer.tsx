@@ -1,11 +1,8 @@
 import { useEffect } from 'react'
 import { Route, Routes } from 'react-router-dom'
 import { makeStyles } from '@material-ui/core'
-import { TransitionGroup, CSSTransition } from 'react-transition-group'
 import { useRouter } from 'hooks'
 import { ROUTES } from 'modules/layout/constants'
-
-import './transition.css'
 
 // Views
 import SwapView from 'modules/swap'
@@ -55,15 +52,13 @@ export const PageViewer = (): JSX.Element => {
   }, [])
 
   return (
-    <TransitionGroup className={pageContent}>
-      <CSSTransition key={router.pathname} classNames={rest} timeout={300}>
-        <Routes>
-          <Route path="/" element={<SwapView />} />
-          <Route path="/liquidity" element={<LiquidityView />} />
-          <Route path="/pools" element={<PoolsView />} />
-        </Routes>
-      </CSSTransition>
-    </TransitionGroup>
+    <div className={pageContent}>
+      <Routes>
+        <Route path="/" element={<SwapView />} />
+        <Route path="/liquidity" element={<LiquidityView />} />
+        <Route path="/pools" element={<PoolsView />} />
+      </Routes>
+    </div>
   )
 }
 

@@ -1,8 +1,9 @@
-import { CaseReducer, createSlice, createAsyncThunk } from '@reduxjs/toolkit'
+import { CaseReducer, createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit'
 import { WalletState, WalletDataAction, WalletData } from './types'
 import { imitateFetch, MockedResponse } from 'utils'
 import { walletDataResponse } from 'mocks/wallet'
 import { toggleAlert } from 'modules/layout'
+import { CombinedTokenInput } from '../shared'
 
 export const INITIAL_STATE: WalletState = {
   connecting: false,
@@ -20,7 +21,7 @@ export const getWalletData = createAsyncThunk('wallet/getWalletData', async (_, 
   return data as WalletData
 })
 
-const setConnectingReducer: CaseReducer<WalletState, any> = (state) => {
+const setConnectingReducer: CaseReducer<WalletState> = (state) => {
   state.connecting = true
 }
 
@@ -29,14 +30,28 @@ const setWalletDataReducer: CaseReducer<WalletState, WalletDataAction> = (state,
   state.walletTokens = payload.walletTokens
 }
 
+const setWalletTokenConfirmedReducer: CaseReducer<WalletState, PayloadAction<CombinedTokenInput>> = (
+  state,
+  { payload },
+) => {
+  const i = state.walletTokens.findIndex((wToken) => wToken.name === payload.token?.name)
+  if (i !== -1) {
+    state.walletTokens[i].hasPermission = true
+  }
+}
+
 const walletSlice = createSlice({
   name: 'wallet',
   initialState: INITIAL_STATE,
-  reducers: {},
+  reducers: {
+    setWalletTokenConfirmed: setWalletTokenConfirmedReducer,
+  },
   extraReducers: (builder) => {
     builder.addCase(getWalletData.pending, setConnectingReducer)
     builder.addCase(getWalletData.fulfilled, setWalletDataReducer)
   },
 })
+
+export const { setWalletTokenConfirmed } = walletSlice.actions
 
 export const walletReducer = walletSlice.reducer

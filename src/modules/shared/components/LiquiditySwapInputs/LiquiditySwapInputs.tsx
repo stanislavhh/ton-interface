@@ -1,18 +1,21 @@
 import { ReactElement } from 'react'
 import { Grid, makeStyles } from '@material-ui/core'
-import { Inputs, InputType } from 'modules/shared'
 import { CombinedTokenInput } from 'modules/shared'
-import { ChangeAmountEvent } from 'modules/swap/types'
 import { LiquiditySwapInput } from './LiquiditySwapInput'
 
-export type ClickBtnEvent = { type: InputType }
+export type IProps = {
+  tokenInput: CombinedTokenInput
+  label: string
+  withBalanceLabel?: boolean
+  withMax?: boolean
+  onChange: (value: string) => void
+  onBtnClick: () => void
+  onMaxClick?: () => void
+}
 
 export type LiquiditySwapInputsProps = {
-  input0: CombinedTokenInput
-  input1: CombinedTokenInput
-  onAmountChange: (e: ChangeAmountEvent) => void
-  onTokenBtnClick: (e: ClickBtnEvent) => void
-  onMaxClick?: (e: ClickBtnEvent) => void
+  input0Props: IProps
+  input1Props: IProps
   icon: ReactElement
 }
 const useStyles = makeStyles((theme) => ({
@@ -23,46 +26,29 @@ const useStyles = makeStyles((theme) => ({
     marginTop: theme.spacing(2),
   },
   iconContainer: {
+    zIndex: 1,
     position: 'absolute',
     top: 'calc(50% + 4px)',
     left: '40%',
-    [theme.breakpoints.down('sm')]: {
-      left: '30%',
+    [theme.breakpoints.down('xs')]: {
+      left: '20%',
     },
+  },
+  input1Container: {
+    marginTop: theme.spacing(2),
   },
 }))
 
 export const LiquiditySwapInputs = (props: LiquiditySwapInputsProps) => {
-  const { input0, input1, onAmountChange, onTokenBtnClick, onMaxClick, icon } = props
+  const { input0Props, input1Props, icon } = props
   const classes = useStyles()
-
-  const getInputHandler = (type: InputType) => (value: string) => onAmountChange({ type, amount: value as string })
-
-  const getTokenHandler = (type: InputType) => () => onTokenBtnClick({ type })
-
-  const onMaxClickHandler = (type: InputType) => () => onMaxClick?.({ type })
 
   return (
     <>
       <Grid container spacing={2} className={classes.mainContainer} justifyContent="space-between">
-        <LiquiditySwapInput
-          label="From"
-          withBalanceLabel
-          onChange={getInputHandler(Inputs.INPUT_0)}
-          onBtnClick={getTokenHandler(Inputs.INPUT_0)}
-          onMaxClick={onMaxClickHandler(Inputs.INPUT_0)}
-          tokenInput={input0}
-        />
+        <LiquiditySwapInput {...input0Props} />
         <div className={classes.iconContainer}>{icon}</div>
-        <LiquiditySwapInput
-          label="To"
-          withMax={false}
-          withBalanceLabel
-          className={classes.toInputContainer}
-          onChange={getInputHandler(Inputs.INPUT_1)}
-          onBtnClick={getTokenHandler(Inputs.INPUT_1)}
-          tokenInput={input1}
-        />
+        <LiquiditySwapInput {...input1Props} className={classes.input1Container} />
       </Grid>
     </>
   )

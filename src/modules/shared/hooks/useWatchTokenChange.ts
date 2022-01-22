@@ -2,6 +2,7 @@ import { useEffect } from 'react'
 import { useAppDispatch, useAppSelector } from 'hooks'
 import { $prices } from 'modules//layout/selectors'
 import { getTokenPrice } from 'modules/layout/slice'
+import { findTokenPrice } from 'modules/shared'
 import { Token } from 'modules//shared'
 
 export const useWatchTokenChange = (token: Token | null) => {
@@ -9,7 +10,7 @@ export const useWatchTokenChange = (token: Token | null) => {
   const prices = useAppSelector($prices)
 
   useEffect(() => {
-    if (token && !prices.find(({ name: tokenName }) => token.name === tokenName)) {
+    if (token && !findTokenPrice(prices, token)) {
       dispatch(getTokenPrice(token.name))
     }
   }, [token])

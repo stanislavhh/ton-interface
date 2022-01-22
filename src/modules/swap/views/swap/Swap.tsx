@@ -1,13 +1,20 @@
+import { useCallback, useMemo } from 'react'
 import { Grid, Icon, makeStyles } from '@material-ui/core'
 import { iconsTransition } from 'helpers/themeHelper'
-import { Token, TokensListDialog } from 'modules/shared'
-import { ChangeAmountEvent } from 'modules/swap/types'
+import {
+  canSetAmount,
+  convertTokensAmount,
+  findTokenPrice,
+  Inputs,
+  InputType,
+  Token,
+  TokensListDialog,
+  useWatchPricesChange,
+  useWatchTokenChange,
+} from 'modules/shared'
 import { Dialogs } from 'modules/swap/enums'
-import { Inputs } from 'modules/shared/enums'
-import { useAppDispatch, useAppSelector } from 'hooks'
-import { useWatchPricesChange, useWatchTokenChange } from 'modules/swap/hooks'
-import { convertTokensAmount, getTokenPrice } from 'modules/swap//utils'
-import { setAmount, setDialog, setToken, swapInputs } from 'modules/swap/slice'
+import { useAppDispatch, useAppSelector, useDispatchOnUnmount } from 'hooks'
+import { clearState, setAmount, setDialog, setToken, swapInputs } from 'modules/swap/slice'
 import {
   $canSwap,
   $combinedInput0,
@@ -35,10 +42,7 @@ const useStyles = makeStyles((theme) => ({
     marginTop: theme.spacing(2),
   },
   infoContainer: {
-    marginTop: theme.spacing(3),
-  },
-  swapButton: {
-    minHeight: '48px',
+    marginTop: theme.spacing(2),
   },
 }))
 
@@ -58,35 +62,60 @@ export const Swap = () => {
 
   useWatchTokenChange(input0.token)
   useWatchTokenChange(input1.token)
-  useWatchPricesChange()
+  useWatchPricesChange(input0, input1, setAmount, Inputs.INPUT_1)
+  useDispatchOnUnmount(clearState())
 
   const closeDialog = () => dispatch(setDialog({ type: '' }))
 
   const onTokenSelect = (token: Token) => {
     const type = dialog.input as Inputs
-    const iFrom = { ...input0 }
-    const iTo = { ...input1 }
-    const price = getTokenPrice(prices, token)?.price || '0'
+    const scopedInputs = { input0: { ...input0 }, input1: { ...input1 } }
 
-    if (type === Inputs.INPUT_0) {
-      iFrom.price = price
-    } else {
-      iTo.price = price
-    }
+    scopedInputs[type].price = findTokenPrice(prices, token)?.price || '0'
 
-    dispatch(setAmount({ type: Inputs.INPUT_1, amount: convertTokensAmount(iFrom, iTo) }))
+    const t1Amount = convertTokensAmount(scopedInputs.input0, scopedInputs.input1)
+
+    dispatch(setAmount({ type: Inputs.INPUT_1, amount: canSetAmount(Number(t1Amount)) ? t1Amount : '' }))
     dispatch(setToken({ type, token }))
   }
 
-  const handleAmountChange = ({ type, amount }: ChangeAmountEvent) => {
+  const handleAmountChange = (type: InputType) => (amount: string) => {
     const invertedType = type === Inputs.INPUT_0 ? Inputs.INPUT_1 : Inputs.INPUT_0
-    const t1 = inputs[type]
-    const t2 = inputs[invertedType]
-    const t2Amount = convertTokensAmount({ ...t1, amount: amount || t1.amount }, t2)
+    const i0 = inputs[type]
+    const i1 = inputs[invertedType]
+    const t1Amount = convertTokensAmount({ ...i0, amount: amount || i0.amount }, i1)
+
+    if (canSetAmount(Number(t1Amount))) {
+      dispatch(setAmount({ type: invertedType, amount: t1Amount }))
+    }
 
     dispatch(setAmount({ type, amount }))
-    dispatch(setAmount({ type: invertedType, amount: String(t2Amount) }))
   }
+
+  const i0AmountChange = useCallback(handleAmountChange(Inputs.INPUT_0), [inputs])
+  const i1AmountChange = useCallback(handleAmountChange(Inputs.INPUT_1), [inputs])
+
+  const i0Props = useMemo(
+    () => ({
+      tokenInput: input0,
+      label: 'From',
+      onChange: i0AmountChange,
+      onBtnClick: () => dispatch(setDialog({ input: Inputs.INPUT_0, type: Dialogs.TOKENS_LIST })),
+      onMaxClick: () => i0AmountChange(String(inputs.input0.balance)),
+    }),
+    [input0],
+  )
+  const i1Props = useMemo(
+    () => ({
+      tokenInput: input1,
+      label: 'To',
+      onChange: i1AmountChange,
+      withMax: false,
+      onBtnClick: () => dispatch(setDialog({ input: Inputs.INPUT_1, type: Dialogs.TOKENS_LIST })),
+      onMaxClick: () => i0AmountChange(String(inputs.input1.balance)),
+    }),
+    [input1],
+  )
 
   return (
     <Grid container justifyContent="center">
@@ -104,11 +133,8 @@ export const Swap = () => {
       <LiquiditySwapCardContainer>
         <TransactionSettingsGridWrapper />
         <SwapInputs
-          input0={input0}
-          input1={input1}
-          onAmountChange={handleAmountChange}
-          onMaxClick={({ type }) => handleAmountChange({ type, amount: String(inputs[type].balance) })}
-          onTokenBtnClick={({ type }) => dispatch(setDialog({ input: type, type: Dialogs.TOKENS_LIST }))}
+          input0Props={i0Props}
+          input1Props={i1Props}
           icon={
             <Icon color="primary" onClick={() => dispatch(swapInputs())} className={classes.refreshIcon}>
               cached_sharp
@@ -118,7 +144,6 @@ export const Swap = () => {
         <Grid container>
           <Grid item xs={12} sm={9} className={classes.mainButtonContainer}>
             <ConfirmTransactionButton
-              className={classes.swapButton}
               canConfirm={canSwap}
               text={!insufficientBalance ? 'Swap' : 'Insufficient Balance'}
               confirm={() => dispatch(setDialog({ type: Dialogs.SWAP_CONFIRM }))}

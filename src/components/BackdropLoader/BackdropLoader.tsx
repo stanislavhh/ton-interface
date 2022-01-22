@@ -9,7 +9,7 @@ interface BackdropLoaderProps {
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    zIndex: 1,
+    zIndex: 2,
     opacity: 0.75,
     backdropFilter: 'blur(5px)',
   },

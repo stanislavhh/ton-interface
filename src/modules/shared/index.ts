@@ -1,5 +1,5 @@
 // Types
-export type { Token, TokenWithPrice, TokenWithBalance } from './types'
+export type { Token, TokenInput, TokenWithPrice, TokenWithBalance } from './types'
 
 // Components
 export { default as TokensListDialog, TokensList } from './components/TokensListDialog'

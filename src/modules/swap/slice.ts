@@ -14,7 +14,7 @@ export const INITIAL_STATE: SwapState = {
 export const sendTransaction = createAsyncThunk(
   'swap/confirmTransaction',
   async ({ from, to }: ConfirmTransactionBody, { dispatch }) => {
-    console.log(from, to)
+    console.log('TRANSACTION:', { from, to })
     await imitateFetch({ data: {} }, true, 2000)
     dispatch(toggleAlert({ type: 'success', element: 'Transaction sent!' }))
     dispatch(setDialog({ type: '' }))

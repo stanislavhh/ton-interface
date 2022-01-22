@@ -14,3 +14,8 @@ export interface TokenWithPrice extends Token {
 export interface TokenWithBalance extends Token {
   balance: number
 }
+
+export interface TokenInput {
+  token: Token | null
+  amount: string | null
+}

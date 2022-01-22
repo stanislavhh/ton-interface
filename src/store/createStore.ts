@@ -9,18 +9,24 @@ import { createLogger } from 'redux-logger'
 import { appReducer } from 'modules/layout'
 import { walletReducer } from 'modules/wallet'
 import { swapReducer } from 'modules/swap'
+import { poolsReducer } from 'modules/pools'
+import { liquidityReducer } from 'modules/liquidity'
 
+//Types
 export type AppDispatch = typeof store.dispatch
 export type RootState = ReturnType<typeof store.getState>
 
 const logger = createLogger()
 
+// For future lazy loading support
 const lazyReducers: { [key: string]: Reducer } = {}
 
 const staticReducers = {
   app: appReducer,
   wallet: walletReducer,
   swap: swapReducer,
+  liquidity: liquidityReducer,
+  pools: poolsReducer,
 }
 
 function createReducer(lazyReducers = {}) {

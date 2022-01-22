@@ -1,5 +1,6 @@
 import { StoreState } from 'store/types'
-import { SwapState, TokenInput } from './types'
+import { SwapState } from './types'
+import { TokenInput } from 'modules/shared'
 import { createSelector } from '@reduxjs/toolkit'
 import { $loadingPrice, $prices, $tokensWithPrices, $transactionSettings } from 'modules/layout/selectors'
 import { Inputs } from './enums'

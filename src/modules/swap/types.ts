@@ -1,11 +1,6 @@
-import { Token } from 'modules/shared'
+import { Token, TokenInput } from 'modules/shared'
 import { Dialogs, Inputs } from './enums'
 import { PayloadAction } from '@reduxjs/toolkit'
-
-export interface TokenInput {
-  token: Token | null
-  amount: string | null
-}
 
 export interface CombinedTokenInput extends TokenInput {
   balance: number

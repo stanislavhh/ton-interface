@@ -7,9 +7,6 @@ import { getWalletData } from 'modules/wallet/slice'
 import { useAppDispatch } from 'hooks'
 
 const useStyles = makeStyles((theme) => ({
-  buttonConnect: {
-    minHeight: '48px',
-  },
   iconBalance: {
     marginRight: theme.spacing(1),
   },
@@ -36,7 +33,6 @@ export const ConnectButton = (props: BaseButtonProps) => {
   const isConnected = useSelector($isConnected)
   const connecting = useSelector($connecting)
   const wToken = useSelector($selectedWToken)
-  const { className, ...rest } = props
 
   const connectWallet = () => dispatch(getWalletData())
 
@@ -47,9 +43,8 @@ export const ConnectButton = (props: BaseButtonProps) => {
       color="primary"
       size="large"
       onClick={connectWallet}
-      loading={connecting}
-      className={`${classes.buttonConnect} ${className || ''}`}
-      {...rest}
+      {...props}
+      loading={isConnected && (connecting || props.loading)}
     >
       {isConnected ? (
         <Typography variant="h3" className={classes.connectionText}>

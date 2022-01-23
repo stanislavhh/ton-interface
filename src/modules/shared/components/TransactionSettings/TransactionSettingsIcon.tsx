@@ -14,7 +14,7 @@ export const TransactionSettingsIcon = () => {
   const [anchorEl, setAnchorEl] = useState<(EventTarget & HTMLSpanElement) | null>(null)
 
   const open = Boolean(anchorEl)
-  const id = open ? 'simple-popover' : undefined
+  const id = open ? 'popover' : undefined
 
   return (
     <>

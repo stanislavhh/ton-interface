@@ -1,23 +1,13 @@
 import { useCallback } from 'react'
-import { Popover, Grid, Switch, Box, Typography, PopoverProps, makeStyles, Icon } from '@material-ui/core'
+import { Grid, Switch, Box, Typography, makeStyles, Icon } from '@material-ui/core'
 import { useAppDispatch, useAppSelector } from 'hooks'
 import { $transactionSettings } from 'modules/layout/selectors'
-import { BORDER_RADIUS1 } from 'helpers/themeHelper'
 import BaseInput from 'components/BaseInput'
 import BaseTooltip from 'components/BaseTooltip'
+import BasePopover, { BasePopoverProps } from 'components/BasePopover'
 import { setTransactionSettings, TransactionSettings } from 'modules/layout'
 
 const useStyles = makeStyles((theme) => ({
-  root: {
-    transition: 'opacity 225ms cubic-bezier(0.4, 0, 0.2, 1) 0ms',
-    backgroundColor: ({ open }: { open: boolean }) => `rgba(0, 0,0, ${open ? '0.25' : '0'})`,
-  },
-  popover: {
-    borderRadius: BORDER_RADIUS1,
-    background: 'rgba(255, 255, 255, 0.8)',
-    backdropFilter: 'blur(8px)',
-    boxShadow: 'none',
-  },
   boxContainer: {
     padding: theme.spacing(4),
     marginBottom: theme.spacing(2),
@@ -47,9 +37,8 @@ const useStyles = makeStyles((theme) => ({
   },
 }))
 
-export const TransactionSettingsPopup = (props: PopoverProps) => {
-  const { open, ...rest } = props
-  const classes = useStyles({ open })
+export const TransactionSettingsPopup = (props: BasePopoverProps) => {
+  const classes = useStyles()
   const dispatch = useAppDispatch()
 
   const transactionSettings = useAppSelector($transactionSettings)
@@ -67,7 +56,7 @@ export const TransactionSettingsPopup = (props: PopoverProps) => {
   )
 
   return (
-    <Popover {...rest} open={open} classes={{ paper: classes.popover, root: classes.root }}>
+    <BasePopover {...props}>
       <Box className={classes.boxContainer}>
         <Grid container className={classes.gridContainer}>
           <Grid item xs={12}>
@@ -128,6 +117,6 @@ export const TransactionSettingsPopup = (props: PopoverProps) => {
           </Grid>
         </Grid>
       </Box>
-    </Popover>
+    </BasePopover>
   )
 }

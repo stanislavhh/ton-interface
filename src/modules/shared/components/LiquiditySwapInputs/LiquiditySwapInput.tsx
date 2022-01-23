@@ -19,7 +19,7 @@ export interface LiquiditySwapInputProps {
 const useStyles = makeStyles((theme) => ({
   buttonContainer: {
     display: 'flex',
-    alignItems: 'end',
+    alignItems: 'flex-end ',
   },
   inputLabelBox: {
     marginBottom: theme.spacing(0.5),
@@ -46,8 +46,6 @@ const useStyles = makeStyles((theme) => ({
   maxButton: {
     ...xsButton,
     marginLeft: theme.spacing(1),
-    boxShadow: 'none',
-    background: COLOR_WHITE,
   },
   underlineEl: {
     position: 'absolute',

@@ -25,6 +25,8 @@ export const iconsTransition = {
 export const xsButton = {
   borderRadius: BORDER_RADIUS6,
   minWidth: '40px',
+  boxShadow: 'none',
+  background: COLOR_WHITE,
 }
 
 export const theme = createTheme({
@@ -66,6 +68,7 @@ export const theme = createTheme({
           '0px 3px 1px -2px rgb(0 0 0 / 20%), 0px 2px 2px 0px rgb(0 0 0 / 14%), 0px 1px 5px 0px rgb(0 0 0 / 12%)',
       },
       containedSizeLarge: {
+        minHeight: '48px',
         fontSize: '24px',
         lineHeight: '36px',
         '@media(min-width:600px)': {
@@ -198,4 +201,29 @@ theme.typography.caption = {
 
 theme.typography.overline = {
   ...commonTypo,
+}
+
+// overrides with psssed theme
+if (theme.overrides) {
+  theme.overrides.MuiTooltip = {
+    popper: {
+      backdropFilter: 'blur(1px)',
+    },
+
+    tooltip: {
+      maxWidth: '200px',
+      borderRadius: BORDER_RADIUS3,
+      backgroundColor: 'rgba(135, 135, 135, 0.9)',
+      paddingInline: theme.spacing(2),
+      paddingBlock: theme.spacing(1),
+      [theme.breakpoints.up('md')]: {
+        ...theme.typography.caption,
+        color: COLOR_WHITE,
+        lineHeight: '20px',
+      },
+      '& .MuiTooltip-arrow': {
+        color: 'rgba(135, 135, 135, 0.9)',
+      },
+    },
+  }
 }

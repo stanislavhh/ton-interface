@@ -6,6 +6,7 @@ import { sendTransaction } from 'modules/swap/slice'
 import { Token } from 'modules/shared'
 import SwapInfo from 'modules/swap/components/SwapInfo'
 import ConfirmTransactionButton from 'modules/shared/components/ConfirmTransactionButton'
+import ConfirmationTerms from 'modules/shared/components/ConfirmationTerms'
 
 interface SwapConfirmDialogProps extends Partial<BaseDialogProps> {
   open: boolean
@@ -33,12 +34,7 @@ const useStyles = makeStyles((theme) => ({
     marginRight: theme.spacing(1.5),
   },
   confirmContainer: {
-    marginBlock: theme.spacing(2),
-  },
-  termsTypo: {
-    marginBottom: theme.spacing(1),
-    textAlign: 'justify',
-    display: 'block',
+    marginTop: theme.spacing(2),
   },
 }))
 
@@ -93,12 +89,7 @@ export const SwapConfirmDialog = (props: SwapConfirmDialogProps) => {
           <ConfirmTransactionButton text="Confirm" canConfirm confirm={() => dispatch(sendTransaction({ i0, i1 }))} />
         </Grid>
 
-        <Grid item xs={12}>
-          <Typography variant="caption" color="textSecondary" className={classes.termsTypo}>
-            By clicking ‘confirm’ I agree to Terms and Conditions and allow TonLaunch to transfer cryptocurrency from my
-            electronic wallet.
-          </Typography>
-        </Grid>
+        <ConfirmationTerms />
       </Grid>
     </BaseDialog>
   )

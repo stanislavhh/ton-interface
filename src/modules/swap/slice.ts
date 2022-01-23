@@ -26,6 +26,7 @@ export const sendTransaction = createAsyncThunk(
     await imitateFetch({ data: {} }, true, 2000)
     dispatch(toggleAlert({ type: 'success', element: 'Transaction sent!' }))
     dispatch(setDialog({ type: '' }))
+    dispatch(clearState())
   },
 )
 

@@ -3,7 +3,10 @@ import { StoreState } from 'store/types'
 import { selectorsGeneratorForSwapOrLiquidity } from 'modules/shared/selectors'
 import { $poolsList } from 'modules/pools/selectors'
 import { LiquidityState } from './types'
-import { $transactionSettings } from '../layout/selectors'
+import { $transactionSettings } from 'modules/layout/selectors'
+import { DEFAULT_PRECISION } from 'components/BaseInput'
+import { findPoolsBySelectedTokens, feeTierToPercentage } from './utils'
+import { FEE_TIERS } from './enums'
 
 export const liquidity = (state: StoreState) => state.liquidity
 
@@ -17,15 +20,9 @@ export const $confirmingTokenTransaction = createSelector(
 )
 export const $confirmingLiquidity = createSelector(liquidity, (l: LiquidityState) => l.confirmingLiquidity)
 
-// While here we have mocks I make a comparison by name
 export const $poolsBySelectedTokens = createSelector(
   [$combinedInput0, $combinedInput1, $poolsList],
-  (i0, i1, pools) => {
-    const selectedTokenNames = [i0.token?.name, i1.token?.name]
-    return pools.filter(
-      (pool) => selectedTokenNames.includes(pool.token0.name) && selectedTokenNames.includes(pool.token1.name),
-    )
-  },
+  findPoolsBySelectedTokens,
 )
 
 export const $poolByFeeAndSelectedTokens = createSelector([$selectedFees, $poolsBySelectedTokens], (fees, pools) => {
@@ -50,6 +47,24 @@ export const $canAddLiquidity = createSelector(
 )
 
 export const $liquidityInfo = createSelector(
-  [$combinedInput0, $combinedInput1, $transactionSettings],
-  (i0, i1, settings) => {},
+  [$combinedInput0, $combinedInput1, $transactionSettings, $selectedFees, $poolByFeeAndSelectedTokens],
+  (i0, i1, settings, fees, pool) => {
+    const tokensNotReady = Boolean(!i0.token || !i1.token || !i0.price || !i1.price)
+    const i0Price = Number(i0.price)
+    const i1Price = Number(i1.price)
+    const rate = (1 / (i1Price || 1)) * (i0Price || 1)
+
+    const liquiditySum = i0Price * Number(i0.amount) + i1Price * Number(i1.amount)
+    const poolShare = pool ? ((liquiditySum / Number(pool.volumeUSD)) * 100).toFixed(DEFAULT_PRECISION) : 100
+
+    return {
+      i0,
+      i1,
+      rate: rate.toFixed(DEFAULT_PRECISION),
+      price: Number(i0.price).toFixed(2),
+      slipTolerance: settings.slippageTolerance,
+      poolShare: !tokensNotReady ? poolShare : null,
+      poolFees: !tokensNotReady ? ((pool ? pool.feeTier : fees) as FEE_TIERS) : null,
+    }
+  },
 )

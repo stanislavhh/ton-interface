@@ -1,5 +1,5 @@
 import { useCallback, useMemo } from 'react'
-import { Grid, Icon, makeStyles } from '@material-ui/core'
+import { Box, Grid, Icon, makeStyles, Typography } from '@material-ui/core'
 import {
   canSetAmount,
   CombinedTokenInput,
@@ -12,9 +12,11 @@ import {
   useWatchPricesChange,
   useWatchTokenChange,
 } from 'modules/shared'
-import { Dialogs } from 'modules/liquidity/enums'
+import { Dialogs, FEE_TIERS } from 'modules/liquidity/enums'
 import { useAppDispatch, useAppSelector, useDispatchOnUnmount } from 'hooks'
-import { clearState, setAmount, setDialog, setToken, allowTokenTransaction } from 'modules/liquidity/slice'
+import { useWatchFeeChange } from 'modules/liquidity/hooks/useWatchFeeChange'
+import { clearState, setAmount, setDialog, setToken, allowTokenTransaction, setFees } from 'modules/liquidity/slice'
+import { findPoolsBySelectedTokens, getBestPoolByVolume } from 'modules/liquidity/utils'
 import {
   $canAddLiquidity,
   $combinedInput0,
@@ -27,6 +29,7 @@ import {
 } from 'modules/liquidity/selectors'
 import { $isConnected, $tokensWithBalances } from 'modules/wallet/selectors'
 import { $loadingPrice, $loadingTokens, $prices } from 'modules/layout/selectors'
+import { $poolsList } from 'modules/pools/selectors'
 
 import { TransactionSettingsGridWrapper } from 'modules/shared/components/TransactionSettings'
 import LiquiditySwapCardContainer from 'modules/shared/components/LiquiditySwapCardContainer'
@@ -36,6 +39,7 @@ import ConfirmTransactionButton from 'modules/shared/components/ConfirmTransacti
 import AddLiquidityDialog from 'modules/liquidity/components/AddLiquidityDialog'
 import LiquidityInfo from 'modules/liquidity/components/LiquidityInfo'
 import BaseButton from 'components/BaseButton'
+import NotificationBox from 'components/NotificationBox'
 import BackdropLoader from 'components/BackdropLoader'
 
 const useStyles = makeStyles((theme) => ({
@@ -54,8 +58,9 @@ const useStyles = makeStyles((theme) => ({
     flexGrow: 1,
     marginInline: theme.spacing(1),
   },
-  confirmButton: {
-    minHeight: '48px',
+
+  poolNotCreatedBox: {
+    marginTop: theme.spacing(2),
   },
 }))
 
@@ -64,6 +69,7 @@ export const Liquidity = () => {
   const dispatch = useAppDispatch()
   const input0 = useAppSelector($combinedInput0)
   const input1 = useAppSelector($combinedInput1)
+  const pools = useAppSelector($poolsList)
   const selectedDialogToken = useAppSelector($selectedDialogToken)
   const poolByFeeAndTokens = useAppSelector($poolByFeeAndSelectedTokens)
   const tokens = useAppSelector($tokensWithBalances)
@@ -75,20 +81,23 @@ export const Liquidity = () => {
   const insufficientBalance = useAppSelector($insufficientBalance)
   const prices = useAppSelector($prices)
   const confirmingTokenTransactions = useAppSelector($confirmingTokenTransaction)
-
   const inputs = { input0, input1 }
 
   useWatchTokenChange(input0.token)
   useWatchTokenChange(input1.token)
   useWatchPricesChange(input0, input1, setAmount, Inputs.INPUT_1, Boolean(poolByFeeAndTokens))
+  useWatchFeeChange()
   useDispatchOnUnmount(clearState())
 
   const closeDialog = () => dispatch(setDialog({ type: '' }))
 
   const onTokenSelect = (token: Token) => {
     const type = dialog.input as Inputs
+    const invertedType = type === Inputs.INPUT_0 ? Inputs.INPUT_1 : Inputs.INPUT_0
+    const poolsByTokens = findPoolsBySelectedTokens({ ...inputs[type], token }, inputs[invertedType], pools)
 
-    if (poolByFeeAndTokens) {
+    if (poolsByTokens.length) {
+      const bestPool = getBestPoolByVolume(poolsByTokens)
       const scopedInputs = { input0: { ...input0 }, input1: { ...input1 } }
 
       scopedInputs[type].price = findTokenPrice(prices, token)?.price || '0'
@@ -96,6 +105,7 @@ export const Liquidity = () => {
       const t1Amount = convertTokensAmount(scopedInputs.input0, scopedInputs.input1)
 
       dispatch(setAmount({ type: Inputs.INPUT_1, amount: canSetAmount(Number(t1Amount)) ? t1Amount : '' }))
+      dispatch(setFees(bestPool.feeTier as FEE_TIERS))
     }
 
     dispatch(setToken({ type, token }))
@@ -156,9 +166,10 @@ export const Liquidity = () => {
         <BaseButton
           loading={loadingPrice}
           onClick={() => dispatch(allowTokenTransaction({ input, otherHasPermission }))}
-          className={`${classes.confirmButton} ${classes.enableTokenButton}`}
+          className={`${classes.enableTokenButton}`}
           color="primary"
           variant="contained"
+          size="large"
         >
           Allow {input.token?.symbol}
         </BaseButton>
@@ -183,7 +194,6 @@ export const Liquidity = () => {
     return (
       <ConfirmTransactionButton
         loading={loadingPrice}
-        className={classes.confirmButton}
         canConfirm={canAddLiquidity}
         text={text}
         confirm={() => dispatch(setDialog({ type: Dialogs.CONFIRM_LIQUIDITY }))}
@@ -197,7 +207,7 @@ export const Liquidity = () => {
 
   return (
     <Grid container justifyContent="center">
-      <BackdropLoader open={confirmingTokenTransactions} text="Confirm this transaction in your wallet" />
+      <BackdropLoader open={confirmingTokenTransactions} text="Confirm transaction" />
       <AddLiquidityDialog open={dialog.type === Dialogs.CONFIRM_LIQUIDITY} />
       <TokensListDialog
         onTokenSelect={onTokenSelect}
@@ -225,6 +235,22 @@ export const Liquidity = () => {
             {enableToken0Button}
             {enableToken1Button}
             {addLiquidityButton}
+          </Grid>
+          <Grid item xs={12} sm={9}>
+            <NotificationBox
+              className={classes.poolNotCreatedBox}
+              show={Boolean(!poolByFeeAndTokens && input0.token && input1.token)}
+              variant="filled"
+              severity="info"
+            >
+              <Box>
+                <Typography variant="h5">This pool is not created yet</Typography>
+                <Typography variant="body2">
+                  To create a pool please set up an exchange rate for the tokens and the fee tier. Process futher when
+                  you are ready.{' '}
+                </Typography>
+              </Box>
+            </NotificationBox>
           </Grid>
         </Grid>
         <Grid item xs={12} sm={9} className={classes.infoContainer}>

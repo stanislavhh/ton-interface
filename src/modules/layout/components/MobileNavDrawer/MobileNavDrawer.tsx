@@ -18,7 +18,7 @@ const useStyles = makeStyles((theme) => ({
   },
   closeContainer: {
     display: 'flex',
-    justifyContent: 'end',
+    justifyContent: 'flex-end',
     marginBottom: theme.spacing(6),
   },
   walletContainer: {

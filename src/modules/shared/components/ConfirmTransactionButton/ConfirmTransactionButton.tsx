@@ -11,22 +11,14 @@ export interface ConfirmButtonProps extends BaseButtonProps {
   confirm: () => void
 }
 
-const useStyles = makeStyles((theme) => ({
-  confirmButton: {
-    minHeight: '48px',
-  },
-}))
-
 export const ConfirmTransactionButton = (props: ConfirmButtonProps) => {
-  const classes = useStyles()
   const isConnected = useAppSelector($isConnected)
 
-  const { canConfirm, text, confirm, className, ...rest } = props
+  const { canConfirm, text, confirm, ...rest } = props
 
   return isConnected ? (
     <BaseButton
       {...rest}
-      className={`${classes.confirmButton} ${className || ''}`}
       disabled={!canConfirm}
       variant="contained"
       color="primary"
@@ -37,6 +29,6 @@ export const ConfirmTransactionButton = (props: ConfirmButtonProps) => {
       {text}
     </BaseButton>
   ) : (
-    <ConnectWalletButton {...rest} className={`${classes.confirmButton} ${className || ''}`} fullWidth size="large" />
+    <ConnectWalletButton {...rest} fullWidth size="large" />
   )
 }

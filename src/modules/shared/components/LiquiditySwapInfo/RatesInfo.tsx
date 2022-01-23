@@ -6,7 +6,7 @@ interface RatesInfoProps {
   rate: string
   i0Symbol: string | undefined
   i1Symbol: string | undefined
-  price: string
+  price?: string
 }
 
 const useStyles = makeStyles((theme) => ({
@@ -46,9 +46,11 @@ export const RatesInfo = ({ rate, i0Symbol, i1Symbol, price }: RatesInfoProps) =
           <>
             <Box>
               <Typography variant="body2">{`1 ${symbol0} = ${localRate} ${symbol1}`}</Typography>
-              <Typography variant="caption" color="textSecondary" className={classes.$text}>
-                ≈ ${price}
-              </Typography>
+              {price ? (
+                <Typography variant="caption" color="textSecondary" className={classes.$text}>
+                  ≈ ${price}
+                </Typography>
+              ) : null}
             </Box>
             <Icon color="primary" onClick={() => invertRate(!isInverted)} className={classes.refreshPriceIcon}>
               cached_sharp

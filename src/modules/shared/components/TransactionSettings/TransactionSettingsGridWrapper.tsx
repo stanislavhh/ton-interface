@@ -4,7 +4,7 @@ import { TransactionSettingsIcon } from './TransactionSettingsIcon'
 const useStyles = makeStyles((theme) => ({
   transactionSettingsContainer: {
     display: 'flex',
-    justifyContent: 'end',
+    justifyContent: 'flex-end',
   },
 }))
 

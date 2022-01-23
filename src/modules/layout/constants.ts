@@ -1,10 +1,4 @@
-export const ROUTES = [
-  { path: '/' },
-  { path: '/pools' },
-  { path: '/pool' },
-  { path: '/liquidity' },
-  { path: '/remove-liquidity' },
-]
+export const ROUTES = [{ path: '/' }, { path: '/pools' }, { path: '/liquidity' }]
 
 export const NAV_LINKS = [
   { href: '/', text: 'Swap' },

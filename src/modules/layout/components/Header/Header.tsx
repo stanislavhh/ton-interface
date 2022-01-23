@@ -14,7 +14,7 @@ const useStyles = makeStyles((theme) => ({
   },
   navContainer: {
     display: 'flex',
-    justifyContent: 'end',
+    justifyContent: 'flex-end',
   },
   walletContainer: {
     display: 'flex',

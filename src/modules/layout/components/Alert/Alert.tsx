@@ -4,6 +4,7 @@ import { Alert as MuiAlert } from '@material-ui/lab'
 import { useAppDispatch, useAppSelector } from 'hooks'
 import { $alert } from 'modules/layout/selectors'
 import { toggleAlert } from 'modules/layout/slice'
+import NotificationBox from 'components/NotificationBox'
 
 export const Alert = (): JSX.Element => {
   const dispatch = useAppDispatch()
@@ -20,9 +21,9 @@ export const Alert = (): JSX.Element => {
         autoHideDuration={3500}
         onClose={handleClose}
       >
-        <MuiAlert onClose={handleClose} severity={type}>
+        <NotificationBox show onClose={handleClose} severity={type}>
           {element}
-        </MuiAlert>
+        </NotificationBox>
       </Snackbar>
     </>
   )

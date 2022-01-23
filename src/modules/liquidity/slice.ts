@@ -32,6 +32,14 @@ export const INITIAL_STATE: LiquidityState = {
   confirmingTokenTransaction: false,
 }
 
+export const confirmAddLiquidity = createAsyncThunk('liquidity/confirmAddLiquidity', async (_, { dispatch }) => {
+  await imitateFetch({ data: {} }, true)
+
+  dispatch(clearState())
+  dispatch(toggleAlert({ type: 'success', element: 'Transaction sent!' }))
+  dispatch(setDialog({ type: '' }))
+})
+
 export const allowTokenTransaction = createAsyncThunk(
   'liquidity/allowTokenTransaction',
   async (data: { input: CombinedTokenInput; otherHasPermission: boolean }, { dispatch }) => {
@@ -61,6 +69,14 @@ const allowTokenTransactionFulfilled: CaseReducer<LiquidityState, PayloadAction<
   }
 }
 
+const confirmAddLiquidityReducerPending: CaseReducer<LiquidityState, PayloadAction> = (state) => {
+  state.confirmingLiquidity = true
+}
+
+const confirmAddLiquidityReducerFulfilled: CaseReducer<LiquidityState, PayloadAction> = (state) => {
+  state.confirmingLiquidity = false
+}
+
 const liquiditySlice = createSlice({
   name: 'liquidity',
   initialState: INITIAL_STATE,
@@ -74,6 +90,8 @@ const liquiditySlice = createSlice({
   extraReducers: (builder) => {
     builder.addCase(allowTokenTransaction.pending, allowTokenTransactionPending)
     builder.addCase(allowTokenTransaction.fulfilled, allowTokenTransactionFulfilled)
+    builder.addCase(confirmAddLiquidity.pending, confirmAddLiquidityReducerPending)
+    builder.addCase(confirmAddLiquidity.fulfilled, confirmAddLiquidityReducerFulfilled)
   },
 })
 

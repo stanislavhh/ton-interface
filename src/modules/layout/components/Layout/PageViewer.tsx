@@ -10,23 +10,6 @@ import LiquidityView from 'modules/liquidity'
 import PoolsView from 'modules/pools'
 
 const useStyles = makeStyles((theme) => ({
-  enter: {
-    opacity: '0',
-    transform: 'scale(0.9)',
-  },
-  enterActive: {
-    opacity: '1',
-    transform: 'translateX(0)',
-    transition: 'opacity 300ms, transform 300ms',
-  },
-  exit: {
-    opacity: '1',
-  },
-  exitActive: {
-    opacity: '0',
-    transform: 'scale(0.9)',
-    transition: 'opacity 300ms, transform 300ms',
-  },
   pageContent: {
     marginTop: theme.spacing(3),
     paddingInline: theme.spacing(0),

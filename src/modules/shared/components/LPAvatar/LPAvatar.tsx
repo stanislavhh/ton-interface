@@ -8,10 +8,12 @@ const useStyles = makeStyles((theme) => ({
   },
   avatar0: {
     zIndex: 1,
+    width: ({ size }: { size: number }) => `${size}px`,
+    height: ({ size }: { size: number }) => `${size}px`,
   },
   avatar1: {
-    width: '32px',
-    height: '32px',
+    width: ({ size }: { size: number }) => `${size - 8}px`,
+    height: ({ size }: { size: number }) => `${size - 8}px`,
     position: 'absolute',
     top: '-25%',
     left: '50%',
@@ -21,10 +23,11 @@ const useStyles = makeStyles((theme) => ({
 export type LPAvatarProps = {
   avatar0?: string
   avatar1?: string
+  size?: number
 }
 
-export const LPAvatar = ({ avatar0, avatar1 }: LPAvatarProps) => {
-  const classes = useStyles()
+export const LPAvatar = ({ avatar0, avatar1, size = 40 }: LPAvatarProps) => {
+  const classes = useStyles({ size })
   return (
     <Box className={classes.box}>
       <Avatar src={avatar0} className={classes.avatar0} />

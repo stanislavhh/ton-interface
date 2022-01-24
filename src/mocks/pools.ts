@@ -2,7 +2,7 @@ export const pools = [
   {
     feeTier: '3000',
     id: '0x8ad599c3a0ff1de082011efddc58f1908eb6e6d8',
-    liquidity: '15626023218455057927',
+    liquidity: '54234449',
     sqrtPrice: '1362688918005354475498888722270870',
     tick: '195062',
     token0: {
@@ -28,11 +28,12 @@ export const pools = [
     totalValueLockedUSD: '355492932.1669003554269921225287076',
     txCount: '263331',
     volumeUSD: '40475531766.12656295849850606616254',
+    apr: '50',
   },
   {
     feeTier: '1000',
     id: '0x8ad599c3a0ff1de082011efddc58f1908eb6e6d8',
-    liquidity: '15626023218455057927',
+    liquidity: '94346526',
     sqrtPrice: '1362688918005354475498888722270870',
     tick: '195062',
     token0: {
@@ -58,11 +59,12 @@ export const pools = [
     totalValueLockedUSD: '355492932.1669003554269921225287076',
     txCount: '263331',
     volumeUSD: '40475531966.12656295849850606616254',
+    apr: '20',
   },
   {
     feeTier: '3000',
     id: '0x8ad599c3a0ff1de082011efddc58f1908eb6e6d8',
-    liquidity: '15626023218455057927',
+    liquidity: '2697229',
     sqrtPrice: '1362688918005354475498888722270870',
     tick: '195062',
     token0: {
@@ -88,11 +90,12 @@ export const pools = [
     totalValueLockedUSD: '355492932.1669003554269921225287076',
     txCount: '263331',
     volumeUSD: '40475531766.12656295849850606616254',
+    apr: '103',
   },
   {
     feeTier: '3000',
     id: '0xcbcdf9626bc03e24f779434178a73a0b4bad62ed',
-    liquidity: '1172199102178612837',
+    liquidity: '97199059',
     sqrtPrice: '28546277110360930945423201274965196',
     tick: '255906',
     token0: {
@@ -118,11 +121,12 @@ export const pools = [
     totalValueLockedUSD: '335005088.2762603633583761353204985',
     txCount: '77523',
     volumeUSD: '9373759377.656430335212865819458194',
+    apr: '83',
   },
   {
     feeTier: '500',
     id: '0x88e6a0c2ddd26feeb64f039a2c41296fcb3f5640',
-    liquidity: '47661827186105381341',
+    liquidity: '11802179',
     sqrtPrice: '1363173240745288892576834413341748',
     tick: '195069',
     token0: {
@@ -148,11 +152,12 @@ export const pools = [
     totalValueLockedUSD: '244197334.242403954299404385545517',
     txCount: '1179617',
     volumeUSD: '111630985902.0661686980973183502485',
+    apr: '25',
   },
   {
     feeTier: '500',
     id: '0xc63b0708e2f7e69cb8a1df0e1389a98c35a76d52',
-    liquidity: '42992111017854540672817',
+    liquidity: '20712400',
     sqrtPrice: '79239555811499348959911',
     tick: '-276322',
     token0: {
@@ -178,11 +183,12 @@ export const pools = [
     totalValueLockedUSD: '236732799.2820822510968074490164122',
     txCount: '25369',
     volumeUSD: '1161751336.120258554251595080797099',
+    apr: '189',
   },
   {
     feeTier: '3000',
     id: '0x4e68ccd3e89f51c3074ca5072bbac773960dfa36',
-    liquidity: '4822560972233118500',
+    liquidity: '91322651',
     sqrtPrice: '4605350870017641151842107',
     tick: '-195068',
     token0: {
@@ -208,11 +214,12 @@ export const pools = [
     totalValueLockedUSD: '142274292.7015246987915736011772762',
     txCount: '181398',
     volumeUSD: '18541723608.1277566287399318630184',
+    apr: '140',
   },
   {
     feeTier: '3000',
     id: '0x99ac8ca7087fa4a2a1fb6357269965a2014abc35',
-    liquidity: '13132533817719',
+    liquidity: '42631569',
     sqrtPrice: '1659334160841210952076481338305',
     tick: '60839',
     token0: {
@@ -238,11 +245,12 @@ export const pools = [
     totalValueLockedUSD: '102342903.2453597141079067131046396',
     txCount: '67526',
     volumeUSD: '4946735903.211501530677383027806713',
+    apr: '69',
   },
   {
     feeTier: '3000',
     id: '0xc2e9f25be6257c210d7adf0d4cd6e3e881ba25f8',
-    liquidity: '7660746471642830826759540',
+    liquidity: '23073995',
     sqrtPrice: '1363155426349851845512416381',
     tick: '-81255',
     token0: {
@@ -268,11 +276,12 @@ export const pools = [
     totalValueLockedUSD: '99783982.11055899451010421873375393',
     txCount: '91922',
     volumeUSD: '7919843485.295108939143225153206309',
+    apr: '22',
   },
   {
     feeTier: '500',
     id: '0x6c6bc977e13df9b0de53b251522280bb72383700',
-    liquidity: '84476226153310282726960',
+    liquidity: '41357247',
     sqrtPrice: '79238363054043832285914',
     tick: '-276322',
     token0: {
@@ -298,11 +307,12 @@ export const pools = [
     totalValueLockedUSD: '89075606.464019784515670845',
     txCount: '92479',
     volumeUSD: '5382081932.115929371433341416325527',
+    apr: '70',
   },
   {
     feeTier: '3000',
     id: '0x7379e81228514a1d2a6cf7559203998e20598346',
-    liquidity: '6327291465428310875683338',
+    liquidity: '64394254',
     sqrtPrice: '79351293907690171665289469835',
     tick: '31',
     token0: {
@@ -328,11 +338,12 @@ export const pools = [
     totalValueLockedUSD: '79987219.57870174137534080685349286',
     txCount: '4242',
     volumeUSD: '128893273.0039828047495179508085567',
+    apr: '45',
   },
   {
     feeTier: '500',
     id: '0x4585fe77225b41b697c938b018e2ac67ac5a20c0',
-    liquidity: '382011414523150234',
+    liquidity: '86496654',
     sqrtPrice: '28573466896164082949237483847816003',
     tick: '255925',
     token0: {
@@ -358,11 +369,12 @@ export const pools = [
     totalValueLockedUSD: '64671173.24074990370338806119564935',
     txCount: '142124',
     volumeUSD: '10891212571.62975929404541381536499',
+    apr: '81',
   },
   {
     feeTier: '500',
     id: '0x00cef0386ed94d738c8f8a74e8bfd0376926d24c',
-    liquidity: '128044358303456316677925',
+    liquidity: '65636409',
     sqrtPrice: '79213462506786047558179',
     tick: '-276328',
     token0: {
@@ -388,11 +400,12 @@ export const pools = [
     totalValueLockedUSD: '64130700.46218333433997333064271773',
     txCount: '6469',
     volumeUSD: '127301614.4691267145920522387135823',
+    apr: '27',
   },
   {
     feeTier: '500',
     id: '0x97e7d56a0408570ba1a7852de36350f7713906ec',
-    liquidity: '11055672059381895620450875668',
+    liquidity: '89810889',
     sqrtPrice: '79217667305522606831717922791',
     tick: '-3',
     token0: {
@@ -418,11 +431,12 @@ export const pools = [
     totalValueLockedUSD: '55437075.68729162247626334267238732',
     txCount: '10546',
     volumeUSD: '445557031.8847968634728450731824953',
+    apr: '20',
   },
   {
     feeTier: '100',
     id: '0x5777d92f208679db4b9778590fa3cab3ac9e2168',
-    liquidity: '292877537001730298138119',
+    liquidity: '1522636',
     sqrtPrice: '79230131304068566088078',
     tick: '-276324',
     token0: {
@@ -448,11 +462,12 @@ export const pools = [
     totalValueLockedUSD: '52760190.05640186862385497700000002',
     txCount: '16240',
     volumeUSD: '2928502843.855207800385890104375993',
+    apr: '104',
   },
   {
     feeTier: '100',
     id: '0x025b887e7f62d8b5f1564ba204187452cf27f634',
-    liquidity: '0',
+    liquidity: '81618230',
     sqrtPrice: '77117016391315999963119871860014576',
     tick: '275783',
     token0: {
@@ -478,11 +493,12 @@ export const pools = [
     totalValueLockedUSD: '50134958.87097359256397687142372701',
     txCount: '32',
     volumeUSD: '580341.87545',
+    apr: '140',
   },
   {
     feeTier: '3000',
     id: '0x290a6a7460b308ee3f19023d2d00de604bcf5b42',
-    liquidity: '1093581043701069325232331',
+    liquidity: '43219567',
     sqrtPrice: '2091397762109490167757345227',
     tick: '-72694',
     token0: {
@@ -508,11 +524,12 @@ export const pools = [
     totalValueLockedUSD: '43872131.76461674524079902500332981',
     txCount: '79514',
     volumeUSD: '2148353707.53996785503481266612234',
+    apr: '95',
   },
   {
     feeTier: '3000',
     id: '0x8f8ef111b67c04eb1641f5ff19ee54cda062f163',
-    liquidity: '1565034151647360166',
+    liquidity: '46657448',
     sqrtPrice: '1662861138797110303716556409356729476',
     tick: '337206',
     token0: {
@@ -538,11 +555,12 @@ export const pools = [
     totalValueLockedUSD: '40709754.77696098189196042164722934',
     txCount: '6727',
     volumeUSD: '393690787.0130903590603969719816807',
+    apr: '116',
   },
   {
     feeTier: '10000',
     id: '0x3b685307c8611afb2a9e83ebc8743dc20480716e',
-    liquidity: '723647286881303648538136',
+    liquidity: '68995706',
     sqrtPrice: '2328711261545190485126698386',
     tick: '-70544',
     token0: {
@@ -568,11 +586,12 @@ export const pools = [
     totalValueLockedUSD: '39625798.88585942858703686658788798',
     txCount: '34144',
     volumeUSD: '910974978.6979102776047477493914761',
+    apr: '132',
   },
   {
     feeTier: '3000',
     id: '0x1d42064fc4beb5f8aaf85f4617ae8b3b5b8bd801',
-    liquidity: '155933282328931231674630',
+    liquidity: '33087865',
     sqrtPrice: '5515295521140595001712838392',
     tick: '-53299',
     token0: {
@@ -598,11 +617,12 @@ export const pools = [
     totalValueLockedUSD: '37794655.75330112963009542332671012',
     txCount: '62976',
     volumeUSD: '2825409169.907137894953218825157719',
+    apr: '78',
   },
   {
     feeTier: '500',
     id: '0x7ed3f364668cd2b9449a8660974a26a092c64849',
-    liquidity: '236617110881153305333',
+    liquidity: '52861711',
     sqrtPrice: '84533140096938943125831',
     tick: '-275028',
     token0: {
@@ -628,11 +648,12 @@ export const pools = [
     totalValueLockedUSD: '34783088.33371354712262415498113749',
     txCount: '2350',
     volumeUSD: '142266378.613024',
+    apr: '89',
   },
   {
     feeTier: '3000',
     id: '0x69d91b94f0aaf8e8a2586909fa77a5c2c89818d5',
-    liquidity: '694582482997690',
+    liquidity: '10756396',
     sqrtPrice: '3768514688840325723691133011',
     tick: '-60917',
     token0: {
@@ -658,11 +679,12 @@ export const pools = [
     totalValueLockedUSD: '33956022.64939111475592215926765479',
     txCount: '101438',
     volumeUSD: '2572983509.724573076600388248524395',
+    apr: '76',
   },
   {
     feeTier: '10000',
     id: '0x5764a6f2212d502bc5970f9f129ffcd61e5d7563',
-    liquidity: '36906790125863294893823404',
+    liquidity: '7427542',
     sqrtPrice: '7696779383494728743672968',
     tick: '-184795',
     token0: {
@@ -688,11 +710,12 @@ export const pools = [
     totalValueLockedUSD: '33837803.08331891084109324064343821',
     txCount: '150972',
     volumeUSD: '1572884148.409366797612946820495544',
+    apr: '55',
   },
   {
     feeTier: '500',
     id: '0x8c54aa2a32a779e6f6fbea568ad85a19e0109c26',
-    liquidity: '15319278297838588305194',
+    liquidity: '78768368',
     sqrtPrice: '79218257424766774840306',
     tick: '-276327',
     token0: {
@@ -718,11 +741,12 @@ export const pools = [
     totalValueLockedUSD: '33254018.026036256344621346',
     txCount: '25134',
     volumeUSD: '5677491295.757817346640688642058117',
+    apr: '68',
   },
   {
     feeTier: '100',
     id: '0x3416cf6c708da44db2624d63ea0aaef7113527c6',
-    liquidity: '52836683111420050',
+    liquidity: '33335051',
     sqrtPrice: '79223203659466055385581919867',
     tick: '-2',
     token0: {
@@ -748,11 +772,12 @@ export const pools = [
     totalValueLockedUSD: '30807034.47693399999999999999999999',
     txCount: '36059',
     volumeUSD: '5440045813.836504704063077244473424',
+    apr: '21',
   },
   {
     feeTier: '3000',
     id: '0x151ccb92bc1ed5c6d0f9adb5cec4763ceb66ac7f',
-    liquidity: '84456806242599737251103',
+    liquidity: '53266701',
     sqrtPrice: '14994812408857456515814765348',
     tick: '-33295',
     token0: {
@@ -778,11 +803,12 @@ export const pools = [
     totalValueLockedUSD: '30806045.10663775136081992405087746',
     txCount: '44053',
     volumeUSD: '2238164494.567715116379601913910022',
+    apr: '64',
   },
   {
     feeTier: '500',
     id: '0x11b815efb8f581194ae79006d24e0d814b7697f6',
-    liquidity: '2348376280906857021',
+    liquidity: '81149877',
     sqrtPrice: '4601388058469817050367279',
     tick: '-195085',
     token0: {
@@ -808,11 +834,12 @@ export const pools = [
     totalValueLockedUSD: '30353979.14287010968038026987071047',
     txCount: '705677',
     volumeUSD: '27404441671.7720256942371831538054',
+    apr: '179',
   },
   {
     feeTier: '10000',
     id: '0x3e5a6af33cc70646bc46aff0af4b930d92856b18',
-    liquidity: '13144866279259143820670',
+    liquidity: '39339641',
     sqrtPrice: '1359060606699046681749441909',
     tick: '-81315',
     token0: {
@@ -838,11 +865,12 @@ export const pools = [
     totalValueLockedUSD: '29633298.46851384225258392816616223',
     txCount: '3754',
     volumeUSD: '27279591.90061796366599169744119724',
+    apr: '173',
   },
   {
     feeTier: '500',
     id: '0x60594a405d53811d3bc4766596efd80fd545a270',
-    liquidity: '2332496852916191197919072',
+    liquidity: '59773602',
     sqrtPrice: '1364160830976368321334222551',
     tick: '-81240',
     token0: {
@@ -868,11 +896,12 @@ export const pools = [
     totalValueLockedUSD: '29155855.95317263695512478392944498',
     txCount: '288464',
     volumeUSD: '16808765806.23690370996999711032109',
+    apr: '188',
   },
   {
     feeTier: '3000',
     id: '0xd83d78108dd0d1dffff11ea3f99871671a52488b',
-    liquidity: '368562972836702705740404',
+    liquidity: '69141827',
     sqrtPrice: '1362111631581459412613340161',
     tick: '-81270',
     token0: {
@@ -898,11 +927,12 @@ export const pools = [
     totalValueLockedUSD: '24522763.79623399756877497936864381',
     txCount: '6304',
     volumeUSD: '265734498.1274703296852076799925268',
+    apr: '151',
   },
   {
     feeTier: '3000',
     id: '0x632e675672f2657f227da8d9bb3fe9177838e726',
-    liquidity: '345449880485270111410168',
+    liquidity: '30075231',
     sqrtPrice: '8460976209173763726094981655',
     tick: '-44740',
     token0: {
@@ -928,11 +958,12 @@ export const pools = [
     totalValueLockedUSD: '24015569.25292462661390454944452046',
     txCount: '13688',
     volumeUSD: '322128241.4925572697210179585709954',
+    apr: '18',
   },
   {
     feeTier: '500',
     id: '0x8ce5796ef6b0c5918025bcf4f9ca908201b030b3',
-    liquidity: '154529917995806272520226914',
+    liquidity: '51415096',
     sqrtPrice: '84451754452550232677201710655',
     tick: '1277',
     token0: {
@@ -958,11 +989,12 @@ export const pools = [
     totalValueLockedUSD: '22759133.78448574930201616299291802',
     txCount: '962',
     volumeUSD: '0',
+    apr: '56',
   },
   {
     feeTier: '500',
     id: '0xcb0c5d9d92f4f2f80cce7aa271a1e148c226e19d',
-    liquidity: '1446216415434944838911901950',
+    liquidity: '62394421',
     sqrtPrice: '138695356686440805373479795492',
     tick: '11199',
     token0: {
@@ -988,11 +1020,12 @@ export const pools = [
     totalValueLockedUSD: '22566522.45174922192053507955262478',
     txCount: '11741',
     volumeUSD: '580273406.1115549838150261893972903',
+    apr: '40',
   },
   {
     feeTier: '3000',
     id: '0xa6cc3c2531fdaa6ae1a3ca84c2855806728693e8',
-    liquidity: '92671052582100382006764',
+    liquidity: '42588744',
     sqrtPrice: '7028841698712607545391362933',
     tick: '-48449',
     token0: {
@@ -1018,11 +1051,12 @@ export const pools = [
     totalValueLockedUSD: '22227600.00090644555875138527753492',
     txCount: '66098',
     volumeUSD: '2789029189.010196698656276854187944',
+    apr: '122',
   },
   {
     feeTier: '10000',
     id: '0x6231e794773e4dc0b1ad79105d850a05d5fc0fcb',
-    liquidity: '265868057041909041530840',
+    liquidity: '54939669',
     sqrtPrice: '2343459062375926717466187487950',
     tick: '67744',
     token0: {
@@ -1048,11 +1082,12 @@ export const pools = [
     totalValueLockedUSD: '20062318.25094776246499060254574418',
     txCount: '34314',
     volumeUSD: '401032835.6164021236931882237005205',
+    apr: '76',
   },
   {
     feeTier: '3000',
     id: '0xea4ba4ce14fdd287f380b55419b1c5b6c3f22ab6',
-    liquidity: '40602151443870029432565',
+    liquidity: '57090175',
     sqrtPrice: '19139639428591159115163162278',
     tick: '-28413',
     token0: {
@@ -1078,11 +1113,12 @@ export const pools = [
     totalValueLockedUSD: '19440708.62139290804671732408303126',
     txCount: '19478',
     volumeUSD: '507461234.0343874334412630899684464',
+    apr: '151',
   },
   {
     feeTier: '3000',
     id: '0x87986ae1e99f99da1f955d16930dc8914ffbed56',
-    liquidity: '26192412346128067404355176',
+    liquidity: '80190261',
     sqrtPrice: '165168568636647556080282515973',
     tick: '14693',
     token0: {
@@ -1108,11 +1144,12 @@ export const pools = [
     totalValueLockedUSD: '17298529.24545280795514385139943526',
     txCount: '2791',
     volumeUSD: '42791715.72561401761342764942721749',
+    apr: '30',
   },
   {
     feeTier: '3000',
     id: '0xb404057ee4b1d7359ca5a57ac1c020b74c23e56b',
-    liquidity: '37383523237430148353996',
+    liquidity: '47323091',
     sqrtPrice: '8762947795225375232319150392',
     tick: '-44039',
     token0: {
@@ -1138,11 +1175,12 @@ export const pools = [
     totalValueLockedUSD: '17271671.64486836216125514850605406',
     txCount: '4032',
     volumeUSD: '106110886.8653013574651182071488624',
+    apr: '50',
   },
   {
     feeTier: '500',
     id: '0x7858e59e0c01ea06df3af3d20ac7b0003275d4bf',
-    liquidity: '8835018221868691',
+    liquidity: '98138592',
     sqrtPrice: '79230872128064622597994483840',
     tick: '0',
     token0: {
@@ -1168,11 +1206,12 @@ export const pools = [
     totalValueLockedUSD: '17255097.049746',
     txCount: '152920',
     volumeUSD: '8405712420.182922760198755495457317',
+    apr: '156',
   },
   {
     feeTier: '10000',
     id: '0x94981f69f7483af3ae218cbfe65233cc3c60d93a',
-    liquidity: '88289192927253144421048',
+    liquidity: '9845962',
     sqrtPrice: '2431242487647265591360039743',
     tick: '-69683',
     token0: {
@@ -1198,11 +1237,12 @@ export const pools = [
     totalValueLockedUSD: '16918677.78209444608938463625097141',
     txCount: '25635',
     volumeUSD: '1035714623.873318194363106646209464',
+    apr: '41',
   },
   {
     feeTier: '10000',
     id: '0xb143bbeb287dcd1034da6e7186ec695316fff78f',
-    liquidity: '14071487202967856984',
+    liquidity: '47135834',
     sqrtPrice: '54942149974185282577837',
     tick: '-283646',
     token0: {
@@ -1228,11 +1268,12 @@ export const pools = [
     totalValueLockedUSD: '16610179.83832670899986178961901821',
     txCount: '2747',
     volumeUSD: '40933783.57574538055382154339265295',
+    apr: '37',
   },
   {
     feeTier: '10000',
     id: '0x4c83a7f819a5c37d64b4c5a2f8238ea082fa1f4e',
-    liquidity: '374419855668536768281460',
+    liquidity: '47341528',
     sqrtPrice: '2073605218176029469543299028384',
     tick: '65297',
     token0: {
@@ -1258,11 +1299,12 @@ export const pools = [
     totalValueLockedUSD: '16523417.45530891655537866828733144',
     txCount: '16585',
     volumeUSD: '450979801.2311480914572645046900112',
+    apr: '131',
   },
   {
     feeTier: '500',
     id: '0xbb2e5c2ff298fd96e166f90c8abacaf714df14f8',
-    liquidity: '5266859789770778854530799079',
+    liquidity: '27703614',
     sqrtPrice: '79247143747224292141348132540',
     tick: '4',
     token0: {
@@ -1288,11 +1330,12 @@ export const pools = [
     totalValueLockedUSD: '16367382.520740470947207756',
     txCount: '5905',
     volumeUSD: '1075496557.898230954291604998192809',
+    apr: '172',
   },
   {
     feeTier: '10000',
     id: '0x5b97b125cf8af96834f2d08c8f1291bd47724939',
-    liquidity: '293686778434911079350608',
+    liquidity: '84620181',
     sqrtPrice: '3086611640310940373316835258',
     tick: '-64909',
     token0: {
@@ -1318,11 +1361,12 @@ export const pools = [
     totalValueLockedUSD: '16332557.13613265498948100247024794',
     txCount: '37654',
     volumeUSD: '522596415.3504521445154657173166217',
+    apr: '32',
   },
   {
     feeTier: '500',
     id: '0x6f48eca74b38d2936b02ab603ff4e36a6c0e3a77',
-    liquidity: '15751941091078437593618',
+    liquidity: '76383545',
     sqrtPrice: '79231648761065956666150',
     tick: '-276324',
     token0: {
@@ -1348,11 +1392,12 @@ export const pools = [
     totalValueLockedUSD: '16195853.311180391550084892',
     txCount: '62841',
     volumeUSD: '2192198818.635036198105266438426108',
+    apr: '159',
   },
   {
     feeTier: '100',
     id: '0xa6de8dbae7b2504a7bec7b0dc7783e46565e9f75',
-    liquidity: '14989097471901002833117',
+    liquidity: '89140128',
     sqrtPrice: '79223103001633295786385',
     tick: '-276326',
     token0: {
@@ -1378,11 +1423,12 @@ export const pools = [
     totalValueLockedUSD: '15010213.56140219122676078713079287',
     txCount: '508',
     volumeUSD: '77583778.260158',
+    apr: '103',
   },
   {
     feeTier: '3000',
     id: '0x14036bbda496e39dc3db6025fe858431c1ddadb1',
-    liquidity: '10229191935695094453',
+    liquidity: '72931932',
     sqrtPrice: '56960265286778501228701193620077001',
     tick: '269724',
     token0: {
@@ -1408,11 +1454,12 @@ export const pools = [
     totalValueLockedUSD: '13433253.43775937368001974383818896',
     txCount: '6616',
     volumeUSD: '222618158.97728',
+    apr: '197',
   },
   {
     feeTier: '500',
     id: '0xbd5fdda17bc27bb90e37df7a838b1bfc0dc997f5',
-    liquidity: '1867435269320',
+    liquidity: '21260791',
     sqrtPrice: '737081815640267500504153728',
     tick: '-93553',
     token0: {
@@ -1438,11 +1485,12 @@ export const pools = [
     totalValueLockedUSD: '13078773.22894378539813545721685219',
     txCount: '6619',
     volumeUSD: '709435445.8861001433405425190201963',
+    apr: '107',
   },
   {
     feeTier: '3000',
     id: '0x9496d107a4b90c7d18c703e8685167f90ac273b0',
-    liquidity: '211366094596595439873929',
+    liquidity: '24002248',
     sqrtPrice: '1452060906936014683896303272',
     tick: '-79991',
     token0: {
@@ -1468,11 +1516,12 @@ export const pools = [
     totalValueLockedUSD: '12880876.20072832467996615311503803',
     txCount: '890',
     volumeUSD: '12947894.34597828639250435291092692',
+    apr: '131',
   },
   {
     feeTier: '3000',
     id: '0xe15e6583425700993bd08f51bf6e7b73cd5da91b',
-    liquidity: '172935956570989720',
+    liquidity: '99814944',
     sqrtPrice: '463572701456463492278242140011624758',
     tick: '311658',
     token0: {
@@ -1498,11 +1547,12 @@ export const pools = [
     totalValueLockedUSD: '11397546.564839184592229114820982',
     txCount: '1365',
     volumeUSD: '47168610.09825253550370845132380507',
+    apr: '0',
   },
   {
     feeTier: '10000',
     id: '0xc5af84701f98fa483ece78af83f11b6c38aca71d',
-    liquidity: '9892922537021718',
+    liquidity: '65612618',
     sqrtPrice: '4583337408086432835907731',
     tick: '-195163',
     token0: {
@@ -1528,5 +1578,6 @@ export const pools = [
     totalValueLockedUSD: '821132.9847699863979900426298117405',
     txCount: '13590',
     volumeUSD: '51426377.56903225451120203608278783',
+    apr: '43',
   },
 ]

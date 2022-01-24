@@ -103,7 +103,7 @@ export const AddLiquidityDialog = (props: AddLiquidityDialogProps) => {
         </Grid>
         {renderToken(i0)}
         <Grid item xs={2} className={`${classes.flex} ${classes.justifyCenter}`}>
-          &
+          <Icon color="primary">add</Icon>
         </Grid>
         {renderToken(i1, classes.justifyEnd)}
         <Grid item xs={12} className={classes.receiveContainer}>
@@ -112,9 +112,6 @@ export const AddLiquidityDialog = (props: AddLiquidityDialogProps) => {
         <Grid item xs={12} className={classes.flex}>
           <LPAvatar avatar0={i0.token?.logoURI} avatar1={i1.token?.logoURI} />
           <Typography variant="body2">{`${i0.token?.symbol}/${i1.token?.symbol} ${MOCKED_LP} LP Token`}</Typography>
-          <BaseTooltip title="HI">
-            <Icon className={classes.helpIcon}>help_outlined</Icon>
-          </BaseTooltip>
         </Grid>
         <Box mt={3} width={1} />
         <RatesInfo i0Symbol={i0.token?.symbol} i1Symbol={i1.token?.symbol} rate={rate} price={i0.price} />

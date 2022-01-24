@@ -1,8 +1,6 @@
 import { Grid, makeStyles, Typography } from '@material-ui/core'
-import PoolsList from 'modules/pools/components/AllPoolsList'
+import AllPoolsList from 'modules/pools/components/AllPoolsList'
 import LiquiditySwapCardContainer from 'modules/shared/components/LiquiditySwapCardContainer'
-import { useAppSelector } from 'hooks'
-import { $poolsWithLogos } from 'modules/pools/selectors'
 
 const useStyles = makeStyles((theme) => ({
   card: {
@@ -14,7 +12,6 @@ const useStyles = makeStyles((theme) => ({
 
 export const Pools = () => {
   const classes = useStyles()
-  const pools = useAppSelector($poolsWithLogos)
 
   return (
     <Grid container justifyContent="center">
@@ -22,7 +19,7 @@ export const Pools = () => {
         <Typography variant="h1">All pools</Typography>
       </Grid>
       <LiquiditySwapCardContainer md={12} cardClass={classes.card}>
-        <PoolsList pools={pools} />
+        <AllPoolsList />
       </LiquiditySwapCardContainer>
     </Grid>
   )

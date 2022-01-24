@@ -1,4 +1,5 @@
 import { Box, Grid, makeStyles, Typography } from '@material-ui/core'
+import { PoolSearch, PoolSearchProps } from './PoolSearch'
 
 const useStyles = makeStyles((theme) => ({
   poolHeader: {
@@ -10,13 +11,14 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: 'center',
   },
 }))
-export const PoolHeader = () => {
+export const PoolHeader = (props: PoolSearchProps) => {
   const classes = useStyles()
 
   return (
     <Grid container className={classes.poolHeader}>
-      <Grid xs={2} sm={1} item component={Box} className={classes.flexCenter} />
-      <Grid xs={5} sm={2} md={2} display={{ xs: 'flex' }} item component={Box} />
+      <Grid xs={7} sm={3} item>
+        <PoolSearch {...props} />
+      </Grid>
       <Grid sm={1} md={1} display={{ xs: 'none', sm: 'flex' }} className={classes.flexCenter} item component={Box}>
         <Typography variant="caption" color="textSecondary">
           Fee

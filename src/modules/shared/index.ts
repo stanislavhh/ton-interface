@@ -17,7 +17,7 @@ export { default as TokensListDialog, TokensList } from './components/TokensList
 export { default as TokenButton } from './components/TokenButton'
 
 // Enums
-export { Inputs } from './enums'
+export { Inputs, SortOrders } from './enums'
 
 // Reducers
 export { setDialogReducer, setAmountReducer, setTokenReducer, clearStateReducer } from './reducers'

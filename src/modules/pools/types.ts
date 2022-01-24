@@ -18,9 +18,10 @@ export interface Pool {
   volumeUSD: string
 }
 
-export interface PoolWithLogo extends Pool {
+export interface PoolSelector extends Pool {
   token0LogoURI: string
   token1LogoURI: string
+  name: string
 }
 
 export interface PoolsState {

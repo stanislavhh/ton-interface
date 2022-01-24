@@ -1,5 +1,5 @@
 // Types
-export type { PoolsState, Pool, PoolToken } from './types'
+export type { PoolsState, Pool, PoolToken, PoolSelector } from './types'
 
 // Views
 export { Pools as default } from './views/pools'

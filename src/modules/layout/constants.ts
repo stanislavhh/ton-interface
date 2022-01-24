@@ -2,6 +2,7 @@ export const ROUTES = [{ path: '/' }, { path: '/all-pools' }, { path: '/my-pools
 
 export const NAV_LINKS = [
   { href: '/', text: 'Swap' },
+  { href: '/liquidity', text: 'Add Liquidity' },
   { href: '/all-pools', text: 'Pools' },
 ]
 

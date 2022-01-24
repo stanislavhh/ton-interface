@@ -1,13 +1,18 @@
 import { StoreState } from 'store/types'
 import { createSelector } from '@reduxjs/toolkit'
 import { $tokens } from 'modules/layout/selectors'
-import { $walletTokens } from 'modules/wallet'
+import { $connecting, $walletTokens } from 'modules/wallet'
 import { feeTierToPercentage } from '../liquidity/utils'
 
 export const pools = (state: StoreState) => state.pools
 
 export const $poolsList = createSelector(pools, (p) => p.list)
-export const $pLoadingList = createSelector(pools, (p) => p.loadingList)
+export const $loadingPools = createSelector(pools, (p) => p.loadingList)
+
+export const $loadingMyPoolsList = createSelector(
+  [$loadingPools, $connecting],
+  (loadingPools, connecting) => loadingPools || connecting,
+)
 
 export const $poolsSelector = createSelector([$poolsList, $tokens], (pools, tokens) => {
   return pools.map((p) => ({

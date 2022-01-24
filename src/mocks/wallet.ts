@@ -3,13 +3,13 @@ export const walletDataResponse = {
   data: {
     walletTokens: [
       {
-        address: '1masdmaSszNwXSwnewS2na',
+        address: '0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2',
         balance: 10000,
         hasPermission: true,
         name: 'Toncoin',
       },
       {
-        address: '1aSszNwXSwnewS2na',
+        address: '0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48',
         balance: 232,
         hasPermission: false,
         name: 'Aave',

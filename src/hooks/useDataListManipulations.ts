@@ -2,8 +2,9 @@ import { useEffect, useState } from 'react'
 import { SortOrders } from 'modules/shared'
 
 export interface SortOption {
-  order: SortOrders
+  order: SortOrders | ''
   field: string
+  type?: string
 }
 
 export interface FilterQuery {
@@ -43,18 +44,27 @@ export const useDataFiltering = (data: any[], queries: FilterQuery[]) => {
   return { data: filteredData }
 }
 
-// currently has only string support
+// currently has only string | number support
 export const useDataSorting = (data: any[], options: SortOption[]) => {
   const [sortedData, setData] = useState<any[]>(data)
 
   useEffect(() => {
     let nextData = [...data]
     options.forEach((option) => {
+      if (!option.order) {
+        return
+      }
+
       const sortedByOption = nextData.sort((a, b) => {
+        if (option.type === 'number') {
+          return a[option.field] - b[option.field]
+        }
+
         if (a[option.field] < b[option.field]) return -1
         if (a[option.field] > b[option.field]) return 1
         return 0
       })
+
       nextData = option.order === SortOrders.ASC ? sortedByOption : sortedByOption.reverse()
     })
 

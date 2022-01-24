@@ -1,13 +1,14 @@
-import React, { LegacyRef } from 'react'
+import React from 'react'
 import { Tabs, Tab, makeStyles } from '@material-ui/core'
 import { BaseLink } from 'components/BaseLink'
-import { NAV_LINKS, ROUTES } from 'modules/layout/constants'
+import { NAV_LINKS } from 'modules/layout/constants'
 import { useRouter } from 'hooks'
-import { COLOR_TEXT } from 'helpers/themeHelper'
+import { COLOR_PRIMARY, COLOR_TEXT } from 'helpers/themeHelper'
 
 const useStyles = makeStyles(() => ({
-  tabSelected: { color: COLOR_TEXT },
+  tabSelected: { color: `${COLOR_TEXT} !important` },
   textColorInherit: {
+    color: COLOR_PRIMARY,
     opacity: 1,
   },
   hiddenTab: {
@@ -29,7 +30,7 @@ export const NavTabs = () => {
       {NAV_LINKS.map(({ href, text }) => (
         <Tab
           component={BaseLink}
-          classes={{ selected: classes.tabSelected, textColorInherit: classes.textColorInherit }}
+          classes={{ textColorInherit: classes.textColorInherit, selected: classes.tabSelected }}
           to={href}
           label={text}
           key={href}

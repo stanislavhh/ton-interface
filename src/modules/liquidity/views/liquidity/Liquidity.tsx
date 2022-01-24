@@ -33,7 +33,7 @@ import { $poolsList } from 'modules/pools/selectors'
 
 import { TransactionSettingsGridWrapper } from 'modules/shared/components/TransactionSettings'
 import LiquiditySwapCardContainer from 'modules/shared/components/LiquiditySwapCardContainer'
-import LiquiditySwapTitle from 'modules/shared/components/LiquiditySwapTitle'
+import LiquiditySwapTitle from 'modules/shared/components/PageTitileWithLink'
 import LiquidityInputs from 'modules/shared/components/LiquiditySwapInputs'
 import ConfirmTransactionButton from 'modules/shared/components/ConfirmTransactionButton'
 import AddLiquidityDialog from 'modules/liquidity/components/AddLiquidityDialog'

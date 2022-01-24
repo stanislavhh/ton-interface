@@ -1,6 +1,9 @@
+import { FilterQuery, SortOption } from 'hooks'
+
 export interface PoolToken {
   name: string
   symbol: string
+  id: string
 }
 
 export interface Pool {
@@ -24,7 +27,18 @@ export interface PoolSelector extends Pool {
   name: string
 }
 
+export interface WalletPoolsSelector extends PoolSelector {
+  poolShare: string
+  myLiquidity: string
+  dailyIncome: number
+}
+
 export interface PoolsState {
   list: Pool[]
   loadingList: boolean
+}
+
+export interface PoolsListsSettings {
+  filterOptions: FilterQuery[]
+  sortOptions: SortOption[]
 }

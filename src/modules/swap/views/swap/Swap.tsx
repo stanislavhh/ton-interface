@@ -31,7 +31,7 @@ import SwapConfirmDialog from 'modules/swap/components/SwapConfirmDialog'
 import { TransactionSettingsGridWrapper } from 'modules/shared/components/TransactionSettings'
 import ConfirmTransactionButton from 'modules/shared/components/ConfirmTransactionButton'
 import LiquiditySwapCardContainer from 'modules/shared/components/LiquiditySwapCardContainer'
-import LiquiditySwapTitle from 'modules/shared/components/LiquiditySwapTitle'
+import LiquiditySwapTitle from 'modules/shared/components/PageTitileWithLink'
 
 const useStyles = makeStyles((theme) => ({
   refreshIcon: {

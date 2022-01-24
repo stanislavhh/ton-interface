@@ -1,20 +1,20 @@
 import { CSSProperties } from 'react'
 import { Box, Grid } from '@material-ui/core'
-import { PoolSelector } from 'modules/pools/types'
+import { WalletPoolsSelector } from 'modules/pools/types'
 import LPAvatar from 'modules/shared/components/LPAvatar'
 import { feeTierToPercentage } from 'modules/liquidity/utils'
 import { usdFormatter } from 'helpers/formatterHelper'
 import { useRowStyles, RowColumn, ActionsColumn } from 'modules/pools/components/DataList'
 
 export interface PoolRowProps {
-  data: PoolSelector[]
+  data: WalletPoolsSelector[]
   style: CSSProperties
   index: number
 }
 
 export const PoolRow = ({ data, style, index }: PoolRowProps) => {
   const classes = useRowStyles()
-  const { name, liquidity, feeTier, token0LogoURI, token1LogoURI, volumeUSD, apr } = data[index]
+  const { name, poolShare, feeTier, myLiquidity, dailyIncome, token0LogoURI, token1LogoURI, apr } = data[index]
 
   return (
     <Box style={style} className={classes.poolItemBox}>
@@ -26,27 +26,34 @@ export const PoolRow = ({ data, style, index }: PoolRowProps) => {
         </Grid>
         <RowColumn xs={5} sm={2} display={{ xs: 'flex' }} value={name} />
         <RowColumn
-          sm={1}
-          md={2}
+          sm={2}
+          md={1}
           display={{ xs: 'none', sm: 'flex' }}
-          className={classes.flexCenter}
           value={`${feeTierToPercentage(feeTier)} %`}
+          className={classes.flexCenter}
+        />
+        <RowColumn
+          md={2}
+          display={{ xs: 'none', md: 'flex' }}
+          value={`${poolShare} %`}
+          className={classes.flexCenter}
         />
         <RowColumn
           sm={3}
           md={2}
           display={{ xs: 'none', sm: 'flex' }}
+          value={usdFormatter.format(Number(myLiquidity))}
           className={classes.flexCenter}
-          value={usdFormatter.format(Number(liquidity))}
         />
         <RowColumn
+          xs={4}
           sm={3}
           md={2}
-          display={{ xs: 'none', sm: 'flex' }}
+          display={{ xs: 'flex' }}
+          value={usdFormatter.format(Number(dailyIncome))}
           className={classes.flexCenter}
-          value={usdFormatter.format(Number(volumeUSD))}
         />
-        <RowColumn xs={4} sm={1} md={2} display={{ xs: 'flex' }} className={classes.flexCenter} value={`${apr} %`} />
+        <RowColumn md={1} display={{ xs: 'none', md: 'flex' }} value={`${apr} %`} className={classes.flexCenter} />
         <ActionsColumn />
       </Grid>
     </Box>

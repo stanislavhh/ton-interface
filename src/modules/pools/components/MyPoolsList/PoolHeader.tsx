@@ -1,10 +1,5 @@
-import {  Grid } from '@material-ui/core'
-import {
-  SearchColumn,
-  SearchColumnProps,
-  useHeaderStyles,
-  HeaderColumn,
-} from 'modules/pools/components/DataList'
+import { Grid } from '@material-ui/core'
+import { SearchColumn, SearchColumnProps, useHeaderStyles, HeaderColumn } from 'modules/pools/components/DataList'
 import { SortOrders } from 'modules/shared'
 import { SortOption } from 'hooks'
 
@@ -22,41 +17,49 @@ export const PoolHeader = ({ onSortChange, sortOptions, ...rest }: PoolHeaderPro
         <SearchColumn {...rest} />
       </Grid>
       <HeaderColumn
-        sm={1}
-        md={2}
-        display={{ xs: 'none', sm: 'flex' }}
         title="Fee"
+        sm={2}
+        md={1}
+        display={{ xs: 'none', sm: 'flex' }}
         onSortChange={onSortChange}
         field="feeTier"
         order={sortOptions[0].order}
       />
       <HeaderColumn
-        sm={3}
+        title="Share of Pool"
+        sm={2}
         md={2}
-        display={{ xs: 'none', sm: 'flex' }}
-        title="Liquidity"
+        display={{ xs: 'none', md: 'flex' }}
         onSortChange={onSortChange}
-        field="liquidity"
+        field="poolShare"
         order={sortOptions[1].order}
       />
       <HeaderColumn
+        title="My Liquidity"
         sm={3}
         md={2}
         display={{ xs: 'none', sm: 'flex' }}
-        title="Volume 7d"
         onSortChange={onSortChange}
-        field="volumeUSD"
+        field="myLiquidity"
         order={sortOptions[2].order}
       />
       <HeaderColumn
+        title="Daily income"
         xs={4}
-        sm={1}
+        sm={3}
         md={2}
         display={{ xs: 'flex' }}
+        onSortChange={onSortChange}
+        field="dailyIncome"
+        order={sortOptions[3].order}
+      />
+      <HeaderColumn
         title="APR"
+        md={1}
+        display={{ xs: 'none', md: 'flex' }}
         onSortChange={onSortChange}
         field="apr"
-        order={sortOptions[3].order}
+        order={sortOptions[4].order}
       />
     </Grid>
   )

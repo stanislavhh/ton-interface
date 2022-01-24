@@ -2,9 +2,9 @@ import BaseInput from 'components/BaseInput'
 import { makeStyles } from '@material-ui/core'
 import { BORDER_RADIUS3 } from 'helpers/themeHelper'
 
-export interface PoolSearchProps {
+export interface SearchColumnProps {
   search: string
-  onChange: (value: string) => void
+  onSearchChange: (value: string) => void
 }
 
 const useStyles = makeStyles((theme) => ({
@@ -21,14 +21,14 @@ const useStyles = makeStyles((theme) => ({
   },
 }))
 
-export const PoolSearch = ({ search, onChange }: PoolSearchProps) => {
+export const SearchColumn = ({ search, onSearchChange }: SearchColumnProps) => {
   const classes = useStyles()
 
   return (
     <BaseInput
       variant="standard"
       value={search}
-      onChange={onChange}
+      onChange={onSearchChange}
       fullWidth
       className={classes.searchInput}
       placeholder="Search by name"

@@ -7,7 +7,7 @@ import { ROUTES } from 'modules/layout/constants'
 // Views
 import SwapView from 'modules/swap'
 import LiquidityView from 'modules/liquidity'
-import PoolsView from 'modules/pools'
+import { MyPools as MyPoolsView, AllPools as AllPoolsView } from 'modules/pools'
 
 const useStyles = makeStyles((theme) => ({
   pageContent: {
@@ -39,7 +39,8 @@ export const PageViewer = (): JSX.Element => {
       <Routes>
         <Route path="/" element={<SwapView />} />
         <Route path="/liquidity" element={<LiquidityView />} />
-        <Route path="/pools" element={<PoolsView />} />
+        <Route path="/my-pools" element={<MyPoolsView />} />
+        <Route path="/all-pools" element={<AllPoolsView />} />
       </Routes>
     </div>
   )

@@ -1,12 +1,25 @@
 import { useEffect, useRef, useState } from 'react'
 import { FilterQuery, SortOption, useDataFiltering, useDataSorting } from 'hooks'
 import { debounce } from '@material-ui/core'
-import { Pool } from 'modules/pools/types'
+import { Pool, WalletPoolsSelector } from 'modules/pools/types'
+import { SortOrders } from 'modules/shared'
 
-export const usePoolsList = (pools: Pool[]) => {
+/**
+ * I keep the filtering and sorting states outside the redux:
+ * -the data for sorted or filtered list doesnt seem to be needed in main storage
+ * -it is easier to handle multiple lists with this hook
+ * @param pools
+ * @param initialQueries
+ * @param initialSorts
+ */
+export const usePoolsList = (
+  pools: Pool[] | WalletPoolsSelector[],
+  initialQueries: FilterQuery[] = [],
+  initialSorts: SortOption[] = [],
+) => {
   const [searchQuery, setSearchQuery] = useState<string>('')
-  const [queries, setQueries] = useState<FilterQuery[]>([{ field: 'name', value: '' }])
-  const [sortOptions] = useState<SortOption[]>([])
+  const [queries, setQueries] = useState<FilterQuery[]>(initialQueries)
+  const [sortOptions, setSortOptions] = useState<SortOption[]>(initialSorts)
   const { data: filteredPools } = useDataFiltering(pools, queries)
   const { data: filteredAndSortedPools } = useDataSorting(filteredPools, sortOptions)
 
@@ -14,6 +27,12 @@ export const usePoolsList = (pools: Pool[]) => {
 
   const handleSearchChange = (value: string) => {
     setSearchQuery(value)
+  }
+
+  const handleSortChange = (order: SortOrders | '', field: string) => {
+    let nextOptions = sortOptions.map((option) => ({ ...option, order: option.field === field ? order : option.order }))
+
+    setSortOptions(nextOptions)
   }
 
   useEffect(() => {
@@ -25,7 +44,10 @@ export const usePoolsList = (pools: Pool[]) => {
 
   return {
     filteredAndSortedPools,
-    handleSearchChange,
     searchQuery,
+    sortOptions,
+    queries,
+    handleSearchChange,
+    handleSortChange,
   }
 }

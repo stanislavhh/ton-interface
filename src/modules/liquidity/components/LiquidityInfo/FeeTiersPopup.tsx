@@ -5,7 +5,7 @@ import { FEE_TIERS } from 'modules/liquidity/enums'
 import BaseButton from 'components/BaseButton'
 import { feeTierToPercentage } from 'modules/liquidity/utils'
 import { setFees } from 'modules/liquidity/slice'
-import { COLOR_PRIMARY, COLOR_WHITE, xsButton } from 'helpers/themeHelper'
+import { xsButton } from 'helpers/themeHelper'
 import { useAppDispatch } from 'hooks'
 
 export interface FeeTiersPopupProps extends BasePopoverProps {

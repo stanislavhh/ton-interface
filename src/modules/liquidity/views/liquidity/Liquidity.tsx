@@ -36,7 +36,7 @@ import LiquiditySwapCardContainer from 'modules/shared/components/LiquiditySwapC
 import LiquiditySwapTitle from 'modules/shared/components/PageTitileWithLink'
 import LiquidityInputs from 'modules/shared/components/LiquiditySwapInputs'
 import ConfirmTransactionButton from 'modules/shared/components/ConfirmTransactionButton'
-import AddLiquidityDialog from 'modules/liquidity/components/AddLiquidityDialog'
+import ConfirmLiquidityDialog from 'modules/liquidity/components/ConfirmLiquidityDialog'
 import LiquidityInfo from 'modules/liquidity/components/LiquidityInfo'
 import BaseButton from 'components/BaseButton'
 import NotificationBox from 'components/NotificationBox'
@@ -208,7 +208,7 @@ export const Liquidity = () => {
   return (
     <Grid container justifyContent="center">
       <BackdropLoader open={confirmingTokenTransactions} text="Confirm transaction" />
-      <AddLiquidityDialog open={dialog.type === Dialogs.CONFIRM_LIQUIDITY} />
+      <ConfirmLiquidityDialog open={dialog.type === Dialogs.CONFIRM_LIQUIDITY} />
       <TokensListDialog
         onTokenSelect={onTokenSelect}
         selectedToken={selectedDialogToken}

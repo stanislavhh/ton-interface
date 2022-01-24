@@ -1,4 +1,5 @@
 import { FilterQuery, SortOption } from 'hooks'
+import { Dialogs } from 'modules/pools/enums'
 
 export interface PoolToken {
   name: string
@@ -21,6 +22,11 @@ export interface Pool {
   volumeUSD: string
 }
 
+export interface Dialog {
+  type: Dialogs | ''
+  pool?: PoolSelector | WalletPoolsSelector | null
+}
+
 export interface PoolSelector extends Pool {
   token0LogoURI: string
   token1LogoURI: string
@@ -36,6 +42,7 @@ export interface WalletPoolsSelector extends PoolSelector {
 export interface PoolsState {
   list: Pool[]
   loadingList: boolean
+  dialog: Dialog
 }
 
 export interface PoolsListsSettings {

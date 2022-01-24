@@ -1,5 +1,5 @@
 import { makeStyles } from '@material-ui/core'
-import { BORDER_RADIUS2, BORDER_RADIUS4 } from 'helpers/themeHelper'
+import { BORDER_RADIUS2 } from 'helpers/themeHelper'
 
 export const useRowStyles = makeStyles((theme) => ({
   poolItemBox: {
@@ -14,6 +14,10 @@ export const useRowStyles = makeStyles((theme) => ({
   },
   flexCenter: {
     justifyContent: 'center',
+  },
+  menuItem: {
+    minWidth: '180px',
+    paddingBlock: theme.spacing(1.5),
   },
 }))
 

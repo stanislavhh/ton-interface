@@ -4,7 +4,8 @@ import { WalletPoolsSelector } from 'modules/pools/types'
 import LPAvatar from 'modules/shared/components/LPAvatar'
 import { feeTierToPercentage } from 'modules/liquidity/utils'
 import { usdFormatter } from 'helpers/formatterHelper'
-import { useRowStyles, RowColumn, ActionsColumn } from 'modules/pools/components/DataList'
+import { useRowStyles, RowColumn, ActionsColumn } from 'components/DataList'
+import { ActionItems } from 'modules/pools/components/ListComponents'
 
 export interface PoolRowProps {
   data: WalletPoolsSelector[]
@@ -54,7 +55,9 @@ export const PoolRow = ({ data, style, index }: PoolRowProps) => {
           className={classes.flexCenter}
         />
         <RowColumn md={1} display={{ xs: 'none', md: 'flex' }} value={`${apr} %`} className={classes.flexCenter} />
-        <ActionsColumn />
+        <ActionsColumn>
+          <ActionItems pool={data[index]} withRemove />
+        </ActionsColumn>
       </Grid>
     </Box>
   )

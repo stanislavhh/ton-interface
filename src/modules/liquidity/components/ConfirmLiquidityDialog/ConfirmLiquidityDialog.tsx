@@ -6,12 +6,11 @@ import { confirmAddLiquidity, setDialog } from 'modules/liquidity/slice'
 import { CombinedTokenInput } from 'modules/shared'
 import { RatesInfo, RowInfo } from 'modules/shared/components/LiquiditySwapInfo'
 import LPAvatar from 'modules/shared/components/LPAvatar'
-import BaseTooltip from 'components/BaseTooltip'
 import { feeTierToPercentage } from 'modules/liquidity/utils'
 import BaseButton from 'components/BaseButton'
 import ConfirmationTerms from 'modules/shared/components/ConfirmationTerms'
 
-interface AddLiquidityDialogProps extends Partial<BaseDialogProps> {
+interface ConfirmLiquidityDialogProps extends Partial<BaseDialogProps> {
   open: boolean
 }
 
@@ -62,7 +61,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }))
 
-export const AddLiquidityDialog = (props: AddLiquidityDialogProps) => {
+export const ConfirmLiquidityDialog = (props: ConfirmLiquidityDialogProps) => {
   const classes = useStyles()
   const dispatch = useAppDispatch()
   const { i0, i1, poolFees, poolShare, slipTolerance, rate } = useAppSelector($liquidityInfo)

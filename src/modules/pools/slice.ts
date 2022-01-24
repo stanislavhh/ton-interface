@@ -2,11 +2,14 @@ import { CaseReducer, createAsyncThunk, createSlice, PayloadAction } from '@redu
 
 import { imitateFetch, MockedResponse } from 'utils'
 import { pools } from 'mocks/pools'
-import { Pool, PoolsState } from './types'
+import { Dialog, Pool, PoolsState } from './types'
 
 export const INITIAL_STATE: PoolsState = {
   list: [],
   loadingList: false,
+  dialog: {
+    type: '',
+  },
 }
 
 export const getPoolsList = createAsyncThunk('pools/getPoolsList', async () => {
@@ -24,16 +27,22 @@ const getPoolsListFulfilledReducer: CaseReducer<PoolsState> = (state, { payload 
   state.loadingList = false
 }
 
+const toggleDialogReducer: CaseReducer<PoolsState, PayloadAction<Dialog>> = (state, { payload }) => {
+  state.dialog = payload
+}
+
 const poolsSlice = createSlice({
   name: 'pools',
   initialState: INITIAL_STATE,
-  reducers: {},
+  reducers: {
+    toggleDialog: toggleDialogReducer,
+  },
   extraReducers: (builder) => {
     builder.addCase(getPoolsList.pending, getPoolsListPendingReducer)
     builder.addCase(getPoolsList.fulfilled, getPoolsListFulfilledReducer)
   },
 })
 
-export const {} = poolsSlice.actions
+export const { toggleDialog } = poolsSlice.actions
 
 export const poolsReducer = poolsSlice.reducer

@@ -8,6 +8,7 @@ export const pools = (state: StoreState) => state.pools
 
 export const $poolsList = createSelector(pools, (p) => p.list)
 export const $loadingPools = createSelector(pools, (p) => p.loadingList)
+export const $poolsDialog = createSelector(pools, (p) => p.dialog)
 
 export const $loadingMyPoolsList = createSelector(
   [$loadingPools, $connecting],

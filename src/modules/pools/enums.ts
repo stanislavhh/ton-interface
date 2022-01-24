@@ -1,4 +1,4 @@
-export enum PoolLists {
-  MY_POOLS = 'my-pools',
-  ALL_POOLS = 'all-pools',
+export enum Dialogs {
+  ADD_LIQUIDITY = 'addLiquidity',
+  REMOVE_LIQUIDITY = 'removeLiquidity',
 }

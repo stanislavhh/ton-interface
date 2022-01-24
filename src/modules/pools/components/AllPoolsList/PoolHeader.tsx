@@ -1,10 +1,5 @@
-import {  Grid } from '@material-ui/core'
-import {
-  SearchColumn,
-  SearchColumnProps,
-  useHeaderStyles,
-  HeaderColumn,
-} from 'modules/pools/components/DataList'
+import { Grid } from '@material-ui/core'
+import { SearchColumn, SearchColumnProps, useHeaderStyles, HeaderColumn } from 'components/DataList'
 import { SortOrders } from 'modules/shared'
 import { SortOption } from 'hooks'
 

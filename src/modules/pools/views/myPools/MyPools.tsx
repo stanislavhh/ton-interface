@@ -1,14 +1,15 @@
-import { CircularProgress, Grid, makeStyles, Typography } from '@material-ui/core'
-import MyPoolsList from 'modules/pools/components/DataList'
-import CardContainer from 'modules/shared/components/LiquiditySwapCardContainer'
-import MyPoolsTitle from 'modules/shared/components/PageTitileWithLink'
-import { PoolHeader, PoolRow } from 'modules/pools/components/MyPoolsList'
 import { useAppSelector, useRouter } from 'hooks'
 import { $loadingMyPoolsList, $walletPoolsList } from 'modules/pools/selectors'
 import { MY_POOLS_INITIAL_OPTIONS } from 'modules/pools/constants'
 import { $isConnected } from 'modules/wallet'
-import { BaseLink } from 'components/BaseLink'
-import BaseButton from '../../../../components/BaseButton'
+import { CircularProgress, Grid, makeStyles, Typography } from '@material-ui/core'
+import MyPoolsList from 'modules/pools/components/ListComponents'
+import CardContainer from 'modules/shared/components/LiquiditySwapCardContainer'
+import BaseButton from 'components/BaseButton'
+import MyPoolsTitle from 'modules/shared/components/PageTitileWithLink'
+import { PoolHeader, PoolRow } from 'modules/pools/components/MyPoolsList'
+import { AddLiquidityDialog } from 'modules/pools/components/AddLiquidityDialog'
+import { RemoveLiquidityDialog } from 'modules/pools/components/RemoveLiquidityDialog'
 
 const useStyles = makeStyles((theme) => ({
   card: {
@@ -42,6 +43,8 @@ export const MyPools = () => {
 
   return (
     <Grid container justifyContent="center">
+      <AddLiquidityDialog />
+      <RemoveLiquidityDialog />
       <MyPoolsTitle title="My Pools" md={12} secondaryTitle="All Pools" to="/all-pools" />
       <CardContainer md={12} cardClass={classes.card}>
         {loading ? (

@@ -4,7 +4,8 @@ import { PoolSelector } from 'modules/pools/types'
 import LPAvatar from 'modules/shared/components/LPAvatar'
 import { feeTierToPercentage } from 'modules/liquidity/utils'
 import { usdFormatter } from 'helpers/formatterHelper'
-import { useRowStyles, RowColumn, ActionsColumn } from 'modules/pools/components/DataList'
+import { useRowStyles, RowColumn, ActionsColumn } from 'components/DataList'
+import { ActionItems } from 'modules/pools/components/ListComponents'
 
 export interface PoolRowProps {
   data: PoolSelector[]
@@ -47,7 +48,9 @@ export const PoolRow = ({ data, style, index }: PoolRowProps) => {
           value={usdFormatter.format(Number(volumeUSD))}
         />
         <RowColumn xs={4} sm={1} md={2} display={{ xs: 'flex' }} className={classes.flexCenter} value={`${apr} %`} />
-        <ActionsColumn />
+        <ActionsColumn>
+          <ActionItems pool={data[index]} />
+        </ActionsColumn>
       </Grid>
     </Box>
   )

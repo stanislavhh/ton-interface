@@ -1,4 +1,3 @@
-export { PoolsList as default } from './PoolsList'
 export { SearchColumn } from './SearchColumn'
 export { SortIcon } from './SortIcon'
 export { HeaderColumn } from './HeaderColumn'

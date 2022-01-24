@@ -1,14 +1,18 @@
-import { Grid, Icon, makeStyles, Menu, MenuItem } from '@material-ui/core'
+import { Grid, Icon, makeStyles, Menu } from '@material-ui/core'
 import BaseButton from 'components/BaseButton'
 import { BORDER_RADIUS4 } from 'helpers/themeHelper'
-import { useState } from 'react'
+import { ReactChildren, ReactElement, useState } from 'react'
 
 const useStyles = makeStyles((theme) => ({
   actionsContainer: {
     display: 'flex',
     justifyContent: 'flex-end',
   },
-
+  paper: {
+    background: 'rgba(255, 255, 255, 0.6)',
+    backdropFilter: 'blur(8px)',
+    boxShadow: 'none',
+  },
   moreButton: {
     padding: theme.spacing(0.75),
     minWidth: '10px',
@@ -16,10 +20,11 @@ const useStyles = makeStyles((theme) => ({
   },
 }))
 
-export const ActionsColumn = () => {
+export const ActionsColumn = ({ children }: { children: ReactElement | ReactElement[] }) => {
   const classes = useStyles()
   const [anchorEl, setAnchorEl] = useState<(EventTarget & HTMLSpanElement) | null>(null)
 
+  const close = () => setAnchorEl(null)
   const open = Boolean(anchorEl)
 
   return (
@@ -31,6 +36,7 @@ export const ActionsColumn = () => {
       </BaseButton>
       <Menu
         open={open}
+        classes={{ paper: classes.paper }}
         anchorOrigin={{
           vertical: 'bottom',
           horizontal: 'right',
@@ -39,11 +45,12 @@ export const ActionsColumn = () => {
           vertical: 'top',
           horizontal: 'right',
         }}
-        onClose={() => setAnchorEl(null)}
+        onClick={close}
+        onClose={close}
         anchorEl={anchorEl}
         getContentAnchorEl={null}
       >
-        <MenuItem>Add Liquidity</MenuItem>
+        {children}
       </Menu>
     </Grid>
   )

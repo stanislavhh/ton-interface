@@ -1,12 +1,10 @@
-import { useCallback, useMemo } from 'react'
+import { useMemo } from 'react'
 import { Box, Grid, Icon, makeStyles, Typography } from '@material-ui/core'
 import {
   canSetAmount,
-  CombinedTokenInput,
   convertTokensAmount,
   findTokenPrice,
   Inputs,
-  InputType,
   Token,
   TokensListDialog,
   useWatchPricesChange,
@@ -15,32 +13,30 @@ import {
 import { Dialogs, FEE_TIERS } from 'modules/liquidity/enums'
 import { useAppDispatch, useAppSelector, useDispatchOnUnmount } from 'hooks'
 import { useWatchFeeChange } from 'modules/liquidity/hooks/useWatchFeeChange'
-import { clearState, setAmount, setDialog, setToken, allowTokenTransaction, setFees } from 'modules/liquidity/slice'
+import { clearState, setAmount, setDialog, setToken, setFees } from 'modules/liquidity/slice'
 import { findPoolsBySelectedTokens, getBestPoolByVolume } from 'modules/liquidity/utils'
 import {
-  $canAddLiquidity,
   $combinedInput0,
   $combinedInput1,
   $confirmingTokenTransaction,
   $dialog,
-  $insufficientBalance,
   $poolByFeeAndSelectedTokens,
   $selectedDialogToken,
 } from 'modules/liquidity/selectors'
-import { $isConnected, $tokensWithBalances } from 'modules/wallet/selectors'
-import { $loadingPrice, $loadingTokens, $prices } from 'modules/layout/selectors'
+import { $tokensWithBalances } from 'modules/wallet/selectors'
+import { $loadingTokens, $prices } from 'modules/layout/selectors'
 import { $poolsList } from 'modules/pools/selectors'
 
 import { TransactionSettingsGridWrapper } from 'modules/shared/components/TransactionSettings'
 import LiquiditySwapCardContainer from 'modules/shared/components/LiquiditySwapCardContainer'
 import LiquiditySwapTitle from 'modules/shared/components/PageTitileWithLink'
 import LiquidityInputs from 'modules/shared/components/LiquiditySwapInputs'
-import ConfirmTransactionButton from 'modules/shared/components/ConfirmTransactionButton'
 import ConfirmLiquidityDialog from 'modules/liquidity/components/ConfirmLiquidityDialog'
 import LiquidityInfo from 'modules/liquidity/components/LiquidityInfo'
-import BaseButton from 'components/BaseButton'
 import NotificationBox from 'components/NotificationBox'
 import BackdropLoader from 'components/BackdropLoader'
+import { useAmountChangeHandler } from 'modules/shared/hooks/useAmountChangeHandler'
+import { useLiquidityPrimaryButton } from 'modules/liquidity/hooks'
 
 const useStyles = makeStyles((theme) => ({
   iconPlus: {
@@ -75,19 +71,18 @@ export const Liquidity = () => {
   const tokens = useAppSelector($tokensWithBalances)
   const dialog = useAppSelector($dialog)
   const loadingTokens = useAppSelector($loadingTokens)
-  const loadingPrice = useAppSelector($loadingPrice)
-  const isConnected = useAppSelector($isConnected)
-  const canAddLiquidity = useAppSelector($canAddLiquidity)
-  const insufficientBalance = useAppSelector($insufficientBalance)
   const prices = useAppSelector($prices)
   const confirmingTokenTransactions = useAppSelector($confirmingTokenTransaction)
   const inputs = { input0, input1 }
+  const poolExists = Boolean(poolByFeeAndTokens)
 
   useWatchTokenChange(input0.token)
   useWatchTokenChange(input1.token)
-  useWatchPricesChange(input0, input1, setAmount, Inputs.INPUT_1, Boolean(poolByFeeAndTokens))
+  useWatchPricesChange(input0, input1, setAmount, Inputs.INPUT_1, poolExists)
   useWatchFeeChange()
   useDispatchOnUnmount(clearState())
+  const { i1AmountChange, i0AmountChange } = useAmountChangeHandler(inputs, setAmount, poolExists)
+  const { enableToken0Button, enableToken1Button, addLiquidityButton } = useLiquidityPrimaryButton(input0, input1)
 
   const closeDialog = () => dispatch(setDialog({ type: '' }))
 
@@ -111,25 +106,6 @@ export const Liquidity = () => {
     dispatch(setToken({ type, token }))
   }
 
-  const handleAmountChange = (type: InputType) => (amount: string) => {
-    dispatch(setAmount({ type, amount }))
-
-    if (poolByFeeAndTokens) {
-      const invertedType = type === Inputs.INPUT_0 ? Inputs.INPUT_1 : Inputs.INPUT_0
-      const t0 = inputs[type]
-      const t1 = inputs[invertedType]
-
-      const t1Amount = convertTokensAmount({ ...t0, amount: amount || t0.amount }, t1)
-
-      if (canSetAmount(Number(t1Amount))) {
-        dispatch(setAmount({ type: invertedType, amount: t1Amount }))
-      }
-    }
-  }
-
-  const i0AmountChange = useCallback(handleAmountChange(Inputs.INPUT_0), [inputs])
-  const i1AmountChange = useCallback(handleAmountChange(Inputs.INPUT_1), [inputs])
-
   const i0Props = useMemo(
     () => ({
       tokenInput: input0,
@@ -150,60 +126,6 @@ export const Liquidity = () => {
     }),
     [input1],
   )
-
-  const renderAllowTokenButton = (input: CombinedTokenInput, otherHasPermission: boolean) => {
-    const shouldRenderAllowTokenButton =
-      isConnected &&
-      !input.hasPermission &&
-      input0.token &&
-      input1.token &&
-      input0.amount &&
-      input1.amount &&
-      !insufficientBalance
-
-    if (shouldRenderAllowTokenButton) {
-      return (
-        <BaseButton
-          loading={loadingPrice}
-          onClick={() => dispatch(allowTokenTransaction({ input, otherHasPermission }))}
-          className={`${classes.enableTokenButton}`}
-          color="primary"
-          variant="contained"
-          size="large"
-        >
-          Allow {input.token?.symbol}
-        </BaseButton>
-      )
-    }
-
-    return null
-  }
-
-  const renderAddLiquidityButton = () => {
-    let text = ''
-    if (canAddLiquidity) {
-      text = 'Add Liquidity'
-    } else if (!input0.token || !input1.token) {
-      text = 'Select Tokens'
-    } else if (!input0.amount || !input1.amount) {
-      text = 'Enter Amount'
-    } else if (insufficientBalance) {
-      text = 'Insufficient Balance'
-    }
-
-    return (
-      <ConfirmTransactionButton
-        loading={loadingPrice}
-        canConfirm={canAddLiquidity}
-        text={text}
-        confirm={() => dispatch(setDialog({ type: Dialogs.CONFIRM_LIQUIDITY }))}
-      />
-    )
-  }
-
-  const enableToken0Button = renderAllowTokenButton(input0, input1.hasPermission)
-  const enableToken1Button = renderAllowTokenButton(input1, input0.hasPermission)
-  const addLiquidityButton = enableToken0Button || enableToken1Button ? null : renderAddLiquidityButton()
 
   return (
     <Grid container justifyContent="center">

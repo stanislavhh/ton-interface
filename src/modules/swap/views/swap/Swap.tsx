@@ -6,7 +6,6 @@ import {
   convertTokensAmount,
   findTokenPrice,
   Inputs,
-  InputType,
   Token,
   TokensListDialog,
   useWatchPricesChange,
@@ -32,6 +31,7 @@ import { TransactionSettingsGridWrapper } from 'modules/shared/components/Transa
 import ConfirmTransactionButton from 'modules/shared/components/ConfirmTransactionButton'
 import LiquiditySwapCardContainer from 'modules/shared/components/LiquiditySwapCardContainer'
 import LiquiditySwapTitle from 'modules/shared/components/PageTitileWithLink'
+import { useAmountChangeHandler } from 'modules/shared/hooks'
 
 const useStyles = makeStyles((theme) => ({
   refreshIcon: {
@@ -64,6 +64,7 @@ export const Swap = () => {
   useWatchTokenChange(input1.token)
   useWatchPricesChange(input0, input1, setAmount, Inputs.INPUT_1)
   useDispatchOnUnmount(clearState())
+  const { i1AmountChange, i0AmountChange } = useAmountChangeHandler(inputs, setAmount, true)
 
   const closeDialog = () => dispatch(setDialog({ type: '' }))
 
@@ -78,22 +79,6 @@ export const Swap = () => {
     dispatch(setAmount({ type: Inputs.INPUT_1, amount: canSetAmount(Number(t1Amount)) ? t1Amount : '' }))
     dispatch(setToken({ type, token }))
   }
-
-  const handleAmountChange = (type: InputType) => (amount: string) => {
-    const invertedType = type === Inputs.INPUT_0 ? Inputs.INPUT_1 : Inputs.INPUT_0
-    const i0 = inputs[type]
-    const i1 = inputs[invertedType]
-    const t1Amount = convertTokensAmount({ ...i0, amount: amount || i0.amount }, i1)
-
-    if (canSetAmount(Number(t1Amount))) {
-      dispatch(setAmount({ type: invertedType, amount: t1Amount }))
-    }
-
-    dispatch(setAmount({ type, amount }))
-  }
-
-  const i0AmountChange = useCallback(handleAmountChange(Inputs.INPUT_0), [inputs])
-  const i1AmountChange = useCallback(handleAmountChange(Inputs.INPUT_1), [inputs])
 
   const i0Props = useMemo(
     () => ({

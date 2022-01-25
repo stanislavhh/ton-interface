@@ -12,7 +12,7 @@ import { AddLiquidityDialog } from 'modules/liquidity/components/AddLiquidityDia
 import { RemoveLiquidityDialog } from 'modules/pools/components/RemoveLiquidityDialog'
 import { Dialogs } from 'modules/pools/enums'
 import { toggleDialog } from 'modules/pools/slice'
-import { useWatchAddLiquidity } from 'modules/pools/hooks'
+import { useWatchAddLiquidityDialog } from 'modules/pools/hooks'
 import ConfirmLiquidityDialog from 'modules/liquidity/components/ConfirmLiquidityDialog'
 import { Dialogs as LiquidityDialogs } from 'modules/liquidity'
 import { $dialog } from 'modules/liquidity/selectors'
@@ -39,7 +39,7 @@ const useStyles = makeStyles((theme) => ({
 }))
 
 export const MyPools = () => {
-  useWatchAddLiquidity()
+  useWatchAddLiquidityDialog()
   const classes = useStyles()
   const router = useRouter()
   const dispatch = useAppDispatch()

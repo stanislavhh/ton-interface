@@ -9,7 +9,7 @@ import { $tokens } from 'modules/layout/selectors'
 /**
  * Prepare liquidity state for add liquidity dialog
  */
-export const useWatchAddLiquidity = () => {
+export const useWatchAddLiquidityDialog = () => {
   const dispatch = useAppDispatch()
   const { pool, type } = useAppSelector($poolsDialog)
   const tokens = useAppSelector($tokens)

@@ -1,4 +1,4 @@
 export enum Dialogs {
-  ADD_LIQUIDITY = 'addLiquidity',
-  REMOVE_LIQUIDITY = 'removeLiquidity',
+  ADD_LIQUIDITY = 'ADD_LIQUIDITY',
+  REMOVE_LIQUIDITY = 'REMOVE_LIQUIDITY',
 }

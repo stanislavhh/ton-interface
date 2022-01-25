@@ -1,33 +1,16 @@
-import { useCallback, useMemo } from 'react'
-import { useAppDispatch, useAppSelector } from 'hooks'
+import { useMemo } from 'react'
+import { useAppSelector } from 'hooks'
 import BaseDialog, { BaseDialogProps } from 'components/BaseDialog'
-import {
-  $canAddLiquidity,
-  $combinedInput0,
-  $combinedInput1,
-  $confirmingTokenTransaction,
-  $insufficientBalance,
-} from 'modules/liquidity/selectors'
+import { $combinedInput0, $combinedInput1, $confirmingTokenTransaction } from 'modules/liquidity/selectors'
 import LiquidityInputs from 'modules/shared/components/LiquiditySwapInputs'
 import { Box, Grid, Icon, makeStyles, Typography } from '@material-ui/core'
 import LPAvatar from 'modules/shared/components/LPAvatar'
-import {
-  canSetAmount,
-  CombinedTokenInput,
-  convertTokensAmount,
-  Inputs,
-  InputType,
-  useWatchPricesChange,
-  useWatchTokenChange,
-} from 'modules/shared'
-import { allowTokenTransaction, setAmount, setDialog } from 'modules/liquidity/slice'
+import { Inputs, useWatchPricesChange, useWatchTokenChange } from 'modules/shared'
+import { setAmount } from 'modules/liquidity/slice'
 import LiquidityInfo from 'modules/liquidity/components/LiquidityInfo'
-import BaseButton from 'components/BaseButton'
-import ConfirmTransactionButton from 'modules/shared/components/ConfirmTransactionButton'
-import { Dialogs } from 'modules/liquidity/enums'
-import { $loadingPrice } from 'modules/layout/selectors'
-import { $isConnected } from 'modules/wallet'
 import BackdropLoader from 'components/BackdropLoader'
+import { useAmountChangeHandler } from 'modules/shared/hooks/useAmountChangeHandler'
+import { useLiquidityPrimaryButton } from 'modules/liquidity/hooks/useLiquidityPrimaryButton'
 
 const useStyles = makeStyles((theme) => ({
   addLiqTitle: { marginRight: theme.spacing(1) },
@@ -42,11 +25,6 @@ const useStyles = makeStyles((theme) => ({
   infoContainer: {
     marginTop: theme.spacing(2),
   },
-  enableTokenButton: {
-    flexGrow: 1,
-    marginInline: theme.spacing(1),
-  },
-
   poolNotCreatedBox: {
     marginTop: theme.spacing(2),
   },
@@ -56,37 +34,17 @@ const useStyles = makeStyles((theme) => ({
  * tokens for pool you want to add liquidity must be present in tokens list
  */
 export const AddLiquidityDialog = ({ open, onClose }: BaseDialogProps) => {
-  const dispatch = useAppDispatch()
   const classes = useStyles()
   const input0 = useAppSelector($combinedInput0)
   const input1 = useAppSelector($combinedInput1)
-  const loadingPrice = useAppSelector($loadingPrice)
-  const isConnected = useAppSelector($isConnected)
-  const canAddLiquidity = useAppSelector($canAddLiquidity)
-  const insufficientBalance = useAppSelector($insufficientBalance)
   const confirmingTokenTransactions = useAppSelector($confirmingTokenTransaction)
-
   const inputs = { input0, input1 }
+
   useWatchTokenChange(input0.token)
   useWatchTokenChange(input1.token)
   useWatchPricesChange(input0, input1, setAmount, Inputs.INPUT_1, true)
-
-  const handleAmountChange = (type: InputType) => (amount: string) => {
-    dispatch(setAmount({ type, amount }))
-
-    const invertedType = type === Inputs.INPUT_0 ? Inputs.INPUT_1 : Inputs.INPUT_0
-    const t0 = inputs[type]
-    const t1 = inputs[invertedType]
-
-    const t1Amount = convertTokensAmount({ ...t0, amount: amount || t0.amount }, t1)
-
-    if (canSetAmount(Number(t1Amount))) {
-      dispatch(setAmount({ type: invertedType, amount: t1Amount }))
-    }
-  }
-
-  const i0AmountChange = useCallback(handleAmountChange(Inputs.INPUT_0), [inputs])
-  const i1AmountChange = useCallback(handleAmountChange(Inputs.INPUT_1), [inputs])
+  const { i1AmountChange, i0AmountChange } = useAmountChangeHandler(inputs, setAmount, true)
+  const { enableToken0Button, enableToken1Button, addLiquidityButton } = useLiquidityPrimaryButton(input0, input1)
 
   const i0Props = useMemo(
     () => ({
@@ -108,60 +66,6 @@ export const AddLiquidityDialog = ({ open, onClose }: BaseDialogProps) => {
     }),
     [input1],
   )
-
-  const renderAllowTokenButton = (input: CombinedTokenInput, otherHasPermission: boolean) => {
-    const shouldRenderAllowTokenButton =
-      isConnected &&
-      !input.hasPermission &&
-      input0.token &&
-      input1.token &&
-      input0.amount &&
-      input1.amount &&
-      !insufficientBalance
-
-    if (shouldRenderAllowTokenButton) {
-      return (
-        <BaseButton
-          loading={loadingPrice}
-          onClick={() => dispatch(allowTokenTransaction({ input, otherHasPermission }))}
-          className={`${classes.enableTokenButton}`}
-          color="primary"
-          variant="contained"
-          size="large"
-        >
-          Allow {input.token?.symbol}
-        </BaseButton>
-      )
-    }
-
-    return null
-  }
-
-  const renderAddLiquidityButton = () => {
-    let text = ''
-    if (canAddLiquidity) {
-      text = 'Add Liquidity'
-    } else if (!input0.token || !input1.token) {
-      text = 'Select Tokens'
-    } else if (!input0.amount || !input1.amount) {
-      text = 'Enter Amount'
-    } else if (insufficientBalance) {
-      text = 'Insufficient Balance'
-    }
-
-    return (
-      <ConfirmTransactionButton
-        loading={loadingPrice}
-        canConfirm={canAddLiquidity}
-        text={text}
-        confirm={() => dispatch(setDialog({ type: Dialogs.CONFIRM_LIQUIDITY }))}
-      />
-    )
-  }
-
-  const enableToken0Button = renderAllowTokenButton(input0, input1.hasPermission)
-  const enableToken1Button = renderAllowTokenButton(input1, input0.hasPermission)
-  const addLiquidityButton = enableToken0Button || enableToken1Button ? null : renderAddLiquidityButton()
 
   return (
     <BaseDialog

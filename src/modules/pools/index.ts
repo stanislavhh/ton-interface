@@ -10,3 +10,6 @@ export { poolsReducer, getPoolsList, toggleDialog } from './slice'
 
 // Hooks
 export { useLoadPools } from './hooks'
+
+// Enums
+export { Dialogs } from './enums'

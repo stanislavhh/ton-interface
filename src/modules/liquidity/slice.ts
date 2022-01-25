@@ -14,6 +14,7 @@ import {
 import { Dialogs, FEE_TIERS } from './enums'
 import { setWalletTokenConfirmed } from 'modules/wallet'
 import { toggleAlert } from 'modules/layout'
+import { toggleDialog as setPoolsDialogs } from 'modules/pools'
 
 export const INITIAL_STATE: LiquidityState = {
   input0: {
@@ -38,6 +39,7 @@ export const confirmAddLiquidity = createAsyncThunk('liquidity/confirmAddLiquidi
   dispatch(clearState())
   dispatch(toggleAlert({ type: 'success', element: 'Transaction sent!' }))
   dispatch(setDialog({ type: '' }))
+  dispatch(setPoolsDialogs({ type: '' }))
 })
 
 export const allowTokenTransaction = createAsyncThunk(

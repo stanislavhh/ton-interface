@@ -1,3 +1,4 @@
+import { ForwardedRef, forwardRef } from 'react'
 import { makeStyles, MenuItem, Typography } from '@material-ui/core'
 import { toggleDialog } from 'modules/pools/slice'
 import { Dialogs } from 'modules/pools/enums'
@@ -11,34 +12,39 @@ export const useStyles = makeStyles((theme) => ({
   },
 }))
 
-export const ActionItems = ({
-  pool,
-  withRemove = false,
-}: {
-  pool: PoolSelector | WalletPoolsSelector
-  withRemove?: boolean
-}) => {
-  const dispatch = useAppDispatch()
-  const classes = useStyles()
-  return (
-    <>
-      <MenuItem className={classes.menuItem} onClick={() => {}}>
-        <Typography variant="body2">View Details</Typography>
-      </MenuItem>
-      <MenuItem
-        className={classes.menuItem}
-        onClick={() => dispatch(toggleDialog({ type: Dialogs.ADD_LIQUIDITY, pool }))}
-      >
-        <Typography variant="body2">Add Liquidity</Typography>
-      </MenuItem>
-      {withRemove && (
+export const ActionItems = forwardRef(
+  (
+    {
+      pool,
+      withRemove = false,
+    }: {
+      pool: PoolSelector | WalletPoolsSelector
+      withRemove?: boolean
+    },
+    ref?: ForwardedRef<unknown>,
+  ) => {
+    const dispatch = useAppDispatch()
+    const classes = useStyles()
+    return (
+      <>
+        <MenuItem className={classes.menuItem} onClick={() => {}}>
+          <Typography variant="body2">View Details</Typography>
+        </MenuItem>
         <MenuItem
           className={classes.menuItem}
-          onClick={() => dispatch(toggleDialog({ type: Dialogs.REMOVE_LIQUIDITY, pool }))}
+          onClick={() => dispatch(toggleDialog({ type: Dialogs.ADD_LIQUIDITY, pool }))}
         >
-          <Typography variant="body2">Remove Liquidity</Typography>
+          <Typography variant="body2">Add Liquidity</Typography>
         </MenuItem>
-      )}
-    </>
-  )
-}
+        {withRemove && (
+          <MenuItem
+            className={classes.menuItem}
+            onClick={() => dispatch(toggleDialog({ type: Dialogs.REMOVE_LIQUIDITY, pool }))}
+          >
+            <Typography variant="body2">Remove Liquidity</Typography>
+          </MenuItem>
+        )}
+      </>
+    )
+  },
+)

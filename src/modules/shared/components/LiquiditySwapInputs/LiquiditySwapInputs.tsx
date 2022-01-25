@@ -1,21 +1,10 @@
 import { ReactElement } from 'react'
 import { Grid, makeStyles } from '@material-ui/core'
-import { CombinedTokenInput } from 'modules/shared'
-import { LiquiditySwapInput } from './LiquiditySwapInput'
-
-export type IProps = {
-  tokenInput: CombinedTokenInput
-  label: string
-  withBalanceLabel?: boolean
-  withMax?: boolean
-  onChange: (value: string) => void
-  onBtnClick: () => void
-  onMaxClick?: () => void
-}
+import { LiquiditySwapInput, LiquiditySwapInputProps } from './LiquiditySwapInput'
 
 export type LiquiditySwapInputsProps = {
-  input0Props: IProps
-  input1Props: IProps
+  input0Props: LiquiditySwapInputProps
+  input1Props: LiquiditySwapInputProps
   icon: ReactElement
 }
 const useStyles = makeStyles((theme) => ({

@@ -8,11 +8,16 @@ import { FeeTiersPopup } from './FeeTiersPopup'
 import { xsButton } from 'helpers/themeHelper'
 import { feeTierToPercentage } from 'modules/liquidity/utils'
 
-interface LiquidityInfoProps {}
+interface LiquidityInfoProps {
+  editableFees?: boolean
+}
 
 const useStyles = makeStyles((theme) => ({
   feesButton: {
     ...xsButton,
+    '&.Mui-disabled': {
+      background: 'rgba(0, 0, 0, 0.12)',
+    },
   },
   dialog: {
     maxWidth: '500px',
@@ -22,7 +27,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }))
 
-export const LiquidityInfo = (props: LiquidityInfoProps) => {
+export const LiquidityInfo = ({ editableFees = true }: LiquidityInfoProps) => {
   const classes = useStyles()
   const { i0, i1, poolFees, poolShare, rate } = useAppSelector($liquidityInfo)
   const [anchorEl, setAnchorEl] = useState<(EventTarget & HTMLSpanElement) | null>(null)
@@ -45,7 +50,12 @@ export const LiquidityInfo = (props: LiquidityInfoProps) => {
         tooltip="Fee tier is setup automatically based on users choice. You may change it in tiers popup."
       >
         {poolFees ? (
-          <BaseButton size="small" onClick={(e) => setAnchorEl(e.currentTarget)} className={classes.feesButton}>
+          <BaseButton
+            disabled={!editableFees}
+            size="small"
+            onClick={(e) => setAnchorEl(e.currentTarget)}
+            className={classes.feesButton}
+          >
             <Typography variant="body2">{feeTierToPercentage(poolFees)} %</Typography>
           </BaseButton>
         ) : (

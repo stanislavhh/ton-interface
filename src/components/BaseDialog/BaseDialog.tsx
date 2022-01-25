@@ -7,11 +7,13 @@ export interface BaseDialogProps extends DialogProps {
   onClose?: (event: {}, reason: 'closeIcon' | 'backdropClick' | 'escapeKeyDown') => void
   showBackdropLoader?: boolean
   backdropText?: ReactNode | string
+  titleElement?: ReactNode
 }
 
 const useStyles = makeStyles((theme) => ({
   dialog: {
     '& .MuiDialog-paper': {
+      margin: theme.spacing(2),
       borderRadius: BORDER_RADIUS1,
       background: 'rgba(255, 255, 255, 0.8)',
       backdropFilter: 'blur(8px)',
@@ -34,14 +36,14 @@ const useStyles = makeStyles((theme) => ({
 }))
 
 export const BaseDialog = (props: BaseDialogProps): JSX.Element => {
-  const { title, className, children, onClose, backdropText, showBackdropLoader, ...rest } = props
+  const { title, titleElement, className, children, onClose, backdropText, showBackdropLoader, ...rest } = props
   const classes = useStyles()
 
   return (
     <Dialog className={`${classes.dialog} ${className || ''}`} onClose={onClose} {...rest}>
       <Grid container className={classes.gridContainer}>
         <Grid item xs={12} className={classes.headContainer}>
-          <Typography variant="h4">{title}</Typography>
+          {titleElement ? titleElement : <Typography variant="h4">{title}</Typography>}
           <Icon onClick={(e) => onClose?.(e, 'closeIcon')} className={classes.closeIcon}>
             close
           </Icon>

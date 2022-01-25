@@ -25,9 +25,6 @@ export const useWatchPricesChange = (
 
   const t1Amount = convertTokensAmount(i0, i1)
 
-  if (t1Amount) {
-  }
-
   useEffect(() => {
     if (allowDispatch && canSetAmount(Number(t1Amount))) {
       dispatch(action({ type: type, amount: t1Amount }))

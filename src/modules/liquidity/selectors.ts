@@ -5,7 +5,7 @@ import { $poolsList } from 'modules/pools/selectors'
 import { LiquidityState } from './types'
 import { $transactionSettings } from 'modules/layout/selectors'
 import { DEFAULT_PRECISION } from 'components/BaseInput'
-import { findPoolsBySelectedTokens, feeTierToPercentage } from './utils'
+import { findPoolsBySelectedTokens } from './utils'
 import { FEE_TIERS } from './enums'
 
 export const liquidity = (state: StoreState) => state.liquidity

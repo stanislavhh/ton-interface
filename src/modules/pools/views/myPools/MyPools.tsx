@@ -1,5 +1,5 @@
-import { useAppSelector, useRouter } from 'hooks'
-import { $loadingMyPoolsList, $walletPoolsList } from 'modules/pools/selectors'
+import { useAppDispatch, useAppSelector, useRouter } from 'hooks'
+import { $loadingMyPoolsList, $poolsDialog, $walletPoolsList } from 'modules/pools/selectors'
 import { MY_POOLS_INITIAL_OPTIONS } from 'modules/pools/constants'
 import { $isConnected } from 'modules/wallet'
 import { CircularProgress, Grid, makeStyles, Typography } from '@material-ui/core'
@@ -8,8 +8,14 @@ import CardContainer from 'modules/shared/components/LiquiditySwapCardContainer'
 import BaseButton from 'components/BaseButton'
 import MyPoolsTitle from 'modules/shared/components/PageTitileWithLink'
 import { PoolHeader, PoolRow } from 'modules/pools/components/MyPoolsList'
-import { AddLiquidityDialog } from 'modules/pools/components/AddLiquidityDialog'
+import { AddLiquidityDialog } from 'modules/liquidity/components/AddLiquidityDialog'
 import { RemoveLiquidityDialog } from 'modules/pools/components/RemoveLiquidityDialog'
+import { Dialogs } from 'modules/pools/enums'
+import { toggleDialog } from 'modules/pools/slice'
+import { useWatchAddLiquidity } from 'modules/pools/hooks'
+import ConfirmLiquidityDialog from 'modules/liquidity/components/ConfirmLiquidityDialog'
+import { Dialogs as LiquidityDialogs } from 'modules/liquidity'
+import { $dialog } from 'modules/liquidity/selectors'
 
 const useStyles = makeStyles((theme) => ({
   card: {
@@ -33,17 +39,28 @@ const useStyles = makeStyles((theme) => ({
 }))
 
 export const MyPools = () => {
+  useWatchAddLiquidity()
   const classes = useStyles()
   const router = useRouter()
+  const dispatch = useAppDispatch()
+  const dialog = useAppSelector($poolsDialog)
+  const liquidityDialog = useAppSelector($dialog)
   const pools = useAppSelector($walletPoolsList)
   const loading = useAppSelector($loadingMyPoolsList)
   const connected = useAppSelector($isConnected)
 
   const navigateToLiquidity = () => router.navigate('/liquidity')
+  const closeDialog = () => {
+    dispatch(toggleDialog({ type: '', pool: null }))
+  }
 
   return (
     <Grid container justifyContent="center">
-      <AddLiquidityDialog />
+      <AddLiquidityDialog
+        open={dialog.type === Dialogs.ADD_LIQUIDITY && liquidityDialog.type !== LiquidityDialogs.CONFIRM_LIQUIDITY}
+        onClose={closeDialog}
+      />
+      <ConfirmLiquidityDialog open={liquidityDialog.type === LiquidityDialogs.CONFIRM_LIQUIDITY} />
       <RemoveLiquidityDialog />
       <MyPoolsTitle title="My Pools" md={12} secondaryTitle="All Pools" to="/all-pools" />
       <CardContainer md={12} cardClass={classes.card}>

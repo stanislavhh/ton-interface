@@ -7,12 +7,13 @@ import { CombinedTokenInput } from 'modules/shared/types'
 
 export interface LiquiditySwapInputProps {
   onChange: (value: string) => void
-  onBtnClick: () => void
+  onBtnClick?: () => void
   onMaxClick?: () => void
-  label: string
+  label?: string
   className?: string
   withBalanceLabel?: boolean
   withMax?: boolean
+  disallowTokenSelect?: boolean
   tokenInput: CombinedTokenInput
 }
 
@@ -63,8 +64,9 @@ export const LiquiditySwapInput = ({
   tokenInput,
   onChange,
   label,
+  disallowTokenSelect,
 }: LiquiditySwapInputProps) => {
-  const classes = useStyles({ isSmallLabel: label.length < 5 })
+  const classes = useStyles({ isSmallLabel: Boolean(label && label.length < 5) })
 
   const { balance, amount, token } = tokenInput
 
@@ -104,7 +106,7 @@ export const LiquiditySwapInput = ({
         />
       </Grid>
       <Grid item xs={4} sm={3} className={classes.buttonContainer}>
-        <TokenButton onClick={onBtnClick} token={token} />
+        <TokenButton onClick={onBtnClick} disallowTokenSelect={disallowTokenSelect} token={token} />
       </Grid>
     </>
   )

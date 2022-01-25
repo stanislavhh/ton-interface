@@ -1,8 +1,8 @@
-import { Button, ButtonProps, Typography, Icon, makeStyles, Avatar } from '@material-ui/core'
+import { Button, ButtonProps, Typography, Icon, makeStyles, Avatar, Box } from '@material-ui/core'
 import { COLOR_WHITE } from 'helpers/themeHelper'
 import { Token } from 'modules/shared'
 
-export type TokenButtonProps = ButtonProps & { token: Token | null }
+export type TokenButtonProps = ButtonProps & { token: Token | null; disallowTokenSelect?: boolean }
 
 const useStyles = makeStyles((theme) => ({
   tokenButton: {
@@ -26,11 +26,16 @@ const useStyles = makeStyles((theme) => ({
   },
 }))
 
-export const TokenButton = ({ token, onClick }: TokenButtonProps) => {
+export const TokenButton = ({ token, onClick, disallowTokenSelect }: TokenButtonProps) => {
   const { logoURI, symbol } = token || {}
   const classes = useStyles({ symbol })
 
-  return (
+  return disallowTokenSelect ? (
+    <Box display="flex" alignItems="center" ml={2} height={60}>
+      {logoURI && <Avatar className={classes.avatar} src={logoURI} />}
+      {symbol && <Typography variant="body2">{symbol}</Typography>}
+    </Box>
+  ) : (
     <Button variant="outlined" fullWidth className={classes.tokenButton} onClick={onClick}>
       {logoURI && <Avatar className={classes.avatar} src={logoURI} />}
       {symbol || (

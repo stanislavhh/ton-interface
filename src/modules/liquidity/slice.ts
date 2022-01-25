@@ -37,7 +37,16 @@ export const confirmAddLiquidity = createAsyncThunk('liquidity/confirmAddLiquidi
   await imitateFetch({ data: {} }, true)
 
   dispatch(clearState())
-  dispatch(toggleAlert({ type: 'success', element: 'Transaction sent!' }))
+  dispatch(toggleAlert({ type: 'success', element: 'Liquidity added!' }))
+  dispatch(setDialog({ type: '' }))
+  dispatch(setPoolsDialogs({ type: '' }))
+})
+
+export const removeLiquidity = createAsyncThunk('liquidity/confirmAddLiquidity', async (_, { dispatch }) => {
+  await imitateFetch({ data: {} }, true)
+
+  dispatch(clearState())
+  dispatch(toggleAlert({ type: 'success', element: 'Liquidity removed!' }))
   dispatch(setDialog({ type: '' }))
   dispatch(setPoolsDialogs({ type: '' }))
 })

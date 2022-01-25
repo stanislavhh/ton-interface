@@ -43,6 +43,7 @@ export interface PoolsState {
   list: Pool[]
   loadingList: boolean
   dialog: Dialog
+  removingPoolsLiquidity: boolean
 }
 
 export interface PoolsListsSettings {

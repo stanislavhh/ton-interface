@@ -26,7 +26,7 @@ export const PoolHeader = ({ onSortChange, sortOptions, ...rest }: PoolHeaderPro
         order={sortOptions[0].order}
       />
       <HeaderColumn
-        title="Share of Pool"
+        title="Share of pool"
         sm={2}
         md={2}
         display={{ xs: 'none', md: 'flex' }}

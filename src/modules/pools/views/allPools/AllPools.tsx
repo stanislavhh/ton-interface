@@ -8,7 +8,6 @@ import { $loadingPools, $poolsDialog, $poolsSelector } from 'modules/pools/selec
 import { ALL_POOLS_INITIAL_OPTIONS } from 'modules/pools/constants'
 import { AddLiquidityDialog } from 'modules/liquidity/components/AddLiquidityDialog'
 import ConfirmLiquidityDialog from 'modules/liquidity/components/ConfirmLiquidityDialog'
-import { RemoveLiquidityDialog } from 'modules/pools/components/RemoveLiquidityDialog'
 import { toggleDialog } from 'modules/pools/slice'
 import { Dialogs } from 'modules/pools/enums'
 import { Dialogs as LiquidityDialogs } from 'modules/liquidity/enums'
@@ -48,7 +47,6 @@ export const AllPools = () => {
         onClose={closeDialog}
       />
       <ConfirmLiquidityDialog open={liquidityDialog.type === LiquidityDialogs.CONFIRM_LIQUIDITY} />
-      <RemoveLiquidityDialog />
       <AllPoolsTitle title="All Pools" md={12} secondaryTitle="My Pools" to="/my-pools" />
       <CardContainer md={12} cardClass={classes.card}>
         {loading ? (

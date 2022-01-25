@@ -183,6 +183,8 @@ theme.typography.body2 = {
 
 theme.typography.subtitle1 = {
   ...commonTypo,
+  fontSize: '16px',
+  lineHeight: '20px',
 }
 
 theme.typography.subtitle2 = {

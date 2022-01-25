@@ -9,6 +9,7 @@ export const pools = (state: StoreState) => state.pools
 export const $poolsList = createSelector(pools, (p) => p.list)
 export const $loadingPools = createSelector(pools, (p) => p.loadingList)
 export const $poolsDialog = createSelector(pools, (p) => p.dialog)
+export const $removingPoolsLiquidity = createSelector(pools, (p) => p.removingPoolsLiquidity)
 
 export const $loadingMyPoolsList = createSelector(
   [$loadingPools, $connecting],
@@ -37,11 +38,13 @@ export const $walletPoolsList = createSelector([$poolsSelector, $walletTokens], 
     .map((p) => {
       // Mocking data for ui
       const poolShare = Math.random() / 1000
+      const myLiquidity = Number(p.liquidity) * poolShare
       return {
         ...p,
-        myLiquidity: Number(p.liquidity) * poolShare,
+        myLiquidity,
         poolShare: poolShare.toFixed(7),
-        dailyIncome: Number(p.volumeUSD) * feeTierToPercentage(p.feeTier) * poolShare,
+        dailyIncome:
+          (Number(p.volumeUSD) / Number(p.liquidity)) * myLiquidity * feeTierToPercentage(p.feeTier) * poolShare,
       }
     })
 })

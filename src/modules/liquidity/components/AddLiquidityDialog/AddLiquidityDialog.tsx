@@ -13,6 +13,9 @@ import { useAmountChangeHandler } from 'modules/shared/hooks/useAmountChangeHand
 import { useLiquidityPrimaryButton } from 'modules/liquidity/hooks/useLiquidityPrimaryButton'
 
 const useStyles = makeStyles((theme) => ({
+  dialog: {
+    maxWidth: '500px',
+  },
   addLiqTitle: { marginRight: theme.spacing(1) },
   iconPlus: {
     fontWeight: 'bold',
@@ -20,7 +23,7 @@ const useStyles = makeStyles((theme) => ({
   mainButtonContainer: {
     display: 'flex',
     justifyContent: 'space-between',
-    marginTop: theme.spacing(2),
+    marginTop: theme.spacing(3),
   },
   infoContainer: {
     marginTop: theme.spacing(2),
@@ -31,7 +34,8 @@ const useStyles = makeStyles((theme) => ({
 }))
 
 /**
- * tokens for pool you want to add liquidity must be present in tokens list
+ * tokens in pool must be present in tokens list or dialog will not work correctly
+ *
  */
 export const AddLiquidityDialog = ({ open, onClose }: BaseDialogProps) => {
   const classes = useStyles()
@@ -70,10 +74,11 @@ export const AddLiquidityDialog = ({ open, onClose }: BaseDialogProps) => {
   return (
     <BaseDialog
       open={open}
+      classes={{ paper: classes.dialog }}
       titleElement={
         <Box display="flex" alignItems="center">
           <Typography variant="h4" className={classes.addLiqTitle}>
-            Add liquidity to
+            Add
           </Typography>
           <LPAvatar avatar0={input0.token?.logoURI} size={32} avatar1={input1.token?.logoURI} />
           <Typography variant="h4" className={classes.addLiqTitle}>
@@ -82,6 +87,8 @@ export const AddLiquidityDialog = ({ open, onClose }: BaseDialogProps) => {
         </Box>
       }
       onClose={onClose}
+      fullWidth
+      maxWidth="sm"
     >
       <BackdropLoader open={confirmingTokenTransactions} text="Confirm transaction" />
       <LiquidityInputs
@@ -94,13 +101,13 @@ export const AddLiquidityDialog = ({ open, onClose }: BaseDialogProps) => {
         }
       />
       <Grid container>
-        <Grid item xs={12} sm={9} className={classes.mainButtonContainer}>
+        <Grid item xs={12} sm={12} className={classes.mainButtonContainer}>
           {enableToken0Button}
           {enableToken1Button}
           {addLiquidityButton}
         </Grid>
       </Grid>
-      <Grid item xs={12} sm={9} className={classes.infoContainer}>
+      <Grid item xs={12} sm={12} className={classes.infoContainer}>
         <LiquidityInfo editableFees={false} />
       </Grid>
     </BaseDialog>

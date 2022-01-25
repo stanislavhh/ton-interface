@@ -98,7 +98,7 @@ export const ConfirmLiquidityDialog = (props: ConfirmLiquidityDialogProps) => {
     >
       <Grid container className={classes.mainContainer}>
         <Grid item xs={12} className={classes.depositContainer}>
-          <Typography variant="body2">You deposit</Typography>
+          <Typography variant="subtitle1">You deposit</Typography>
         </Grid>
         {renderToken(i0)}
         <Grid item xs={2} className={`${classes.flex} ${classes.justifyCenter}`}>
@@ -106,7 +106,7 @@ export const ConfirmLiquidityDialog = (props: ConfirmLiquidityDialogProps) => {
         </Grid>
         {renderToken(i1, classes.justifyEnd)}
         <Grid item xs={12} className={classes.receiveContainer}>
-          <Typography variant="body2">You receive</Typography>
+          <Typography variant="subtitle1">You receive</Typography>
         </Grid>
         <Grid item xs={12} className={classes.flex}>
           <LPAvatar avatar0={i0.token?.logoURI} avatar1={i1.token?.logoURI} />

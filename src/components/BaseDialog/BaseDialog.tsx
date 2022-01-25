@@ -18,6 +18,9 @@ const useStyles = makeStyles((theme) => ({
       background: 'rgba(255, 255, 255, 0.8)',
       backdropFilter: 'blur(8px)',
     },
+    '& .MuiDialog-paperFullWidth': {
+      width: 'calc(100% - 32px)',
+    },
   },
   gridContainer: {
     paddingBlock: theme.spacing(2.5),

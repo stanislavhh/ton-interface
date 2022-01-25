@@ -51,14 +51,10 @@ I have tried to keep code consistent, reusable and use SOLID as much as I can.
 
 `utils/`: some common functions
 
-## Dependencies 
-All libs were chosen for reason:
-
-`redux-toolkit` - has integrated and full ecosystem for redux. It isn't lightweight, but includes all needed stuff to support from sm to big apps
+## Dependencies
+`redux-toolkit` - has integrated and full ecosystem for redux. It isn't lightweight, but includes all needed stuff to support from small to large apps
 
 `material`  - I know this is not the lightweight lib, but again it allows to use many features, has a great support and smooth ui in comparison with others
-
-`react-transition-group` - just a common animation lib for react (allows us to make animations for transition between routes or with material components)
 
 
 ### Others:

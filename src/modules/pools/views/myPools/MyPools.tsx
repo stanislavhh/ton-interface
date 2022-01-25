@@ -1,5 +1,5 @@
 import { useAppDispatch, useAppSelector, useRouter } from 'hooks'
-import { $loadingMyPoolsList, $poolsDialog, $walletPoolsList } from 'modules/pools/selectors'
+import { $loadingMyPoolsList, $poolsDialog, $removingPoolsLiquidity, $walletPoolsList } from 'modules/pools/selectors'
 import { MY_POOLS_INITIAL_OPTIONS } from 'modules/pools/constants'
 import { $isConnected } from 'modules/wallet'
 import { CircularProgress, Grid, makeStyles, Typography } from '@material-ui/core'
@@ -9,13 +9,14 @@ import BaseButton from 'components/BaseButton'
 import MyPoolsTitle from 'modules/shared/components/PageTitileWithLink'
 import { PoolHeader, PoolRow } from 'modules/pools/components/MyPoolsList'
 import { AddLiquidityDialog } from 'modules/liquidity/components/AddLiquidityDialog'
-import { RemoveLiquidityDialog } from 'modules/pools/components/RemoveLiquidityDialog'
+import { RemoveLiquidityDialog } from 'modules/liquidity/components/RemoveLiquidityDialog'
 import { Dialogs } from 'modules/pools/enums'
-import { toggleDialog } from 'modules/pools/slice'
+import { removeLiquidityFromPool, toggleDialog } from 'modules/pools/slice'
 import { useWatchAddLiquidityDialog } from 'modules/pools/hooks'
 import ConfirmLiquidityDialog from 'modules/liquidity/components/ConfirmLiquidityDialog'
 import { Dialogs as LiquidityDialogs } from 'modules/liquidity'
 import { $dialog } from 'modules/liquidity/selectors'
+import { WalletPoolsSelector } from 'modules/pools/types'
 
 const useStyles = makeStyles((theme) => ({
   card: {
@@ -48,6 +49,7 @@ export const MyPools = () => {
   const pools = useAppSelector($walletPoolsList)
   const loading = useAppSelector($loadingMyPoolsList)
   const connected = useAppSelector($isConnected)
+  const removingLiquidity = useAppSelector($removingPoolsLiquidity)
 
   const navigateToLiquidity = () => router.navigate('/liquidity')
   const closeDialog = () => {
@@ -61,7 +63,13 @@ export const MyPools = () => {
         onClose={closeDialog}
       />
       <ConfirmLiquidityDialog open={liquidityDialog.type === LiquidityDialogs.CONFIRM_LIQUIDITY} />
-      <RemoveLiquidityDialog />
+      <RemoveLiquidityDialog
+        open={dialog.type === Dialogs.REMOVE_LIQUIDITY}
+        pool={dialog.pool as WalletPoolsSelector}
+        onClose={closeDialog}
+        showBackdrop={removingLiquidity}
+        confirm={() => dispatch(removeLiquidityFromPool())}
+      />
       <MyPoolsTitle title="My Pools" md={12} secondaryTitle="All Pools" to="/all-pools" />
       <CardContainer md={12} cardClass={classes.card}>
         {loading ? (

@@ -60,7 +60,6 @@ export const ConnectButton = ({ loading, withMenu = false, ...rest }: ConnectBut
         disabled={connecting}
         color="primary"
         size="large"
-        style={{ zIndex: isOpen ? 1301 : 0 }}
         onClick={handleClick}
         {...rest}
         loading={connecting || (isConnected && loading)}

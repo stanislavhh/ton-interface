@@ -1,5 +1,13 @@
 // Types
-export type { PoolsState, Pool, PoolToken, PoolSelector } from './types'
+export type {
+  PoolsState,
+  Pool,
+  PoolToken,
+  PoolSelector,
+  WalletPoolsSelector,
+  PoolsListsSettings,
+  Dialog,
+} from './types'
 
 // Views
 export { AllPools } from './views/allPools'

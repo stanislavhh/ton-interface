@@ -40,11 +40,16 @@ const setWalletTokenConfirmedReducer: CaseReducer<WalletState, PayloadAction<Com
   }
 }
 
+const disconnectWalletReducer: CaseReducer<WalletState> = (state) => {
+  state.walletTokens = []
+}
+
 const walletSlice = createSlice({
   name: 'wallet',
   initialState: INITIAL_STATE,
   reducers: {
     setWalletTokenConfirmed: setWalletTokenConfirmedReducer,
+    disconnectWallet: disconnectWalletReducer,
   },
   extraReducers: (builder) => {
     builder.addCase(getWalletData.pending, setConnectingReducer)
@@ -52,6 +57,6 @@ const walletSlice = createSlice({
   },
 })
 
-export const { setWalletTokenConfirmed } = walletSlice.actions
+export const { setWalletTokenConfirmed, disconnectWallet } = walletSlice.actions
 
 export const walletReducer = walletSlice.reducer

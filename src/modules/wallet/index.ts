@@ -2,7 +2,7 @@
 export { default } from './components/ConnectButton'
 
 // Slice
-export { walletReducer, getWalletData, setWalletTokenConfirmed } from './slice'
+export { walletReducer, getWalletData, setWalletTokenConfirmed, disconnectWallet } from './slice'
 
 // Selectors
 export { wallet, $walletTokens, $selectedWToken, $isConnected, $connecting } from './selectors'

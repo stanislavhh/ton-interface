@@ -3,10 +3,10 @@ import { useAppSelector } from 'hooks'
 import { $liquidityInfo } from 'modules/liquidity/selectors'
 import { RowInfo, RatesInfo } from 'modules/shared/components/LiquiditySwapInfo'
 import BaseButton from 'components/BaseButton'
-import { useState } from 'react'
 import { FeeTiersPopup } from './FeeTiersPopup'
 import { xsButton } from 'helpers/themeHelper'
 import { feeTierToPercentage } from 'modules/liquidity/utils'
+import { usePopoverAnchor } from 'hooks'
 
 interface LiquidityInfoProps {
   editableFees?: boolean
@@ -30,11 +30,7 @@ const useStyles = makeStyles((theme) => ({
 export const LiquidityInfo = ({ editableFees = true }: LiquidityInfoProps) => {
   const classes = useStyles()
   const { i0, i1, poolFees, poolShare, rate } = useAppSelector($liquidityInfo)
-  const [anchorEl, setAnchorEl] = useState<(EventTarget & HTMLSpanElement) | null>(null)
-
-  const open = Boolean(anchorEl)
-
-  const closePopup = () => setAnchorEl(null)
+  const { anchorEl, close: closePopup, isOpen, setAnchorEl } = usePopoverAnchor()
 
   return (
     <Grid container>
@@ -63,7 +59,7 @@ export const LiquidityInfo = ({ editableFees = true }: LiquidityInfoProps) => {
         )}
         <FeeTiersPopup
           poolFee={poolFees}
-          open={open}
+          open={isOpen}
           anchorOrigin={{
             vertical: 'bottom',
             horizontal: 'right',

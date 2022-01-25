@@ -1,7 +1,7 @@
-import { useState } from 'react'
 import { Icon, makeStyles } from '@material-ui/core'
 import { TransactionSettingsPopup } from './TransactionSettingsPopup'
 import { iconsTransition } from 'helpers/themeHelper'
+import { usePopoverAnchor } from 'hooks'
 
 const useStyles = makeStyles(() => ({
   settingsIcon: {
@@ -11,23 +11,15 @@ const useStyles = makeStyles(() => ({
 
 export const TransactionSettingsIcon = () => {
   const classes = useStyles()
-  const [anchorEl, setAnchorEl] = useState<(EventTarget & HTMLSpanElement) | null>(null)
-
-  const open = Boolean(anchorEl)
-  const id = open ? 'popover' : undefined
+  const { anchorEl, close, isOpen, setAnchorEl } = usePopoverAnchor()
 
   return (
     <>
-      <Icon
-        aria-describedby={id}
-        className={classes.settingsIcon}
-        color="primary"
-        onClick={(e) => setAnchorEl(e.currentTarget)}
-      >
+      <Icon className={classes.settingsIcon} color="primary" onClick={(e) => setAnchorEl(e.currentTarget)}>
         settings
       </Icon>
       <TransactionSettingsPopup
-        open={open}
+        open={isOpen}
         anchorOrigin={{
           vertical: 'bottom',
           horizontal: 'right',
@@ -36,7 +28,7 @@ export const TransactionSettingsIcon = () => {
           vertical: 'top',
           horizontal: 'right',
         }}
-        onClose={() => setAnchorEl(null)}
+        onClose={close}
         anchorEl={anchorEl}
       />
     </>

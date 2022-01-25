@@ -37,7 +37,7 @@ export const Header = (): JSX.Element => {
       </Grid>
       {!isTablet && (
         <Grid item xs={3} className={classes.walletContainer}>
-          <ConnectWalletButton fullWidth />
+          <ConnectWalletButton withMenu fullWidth />
         </Grid>
       )}
     </Grid>

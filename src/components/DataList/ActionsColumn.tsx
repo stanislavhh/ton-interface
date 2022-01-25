@@ -1,17 +1,14 @@
-import { Grid, Icon, makeStyles, Menu } from '@material-ui/core'
+import { ReactElement } from 'react'
+import { Grid, Icon, makeStyles } from '@material-ui/core'
 import BaseButton from 'components/BaseButton'
+import BaseMenu from 'components/BaseMenu'
 import { BORDER_RADIUS4 } from 'helpers/themeHelper'
-import { ReactChildren, ReactElement, useState } from 'react'
+import { usePopoverAnchor } from 'hooks'
 
 const useStyles = makeStyles((theme) => ({
   actionsContainer: {
     display: 'flex',
     justifyContent: 'flex-end',
-  },
-  paper: {
-    background: 'rgba(255, 255, 255, 0.6)',
-    backdropFilter: 'blur(8px)',
-    boxShadow: 'none',
   },
   moreButton: {
     padding: theme.spacing(0.75),
@@ -22,10 +19,7 @@ const useStyles = makeStyles((theme) => ({
 
 export const ActionsColumn = ({ children }: { children: ReactElement | ReactElement[] }) => {
   const classes = useStyles()
-  const [anchorEl, setAnchorEl] = useState<(EventTarget & HTMLSpanElement) | null>(null)
-
-  const close = () => setAnchorEl(null)
-  const open = Boolean(anchorEl)
+  const { anchorEl, close, isOpen, setAnchorEl } = usePopoverAnchor()
 
   return (
     <Grid item xs={1} className={classes.actionsContainer}>
@@ -34,9 +28,8 @@ export const ActionsColumn = ({ children }: { children: ReactElement | ReactElem
           more_vert
         </Icon>
       </BaseButton>
-      <Menu
-        open={open}
-        classes={{ paper: classes.paper }}
+      <BaseMenu
+        open={isOpen}
         anchorOrigin={{
           vertical: 'bottom',
           horizontal: 'right',
@@ -51,7 +44,7 @@ export const ActionsColumn = ({ children }: { children: ReactElement | ReactElem
         getContentAnchorEl={null}
       >
         {children}
-      </Menu>
+      </BaseMenu>
     </Grid>
   )
 }

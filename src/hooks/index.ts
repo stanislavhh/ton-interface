@@ -4,4 +4,5 @@ export { useMobilePoint, useDesktopPoint, useTabletPoint, useLandscapeTabletPoin
 export { useRouter } from './useRouter'
 export { useDispatchOnUnmount } from './useDispatchOnUnmount'
 export { useDataFiltering, useDataSorting } from './useDataListManipulations'
+export { usePopoverAnchor } from './usePopoverAnchor'
 export type { SortOption, FilterQuery } from './useDataListManipulations'

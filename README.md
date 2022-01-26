@@ -15,17 +15,47 @@ To build use:
 ###`yarn build`
 
 
-## Features:
+## Features(modules):
 
-#### - app configuration
-#### - working ui for swap, pools, pool stats, add/remove liquidity
 
-*Some things may work incorrect in business context, because I am aware of business logic for DEFI only partially, didn't have much time to deep into, and a lot of things were done just by my feeling. 
-So there still will be a lot of work with integration, types changing etc
+### Layout module
+responsible for connecting all modules and layout components, such as: header, mobile navigation, content layouts
+redux for layout includes common things like transaction settings, tokens and their prices etc.
+
+### Wallet module
+Has data related to wallet, like tokens and balances. 
+You can't proceed with swap/adding/removing liquidity until you connect to the wallet
+
+### Swap module
+Includes swap functionality. There are a couple of tokens that have balance and TON is the first one.
+I order to proceed with the swap you need to connect wallet, select two tokens and enter the amount of tokens.
+Inputs work automatically, once you selected both tokens and type an amount in one input the second one should change according to their rate.
+Rate works randomly. When you select a token, I emit the call to get its price (which is probably not a correct way, and getting all prices is much easier, but it helps to get the latest price).
+After amount and tokens are selected you can click on swap and see confirmation popup, where you can confirm the transaction.
+It also includes settings popup where you can change slippage tolerance and transaction decline time.
+
+### Liquidity module
+Liquidity has a similar UI to swap. You need to connect to a wallet, select tokens and enter an amount.
+It automatically finds a pool with provided tokens and fee and if pool is not found shows the notification that user is going to create a pool and choose the token's rate.
+If a pool already exists than entering an amount for any token will affect other amount (50%/50%).
+User can proceed with adding liquidity or creating a pool only if tokens are selected & amount/balances correct.
+To test it you can use the tokens in the top of the list. Some of are not allowed from the wallet, so you might see allow token button.
+
+### Pools module
+Includes 2 views: all pools and my pools. In order to see the list of users pools you need to connect to a wallet.
+The all pools list includes common data related to a pool, like liquidity, apr, usdVolume etc. My pools list has the data related to connected wallet.
+Both lists have search/sorting functionality.
+Both lists have action 'add liquidity' that opens dialog where you already have preselected tokens and fee according to pool.
+The flow for adding liquidity is the same as adding liquidity modules. actually in uses mostly the same peace of code and state.
+My list also has an action 'remove liquidity' where you can select the amount in % of how much liquidity you will remove and to see calculation changes.
+
+#####NOTE: 
+Mocks for pools and tokens are inconsistent. So you might not see logos for some pools in the list. But it also means that adding liquidity for some pools is not possible.
+But its should be the case for consistent&real data.
 
 
 ## Initial Code structure
-I have tried to keep code consistent, reusable and use SOLID as much as I can.
+I split code my modules, so it could be scalable for future features
 
 `assets/`: icons, images, fonts etc
 
@@ -37,7 +67,7 @@ I have tried to keep code consistent, reusable and use SOLID as much as I can.
 
 `mock/`: some mock, that I believe can be removed
 
-`modules/`: all features are splitted by modules, usually they consist of the next pieces:
+`modules/`: usually they consist of the next pieces:
 ```
 -components
 -views (components handling routes)

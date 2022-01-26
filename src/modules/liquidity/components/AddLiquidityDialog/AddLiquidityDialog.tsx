@@ -31,6 +31,12 @@ const useStyles = makeStyles((theme) => ({
   poolNotCreatedBox: {
     marginTop: theme.spacing(2),
   },
+  amountInput: {
+    background: 'rgba(255,255,255,0.9)',
+    '& input': {
+      paddingBlock: theme.spacing(1.5),
+    },
+  },
 }))
 
 /**
@@ -50,10 +56,16 @@ export const AddLiquidityDialog = ({ open, onClose }: BaseDialogProps) => {
   const { i1AmountChange, i0AmountChange } = useAmountChangeHandler(inputs, setAmount, true)
   const { enableToken0Button, enableToken1Button, addLiquidityButton } = useLiquidityPrimaryButton(input0, input1)
 
+  const commonIProps = {
+    label: '',
+    inputClass: classes.amountInput,
+    disallowTokenSelect: true,
+    tokenHeight: 48,
+  }
+
   const i0Props = useMemo(
     () => ({
-      label: '',
-      disallowTokenSelect: true,
+      ...commonIProps,
       tokenInput: input0,
       onChange: i0AmountChange,
       onMaxClick: () => i0AmountChange(String(inputs.input0.balance)),
@@ -62,8 +74,7 @@ export const AddLiquidityDialog = ({ open, onClose }: BaseDialogProps) => {
   )
   const i1Props = useMemo(
     () => ({
-      label: '',
-      disallowTokenSelect: true,
+      ...commonIProps,
       tokenInput: input1,
       onChange: i1AmountChange,
       onMaxClick: () => i1AmountChange(String(inputs.input1.balance)),

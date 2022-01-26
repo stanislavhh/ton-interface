@@ -30,7 +30,7 @@ export const usePoolsList = (
   }
 
   const handleSortChange = (order: SortOrders | '', field: string) => {
-    let nextOptions = sortOptions.map((option) => ({ ...option, order: option.field === field ? order : option.order }))
+    let nextOptions = sortOptions.map((option) => ({ ...option, order: option.field === field ? order : '' }))
 
     setSortOptions(nextOptions)
   }

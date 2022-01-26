@@ -7,7 +7,7 @@ interface NotificationBoxProps extends AlertProps {
   show?: boolean
 }
 
-const commonNotificationStyles = {
+export const commonNotificationStyles = {
   backdropFilter: 'blur(5px)',
   color: COLOR_TEXT,
   borderRadius: BORDER_RADIUS2,
@@ -19,14 +19,14 @@ const useStyles = makeStyles(() => ({
     ...commonNotificationStyles,
   },
   standardSuccess: {
-    background: 'rgba(0, 136, 204, 0.2)',
+    background: 'rgba(0, 136, 204, 0.5)',
     ...commonNotificationStyles,
   },
 }))
 
 export const NotificationBox = (props: NotificationBoxProps): JSX.Element | null => {
-  const { children, show, ...rest } = props
-  const classes = useStyles()
+  const { children, show, classes = {}, ...rest } = props
+  const innerClasses = useStyles()
 
   const [showBox, setShowBox] = useState(show)
 
@@ -42,7 +42,7 @@ export const NotificationBox = (props: NotificationBoxProps): JSX.Element | null
 
   return (
     <Grow in={show} onExited={() => setShowBox(false)}>
-      <Alert {...rest} classes={classes}>
+      <Alert classes={{ ...innerClasses, ...classes }} {...rest}>
         {children}
       </Alert>
     </Grow>

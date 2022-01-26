@@ -14,7 +14,9 @@ export interface LiquiditySwapInputProps {
   withBalanceLabel?: boolean
   withMax?: boolean
   disallowTokenSelect?: boolean
+  inputClass?: string
   tokenInput: CombinedTokenInput
+  tokenHeight?: number
 }
 
 const useStyles = makeStyles((theme) => ({
@@ -41,7 +43,7 @@ const useStyles = makeStyles((theme) => ({
     borderRadius: BORDER_RADIUS5,
     '& fieldset': {
       borderRadius: BORDER_RADIUS5,
-      borderColor: 'rgba(0,0,0,0.1)',
+      borderColor: 'rgba(0,0,0,0.2)',
     },
   },
   maxButton: {
@@ -65,6 +67,8 @@ export const LiquiditySwapInput = ({
   onChange,
   label,
   disallowTokenSelect,
+  inputClass = '',
+  tokenHeight,
 }: LiquiditySwapInputProps) => {
   const classes = useStyles({ isSmallLabel: Boolean(label && label.length < 5) })
 
@@ -78,7 +82,7 @@ export const LiquiditySwapInput = ({
           numeric
           max={10000000}
           min={0}
-          className={classes.input}
+          className={`${classes.input} ${inputClass}`}
           value={amount}
           onChange={onChange}
           variant="outlined"
@@ -106,7 +110,12 @@ export const LiquiditySwapInput = ({
         />
       </Grid>
       <Grid item xs={4} sm={3} className={classes.buttonContainer}>
-        <TokenButton onClick={onBtnClick} disallowTokenSelect={disallowTokenSelect} token={token} />
+        <TokenButton
+          onClick={onBtnClick}
+          height={tokenHeight}
+          disallowTokenSelect={disallowTokenSelect}
+          token={token}
+        />
       </Grid>
     </>
   )

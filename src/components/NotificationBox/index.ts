@@ -1,1 +1,1 @@
-export { NotificationBox as default } from './NotificationBox'
+export { NotificationBox as default, commonNotificationStyles } from './NotificationBox'

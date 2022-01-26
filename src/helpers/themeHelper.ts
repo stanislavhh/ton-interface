@@ -1,10 +1,8 @@
 import { createTheme } from '@material-ui/core'
 
-export const MAIN_BACKGROUND = 'linear-gradient(to top, #e6e9f0 0%, #eef1f5 100%)'
-
 export const COLOR_PRIMARY = '#0088CC'
 export const COLOR_TEXT = '#303757'
-export const COLOR_WHITE = '#FFFDFA'
+export const COLOR_WHITE = '#FFF'
 export const COLOR_TEXT_GRAY = '#808080'
 
 export const BORDER_RADIUS1 = '24px'
@@ -53,6 +51,9 @@ export const theme = createTheme({
         backgroundColor: 'rgba(0,0,0,0.05)',
         '&:hover': {
           backgroundColor: 'rgba(0,0,0,0.09)',
+        },
+        '&.Mui-disabled': {
+          backgroundColor: 'rgba(0, 0, 0, 0.2)',
         },
         '&.Mui-focused': {
           backgroundColor: 'rgba(0,0,0,0.07)',

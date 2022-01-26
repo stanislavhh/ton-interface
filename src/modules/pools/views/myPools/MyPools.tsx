@@ -17,6 +17,7 @@ import ConfirmLiquidityDialog from 'modules/liquidity/components/ConfirmLiquidit
 import { Dialogs as LiquidityDialogs } from 'modules/liquidity'
 import { $dialog } from 'modules/liquidity/selectors'
 import { WalletPoolsSelector } from 'modules/pools/types'
+import { $transactionSettings } from 'modules/layout/selectors'
 
 const useStyles = makeStyles((theme) => ({
   card: {
@@ -49,6 +50,7 @@ export const MyPools = () => {
   const pools = useAppSelector($walletPoolsList)
   const loading = useAppSelector($loadingMyPoolsList)
   const connected = useAppSelector($isConnected)
+  const tSettings = useAppSelector($transactionSettings)
   const removingLiquidity = useAppSelector($removingPoolsLiquidity)
 
   const navigateToLiquidity = () => router.navigate('/liquidity')
@@ -66,6 +68,7 @@ export const MyPools = () => {
       <RemoveLiquidityDialog
         open={dialog.type === Dialogs.REMOVE_LIQUIDITY}
         pool={dialog.pool as WalletPoolsSelector}
+        slippageTolerance={tSettings.slippageTolerance}
         onClose={closeDialog}
         showBackdrop={removingLiquidity}
         confirm={() => dispatch(removeLiquidityFromPool())}

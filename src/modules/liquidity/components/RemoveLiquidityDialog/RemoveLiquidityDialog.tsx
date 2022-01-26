@@ -9,6 +9,7 @@ import { RowInfo } from 'modules/shared/components/LiquiditySwapInfo'
 import { useSliderStyles } from 'modules/liquidity/components/RemoveLiquidityDialog/useSliderStyles'
 import ConfirmTransactionButton from 'modules/shared/components/ConfirmTransactionButton'
 import ConfirmationTerms from 'modules/shared/components/ConfirmationTerms'
+import BaseInput from 'components/BaseInput'
 
 const useStyles = makeStyles((theme) => ({
   liquidityTitle: { marginRight: theme.spacing(1) },
@@ -53,12 +54,16 @@ const useStyles = makeStyles((theme) => ({
   infoContainer: {
     marginTop: theme.spacing(2.5),
   },
+  slippageInput: {
+    maxWidth: 80,
+  },
 }))
 
 export interface RemoveLiquidityDialogProps extends BaseDialogProps {
   pool: WalletPoolsSelector | null
   confirm: () => void
   showBackdrop: boolean
+  slippageTolerance: string
 }
 
 interface DialogState {
@@ -80,7 +85,14 @@ const initialState = {
 }
 const initialSlider = 35
 
-export const RemoveLiquidityDialog = ({ open, pool, confirm, showBackdrop, ...rest }: RemoveLiquidityDialogProps) => {
+export const RemoveLiquidityDialog = ({
+  open,
+  pool,
+  slippageTolerance,
+  confirm,
+  showBackdrop,
+  ...rest
+}: RemoveLiquidityDialogProps) => {
   const classes = useStyles()
   const sliderClasses = useSliderStyles()
   const {
@@ -98,7 +110,7 @@ export const RemoveLiquidityDialog = ({ open, pool, confirm, showBackdrop, ...re
   const totalT0AmountInPool = Number(totalValueLockedToken0) * Number(poolShare) * 0.5
   const totalT1AmountInPool = Number(totalValueLockedToken1) * Number(poolShare) * 0.5
   const [slider, setSlider] = useState(initialSlider)
-  const [dialogState, setDialogState] = useState<DialogState>(initialState)
+  const [dialogState, setDialogState] = useState<DialogState>({ ...initialState, slippageTolerance })
 
   const renderToken = (logo?: string, symbol?: string, amount?: string, className?: string) => (
     <Grid item xs={5} className={`${classes.flex} ${className || ''}`}>
@@ -112,9 +124,16 @@ export const RemoveLiquidityDialog = ({ open, pool, confirm, showBackdrop, ...re
     </Grid>
   )
 
+  const handleChangeSlippage = (value: string) => {
+    setDialogState((prevState) => ({
+      ...prevState,
+      slippageTolerance: value,
+    }))
+  }
+
   const calculateNextState = () => {
     const sliderPercentage = slider / 100
-    setDialogState({
+    setDialogState((prevState) => ({
       withdrawUSD: usdFormatter.format(
         (totalT0AmountInPool * Number(token0Price) + totalT1AmountInPool * Number(token1Price)) * sliderPercentage,
       ),
@@ -122,8 +141,8 @@ export const RemoveLiquidityDialog = ({ open, pool, confirm, showBackdrop, ...re
       t1Amount: (totalT1AmountInPool * sliderPercentage).toFixed(4),
       poolShare: (Number(poolShare) * (1 - sliderPercentage)).toFixed(6),
       dailyIncome: usdFormatter.format(Number(dailyIncome) * (1 - sliderPercentage)),
-      slippageTolerance: '',
-    })
+      slippageTolerance: prevState.slippageTolerance ? prevState.slippageTolerance : slippageTolerance,
+    }))
   }
 
   useEffect(calculateNextState, [slider])
@@ -201,9 +220,22 @@ export const RemoveLiquidityDialog = ({ open, pool, confirm, showBackdrop, ...re
           />
           <RowInfo
             variant="body2"
-            label="Slippage Tolerance"
+            label="Slippage Tolerance %"
             tooltip="A higher percent of the slippage tolerance allows to complete a faster transaction, yet the less sum will be received to your account. You can manage slippage tolerance in settings"
-          />
+          >
+            <BaseInput
+              otherSizes="extra-sm"
+              className={classes.slippageInput}
+              value={dialogState.slippageTolerance}
+              onChange={handleChangeSlippage}
+              variant="filled"
+              rtl
+              numeric
+              max={99}
+              min={0}
+              precision={2}
+            />
+          </RowInfo>
         </Grid>
         <ConfirmTransactionButton
           text="Confirm"

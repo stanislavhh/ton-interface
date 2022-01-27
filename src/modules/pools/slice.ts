@@ -11,6 +11,7 @@ export const INITIAL_STATE: PoolsState = {
     type: '',
   },
   removingPoolsLiquidity: false,
+  selectedPoolId: null,
 }
 
 export const getPoolsList = createAsyncThunk('pools/getPoolsList', async () => {
@@ -45,11 +46,16 @@ const removeLiquidityFromPoolFulfilled: CaseReducer<PoolsState> = (state) => {
   state.removingPoolsLiquidity = false
 }
 
+const selectPoolIdReducer: CaseReducer<PoolsState, PayloadAction<string | null>> = (state, { payload }) => {
+  state.selectedPoolId = payload
+}
+
 const poolsSlice = createSlice({
   name: 'pools',
   initialState: INITIAL_STATE,
   reducers: {
     toggleDialog: toggleDialogReducer,
+    selectPoolId: selectPoolIdReducer,
   },
   extraReducers: (builder) => {
     builder.addCase(getPoolsList.pending, getPoolsListPendingReducer)
@@ -59,6 +65,6 @@ const poolsSlice = createSlice({
   },
 })
 
-export const { toggleDialog } = poolsSlice.actions
+export const { toggleDialog, selectPoolId } = poolsSlice.actions
 
 export const poolsReducer = poolsSlice.reducer

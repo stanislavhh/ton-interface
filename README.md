@@ -25,25 +25,40 @@ You can't proceed with swap/adding/removing liquidity until you connect to the w
 
 ### Swap module
 Includes swap functionality. There are a couple of tokens that have balance and TON is the first one.
+
 In order to proceed with the swap you need to connect wallet, select two tokens and enter the amount of tokens.
+
 Inputs work automatically, once you selected both tokens and type an amount in one input the second one should change according to their rate.
-Rate is calculated by prices that get randomly. When you select a token, it emits the call to get its price (which is probably not a correct way, and getting all prices is much easier, but it helps to get the latest price).
+
+Rate is calculated by prices that we get randomly. When you select a token, it emits the call to get its price (which is probably not a correct way, and getting all prices is much easier, but it helps to get the latest price).
+
 After amount and tokens are selected you can click on swap and see confirmation popup, where you can confirm the transaction.
-Swap also includes settings popup where you can change slippage tolerance and transaction decline time.
+
+Swap/liquidity also includes settings popup where you can change slippage tolerance and transaction decline time.
 
 ### Liquidity module
 Liquidity has a similar UI to swap. You need to connect to a wallet, select tokens and enter an amount.
+
 It automatically finds a pool with provided tokens and fee, and if pool is not found, then it shows the notification that user is going to create a pool and choose the token's rate.
+
 If a pool already exists, then entering an amount for any token will affect other amount (50%/50%).
+
 User can proceed with adding liquidity or creating a pool only if tokens are selected & amount/balances are correct.
+
 To test it you can use the tokens in the top of the list. To proceed with adding liquidity app might request a permission to make transactions for particular tokens, so you might see allow token button.
 
 ### Pools module
-Includes 2 views: all pools and my pools. In order to see the list of users pools you need to connect to a wallet.
+Includes 3 views: all pools, my pools, pool(info). In order to see the list of users pools you need to connect to a wallet.
 The all pools list includes common data related to a pool, like liquidity, apr, usdVolume etc. My pools list has the data related to connected wallet.
+
 Both lists have search/sorting functionality.
-Both lists have action 'add liquidity' that opens dialog where you already have preselected tokens and fee according to pool.
-The flow for adding liquidity is the same as in adding liquidity module. actually in uses mostly the same peace of code and state.
+
+Both lists have an action view details which leads you to pool statistics page.
+
+Both lists have an action 'add liquidity' that opens dialog where you already have preselected tokens and fee according to pool (I also could simply move user to liquidity page with preselected tokens and fee, but showing the dialog seemed more native approach to me).
+The flow for adding liquidity is the same as in adding liquidity module. actually it uses mostly the same peace of code and state.
+
+
 My list also has an action 'remove liquidity' where you can select the amount in % of how much liquidity you will remove and can see calculation changes.
 
 #####NOTE: 
@@ -79,7 +94,7 @@ I split code my modules, so it could be scalable for future features
 `utils/`: some common functions
 
 ## Dependencies
-`redux-toolkit` - has integrated and full ecosystem for redux. It isn't lightweight, but includes all needed stuff to support from small to large apps
+`redux-toolkit` - has full ecosystem for redux. It isn't lightweight, but includes all needed stuff to support from small to large apps
 
 `material`  - I know this is not the lightweight lib, but again it allows to use many features, has a great support and smooth ui in comparison with others
 
@@ -87,8 +102,8 @@ I split code my modules, so it could be scalable for future features
 ### Others:
 There are 3 dependencies I had to add in order to reduce bundle size for material components
 
-`"customize-cra": "^1.0.0",` - allows configuring babel without ejecting creat-app (create-react-app sacrifice) 
+`customize-cra` - allows configuring babel without ejecting creat-app (create-react-app sacrifice) 
 
-`"react-app-rewired": "^2.1.11"` - allows configuring babel without ejecting creat-app (create-react-app sacrifice)
+`react-app-rewired` - allows configuring babel without ejecting creat-app (create-react-app sacrifice)
 
-`"babel-plugin-import": "^1.13.3",` - transform import and prevents importing for unused components
+`babel-plugin-import` - transform import and prevents importing for unused components

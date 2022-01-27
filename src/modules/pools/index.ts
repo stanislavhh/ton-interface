@@ -12,7 +12,7 @@ export type {
 // Views
 export { AllPools } from './views/allPools'
 export { MyPools } from './views/myPools'
-
+export { Pool as PoolView } from './views/pool'
 // Slice
 export { poolsReducer, getPoolsList, toggleDialog } from './slice'
 

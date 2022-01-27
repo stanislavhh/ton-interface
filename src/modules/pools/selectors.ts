@@ -10,6 +10,7 @@ export const $poolsList = createSelector(pools, (p) => p.list)
 export const $loadingPools = createSelector(pools, (p) => p.loadingList)
 export const $poolsDialog = createSelector(pools, (p) => p.dialog)
 export const $removingPoolsLiquidity = createSelector(pools, (p) => p.removingPoolsLiquidity)
+export const $selectedPoolId = createSelector(pools, (p) => p.selectedPoolId)
 
 export const $loadingMyPoolsList = createSelector(
   [$loadingPools, $connecting],
@@ -48,3 +49,7 @@ export const $walletPoolsList = createSelector([$poolsSelector, $walletTokens], 
       }
     })
 })
+
+export const selectedPoolById = createSelector([$poolsSelector, $selectedPoolId], (pools, poolId) =>
+  pools.find(({ id }) => id === poolId),
+)

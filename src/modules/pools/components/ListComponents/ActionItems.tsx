@@ -3,7 +3,7 @@ import { makeStyles, MenuItem, Typography } from '@material-ui/core'
 import { toggleDialog } from 'modules/pools/slice'
 import { Dialogs } from 'modules/pools/enums'
 import { PoolSelector, WalletPoolsSelector } from 'modules/pools/types'
-import { useAppDispatch } from 'hooks'
+import { useAppDispatch, useRouter } from 'hooks'
 
 export const useStyles = makeStyles((theme) => ({
   menuItem: {
@@ -24,10 +24,12 @@ export const ActionItems = forwardRef(
     ref?: ForwardedRef<unknown>,
   ) => {
     const dispatch = useAppDispatch()
+    const router = useRouter()
     const classes = useStyles()
+
     return (
       <>
-        <MenuItem className={classes.menuItem} onClick={() => {}}>
+        <MenuItem className={classes.menuItem} onClick={() => router.navigate(`/pool/${pool.id}`)}>
           <Typography variant="body2">View Details</Typography>
         </MenuItem>
         <MenuItem

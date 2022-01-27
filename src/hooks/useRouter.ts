@@ -15,6 +15,7 @@ export const useRouter = () => {
         ...parseQueries(location.search),
         ...params,
       },
+      params,
       location,
     }
   }, [params, location, navigate])

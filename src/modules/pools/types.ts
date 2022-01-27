@@ -8,6 +8,7 @@ export interface PoolToken {
 }
 
 export interface Pool {
+  id: string
   feeTier: string
   liquidity: string
   token0: PoolToken
@@ -44,6 +45,7 @@ export interface PoolsState {
   loadingList: boolean
   dialog: Dialog
   removingPoolsLiquidity: boolean
+  selectedPoolId: string | null
 }
 
 export interface PoolsListsSettings {

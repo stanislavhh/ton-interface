@@ -5,7 +5,8 @@ import BaseTooltip from 'components/BaseTooltip'
 
 interface RowInfoProps {
   variant: Variant
-  label: string
+  variantValue?: Variant
+  label: string | ReactNode
   value?: string
   children?: ReactNode | ReactNode[]
   tooltip?: string
@@ -24,7 +25,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }))
 
-export const RowInfo = ({ variant, value, label, tooltip, children, className }: RowInfoProps) => {
+export const RowInfo = ({ variant, value, variantValue, label, tooltip, children, className }: RowInfoProps) => {
   const classes = useStyles()
   return (
     <Grid item xs={12} className={`${classes.rowContainer} ${className || ''}`}>
@@ -36,7 +37,7 @@ export const RowInfo = ({ variant, value, label, tooltip, children, className }:
           </BaseTooltip>
         ) : null}
       </Typography>
-      {children ? children : <Typography variant={variant}>{value}</Typography>}
+      {children ? children : <Typography variant={variantValue || variant}>{value}</Typography>}
     </Grid>
   )
 }

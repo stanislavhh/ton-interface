@@ -1,5 +1,5 @@
 import { useEffect } from 'react'
-import { Route, Routes } from 'react-router-dom'
+import { Route, Routes, useMatch } from 'react-router-dom'
 import { makeStyles } from '@material-ui/core'
 import { useRouter } from 'hooks'
 import { ROUTES } from 'modules/layout/constants'
@@ -26,7 +26,8 @@ const useStyles = makeStyles((theme) => ({
 export const PageViewer = (): JSX.Element => {
   const router = useRouter()
   const { pageContent, ...rest } = useStyles()
-  const foundRoute = ROUTES.find(({ path }) => router.pathname === path)
+  const poolMatch = useMatch('/pool/:poolId')
+  const foundRoute = ROUTES.find(({ path }) => router.pathname === path || poolMatch?.pattern.path === path)
 
   useEffect(() => {
     if (!foundRoute) {

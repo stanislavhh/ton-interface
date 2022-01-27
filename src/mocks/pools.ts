@@ -13,7 +13,7 @@ export const pools = [
       name: 'Toncoin',
       symbol: 'TON',
     },
-    token0Price: '0.381524272077686134231945336868',
+    token0Price: '300.381524272077686134231945336868',
     token1: {
       __typename: 'Token',
       decimals: '18',
@@ -22,7 +22,7 @@ export const pools = [
       name: 'Aave',
       symbol: 'AAVE',
     },
-    token1Price: '300.0002958245963716587655558390680745211',
+    token1Price: '1.0002958245963716587655558390680745211',
     totalValueLockedToken0: '157421184.995046',
     totalValueLockedToken1: '58594.49465974305831041',
     totalValueLockedUSD: '355492932.1669003554269921225287076',

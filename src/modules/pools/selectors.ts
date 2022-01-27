@@ -3,14 +3,18 @@ import { createSelector } from '@reduxjs/toolkit'
 import { $tokens } from 'modules/layout/selectors'
 import { $connecting, $walletTokens } from 'modules/wallet'
 import { feeTierToPercentage } from '../liquidity/utils'
+import { calculateRate } from 'modules/shared/utils'
+import { DEFAULT_PRECISION } from 'components/BaseInput'
 
 export const pools = (state: StoreState) => state.pools
 
 export const $poolsList = createSelector(pools, (p) => p.list)
 export const $loadingPools = createSelector(pools, (p) => p.loadingList)
+export const $loadingPoolTransactions = createSelector(pools, (p) => p.loadingPoolTransactions)
 export const $poolsDialog = createSelector(pools, (p) => p.dialog)
 export const $removingPoolsLiquidity = createSelector(pools, (p) => p.removingPoolsLiquidity)
 export const $selectedPoolId = createSelector(pools, (p) => p.selectedPoolId)
+export const $poolTransactions = createSelector(pools, (p) => p.poolTransactions)
 
 export const $loadingMyPoolsList = createSelector(
   [$loadingPools, $connecting],
@@ -21,6 +25,7 @@ export const $poolsSelector = createSelector([$poolsList, $tokens], (pools, toke
   return pools.map((p) => ({
     ...p,
     name: `${p.token0.symbol}/${p.token1.symbol}`,
+    rate: calculateRate(Number(p.token0Price), Number(p.token1Price)).toFixed(DEFAULT_PRECISION),
     // the part below needs to be optimized
     token0LogoURI: tokens.find((t) => t.name === p.token0.name)?.logoURI || '',
     token1LogoURI: tokens.find((t) => t.name === p.token1.name)?.logoURI || '',
@@ -50,6 +55,18 @@ export const $walletPoolsList = createSelector([$poolsSelector, $walletTokens], 
     })
 })
 
-export const selectedPoolById = createSelector([$poolsSelector, $selectedPoolId], (pools, poolId) =>
+export const $selectedPoolById = createSelector([$poolsSelector, $selectedPoolId], (pools, poolId) =>
   pools.find(({ id }) => id === poolId),
+)
+
+export const $selectedPoolInWallet = createSelector(
+  [$walletPoolsList, $selectedPoolById],
+  (walletPools, selectedPool) => {
+    return walletPools.find(({ id }) => id === selectedPool?.id)
+  },
+)
+
+export const $selectedPool = createSelector(
+  [$selectedPoolById, $selectedPoolInWallet],
+  (poolById, poolInWallet) => poolInWallet || poolById,
 )

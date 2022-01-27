@@ -4,8 +4,9 @@ import { PoolSelector } from 'modules/pools/types'
 import LPAvatar from 'modules/shared/components/LPAvatar'
 import { feeTierToPercentage } from 'modules/liquidity/utils'
 import { usdFormatter } from 'helpers/formatterHelper'
-import { useRowStyles, RowColumn, ActionsColumn } from 'components/DataList'
+import { RowColumn, ActionsColumn } from 'components/DataList'
 import { ActionItems } from 'modules/pools/components/ListComponents'
+import { useRowStyles } from 'modules/pools/components/ListComponents/styles'
 
 export interface PoolRowProps {
   data: PoolSelector[]

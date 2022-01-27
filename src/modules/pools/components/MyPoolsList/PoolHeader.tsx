@@ -1,7 +1,8 @@
 import { Grid } from '@material-ui/core'
-import { SearchColumn, SearchColumnProps, useHeaderStyles, HeaderColumn } from 'components/DataList'
+import { SearchColumn, SearchColumnProps, HeaderColumn } from 'components/DataList'
 import { SortOrders } from 'modules/shared'
 import { SortOption } from 'hooks'
+import { useHeaderStyles } from 'modules/pools/components/ListComponents/styles'
 
 export interface PoolHeaderProps extends SearchColumnProps {
   onSortChange: (nextOrder: SortOrders | '', field: string) => void

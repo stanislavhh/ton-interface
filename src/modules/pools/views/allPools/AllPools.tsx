@@ -1,6 +1,6 @@
 import { CircularProgress, Grid, makeStyles } from '@material-ui/core'
 import MyPoolsList from 'modules/pools/components/ListComponents'
-import CardContainer from 'modules/shared/components/LiquiditySwapCardContainer'
+import CardContainer from 'modules/shared/components/CardContainer'
 import AllPoolsTitle from 'modules/shared/components/PageTitileWithLink'
 import { PoolHeader, PoolRow } from 'modules/pools/components/AllPoolsList'
 import { useAppDispatch, useAppSelector } from 'hooks'

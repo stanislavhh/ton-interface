@@ -1,6 +1,6 @@
 import { useEffect } from 'react'
 import { useAppDispatch, useRouter } from 'hooks'
-import { selectPoolId } from 'modules/pools/slice'
+import { getPoolTransactions, selectPoolId } from 'modules/pools/slice'
 
 export const useWatchSelectedPool = () => {
   const router = useRouter()
@@ -9,6 +9,7 @@ export const useWatchSelectedPool = () => {
 
   useEffect(() => {
     dispatch(selectPoolId(poolId as string))
+    dispatch(getPoolTransactions())
 
     return () => {
       dispatch(selectPoolId(null))

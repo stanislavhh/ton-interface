@@ -7,6 +7,7 @@ import { $transactionSettings } from 'modules/layout/selectors'
 import { DEFAULT_PRECISION } from 'components/BaseInput'
 import { findPoolsBySelectedTokens } from './utils'
 import { FEE_TIERS } from './enums'
+import { calculateRate } from 'modules/shared/utils'
 
 export const liquidity = (state: StoreState) => state.liquidity
 
@@ -52,7 +53,7 @@ export const $liquidityInfo = createSelector(
     const tokensNotReady = Boolean(!i0.token || !i1.token || !i0.price || !i1.price)
     const i0Price = Number(i0.price)
     const i1Price = Number(i1.price)
-    const rate = (1 / (i1Price || 1)) * (i0Price || 1)
+    const rate = calculateRate(i0Price, i1Price)
 
     const liquiditySum = i0Price * Number(i0.amount) + i1Price * Number(i1.amount)
     const poolShare = pool ? ((liquiditySum / Number(pool.volumeUSD)) * 100).toFixed(DEFAULT_PRECISION) : 100

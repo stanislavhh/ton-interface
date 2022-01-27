@@ -1,12 +1,17 @@
 import { Grid, Box, Icon, makeStyles, Typography } from '@material-ui/core'
 import { iconsTransition } from 'helpers/themeHelper'
 import { useState } from 'react'
+import { Variant } from '@material-ui/core/styles/createTypography'
 
 interface RatesInfoProps {
   rate: string
   i0Symbol: string | undefined
   i1Symbol: string | undefined
   price?: string
+  className?: string
+  labelClassName?: string
+  variant?: Variant
+  variantValue?: Variant
 }
 
 const useStyles = makeStyles((theme) => ({
@@ -25,7 +30,16 @@ const useStyles = makeStyles((theme) => ({
   },
 }))
 
-export const RatesInfo = ({ rate, i0Symbol, i1Symbol, price }: RatesInfoProps) => {
+export const RatesInfo = ({
+  rate,
+  variant = 'body2',
+  variantValue,
+  i0Symbol,
+  i1Symbol,
+  className,
+  labelClassName,
+  price,
+}: RatesInfoProps) => {
   const classes = useStyles()
 
   const hide = !i0Symbol || !i1Symbol
@@ -37,15 +51,17 @@ export const RatesInfo = ({ rate, i0Symbol, i1Symbol, price }: RatesInfoProps) =
   const symbol1 = isInverted ? i0Symbol : i1Symbol
 
   return (
-    <Grid item xs={12} className={classes.rowContainer}>
-      <Typography variant="body2">Rate</Typography>
+    <Grid item xs={12} className={`${classes.rowContainer} ${className || ''}`}>
+      <Typography variant={variant} className={labelClassName}>
+        Rate
+      </Typography>
       <Box display="flex" alignItems="center" justifyContent="center">
         {hide ? (
           '-'
         ) : (
           <>
             <Box>
-              <Typography variant="body2">{`1 ${symbol0} = ${localRate} ${symbol1}`}</Typography>
+              <Typography variant={variantValue || variant}>{`1 ${symbol0} = ${localRate} ${symbol1}`}</Typography>
               {price ? (
                 <Typography variant="caption" color="textSecondary" className={classes.$text}>
                   ≈ ${price}

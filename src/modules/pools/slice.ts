@@ -2,22 +2,33 @@ import { CaseReducer, createAsyncThunk, createSlice, PayloadAction } from '@redu
 
 import { imitateFetch, MockedResponse } from 'utils'
 import { pools } from 'mocks/pools'
-import { Dialog, Pool, PoolsState } from './types'
+import { Dialog, Pool, PoolsState, PoolTransaction } from './types'
+import { getMockedTransactions } from 'mocks/getMockedTransactions'
 
 export const INITIAL_STATE: PoolsState = {
   list: [],
   loadingList: false,
+  loadingPoolTransactions: false,
   dialog: {
     type: '',
   },
   removingPoolsLiquidity: false,
   selectedPoolId: null,
+  poolTransactions: [],
 }
 
 export const getPoolsList = createAsyncThunk('pools/getPoolsList', async () => {
   const { data } = (await imitateFetch({ data: pools })) as MockedResponse
 
   return data as Pool[]
+})
+
+export const getPoolTransactions = createAsyncThunk('pool/getPoolTransactions', async (pool) => {
+  const { data } = (await imitateFetch({
+    data: getMockedTransactions(),
+  })) as MockedResponse
+
+  return data as PoolTransaction[]
 })
 
 export const removeLiquidityFromPool = createAsyncThunk('pools/removeLiquidity', async (_, { dispatch }) => {
@@ -50,6 +61,18 @@ const selectPoolIdReducer: CaseReducer<PoolsState, PayloadAction<string | null>>
   state.selectedPoolId = payload
 }
 
+const getPoolTransactionsPendingReducer: CaseReducer<PoolsState> = (state) => {
+  state.loadingPoolTransactions = true
+}
+
+const getPoolTransactionsFulfilledReducer: CaseReducer<PoolsState, PayloadAction<PoolTransaction[]>> = (
+  state,
+  { payload },
+) => {
+  state.loadingPoolTransactions = false
+  state.poolTransactions = payload
+}
+
 const poolsSlice = createSlice({
   name: 'pools',
   initialState: INITIAL_STATE,
@@ -62,6 +85,8 @@ const poolsSlice = createSlice({
     builder.addCase(getPoolsList.fulfilled, getPoolsListFulfilledReducer)
     builder.addCase(removeLiquidityFromPool.pending, removeLiquidityFromPoolPending)
     builder.addCase(removeLiquidityFromPool.fulfilled, removeLiquidityFromPoolFulfilled)
+    builder.addCase(getPoolTransactions.pending, getPoolTransactionsPendingReducer)
+    builder.addCase(getPoolTransactions.fulfilled, getPoolTransactionsFulfilledReducer)
   },
 })
 

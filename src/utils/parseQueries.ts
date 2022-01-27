@@ -1,5 +1,5 @@
 export function parseQueries(search: string): { [key: string]: string } {
-  return '?ok=test&some=qwe'
+  return search
     .slice(1)
     .split('&')
     .map((val) => ({

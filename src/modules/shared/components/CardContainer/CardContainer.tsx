@@ -1,9 +1,8 @@
 import { ReactNode } from 'react'
-import { Card, Grid, GridSize, makeStyles } from '@material-ui/core'
+import { Card, Grid, GridSize, GridProps, makeStyles } from '@material-ui/core'
 
-export interface LiquiditySwapCardContainerProps {
+export interface CardContainerProps extends GridProps {
   children: ReactNode | ReactNode[]
-  md?: GridSize
   cardClass?: string
 }
 
@@ -18,10 +17,10 @@ const useStyles = makeStyles((theme) => ({
   },
 }))
 
-export const LiquiditySwapCardContainer = ({ children, cardClass = '', md = 9 }: LiquiditySwapCardContainerProps) => {
+export const CardContainer = ({ children, cardClass = '', md = 9, ...rest }: CardContainerProps) => {
   const classes = useStyles()
   return (
-    <Grid item xs={12} md={md} className={classes.cardContainer}>
+    <Grid item xs={12} md={md} className={classes.cardContainer} {...rest}>
       <Card className={`${classes.card} ${cardClass}`}>{children}</Card>
     </Grid>
   )

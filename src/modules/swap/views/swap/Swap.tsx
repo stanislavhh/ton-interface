@@ -29,7 +29,7 @@ import SwapInfo from 'modules/swap/components/SwapInfo'
 import SwapConfirmDialog from 'modules/swap/components/SwapConfirmDialog'
 import { TransactionSettingsGridWrapper } from 'modules/shared/components/TransactionSettings'
 import ConfirmTransactionButton from 'modules/shared/components/ConfirmTransactionButton'
-import LiquiditySwapCardContainer from 'modules/shared/components/LiquiditySwapCardContainer'
+import LiquiditySwapCardContainer from 'modules/shared/components/CardContainer'
 import LiquiditySwapTitle from 'modules/shared/components/PageTitileWithLink'
 import { useAmountChangeHandler } from 'modules/shared/hooks'
 

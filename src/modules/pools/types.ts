@@ -7,6 +7,14 @@ export interface PoolToken {
   id: string
 }
 
+export interface PoolTransaction {
+  totalValue: string
+  token0Amount: string
+  token1Amount: string
+  address: string
+  date: string
+}
+
 export interface Pool {
   id: string
   feeTier: string
@@ -32,6 +40,7 @@ export interface PoolSelector extends Pool {
   token0LogoURI: string
   token1LogoURI: string
   name: string
+  rate: string
 }
 
 export interface WalletPoolsSelector extends PoolSelector {
@@ -43,9 +52,11 @@ export interface WalletPoolsSelector extends PoolSelector {
 export interface PoolsState {
   list: Pool[]
   loadingList: boolean
+  loadingPoolTransactions: boolean
   dialog: Dialog
   removingPoolsLiquidity: boolean
   selectedPoolId: string | null
+  poolTransactions: PoolTransaction[]
 }
 
 export interface PoolsListsSettings {

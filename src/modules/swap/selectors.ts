@@ -6,6 +6,7 @@ import { $loadingPrice, $prices, $tokensWithPrices, $transactionSettings } from 
 import { SWAP_FEE } from './constants'
 import { DEFAULT_PRECISION } from 'components/BaseInput'
 import { selectorsGeneratorForSwapOrLiquidity } from 'modules/shared/selectors'
+import { calculateRate } from 'modules/shared/utils'
 
 export const swap = (state: StoreState) => state.swap
 
@@ -35,7 +36,7 @@ export const $swapInfo = createSelector(
   (i0, i1, settings, loadingPrice) => {
     const i0Price = Number(i0.price)
     const i1Price = Number(i1.price)
-    const rate = (1 / (i1Price || 1)) * (i0Price || 1)
+    const rate = calculateRate(i0Price, i1Price)
 
     return {
       loadingPrice,

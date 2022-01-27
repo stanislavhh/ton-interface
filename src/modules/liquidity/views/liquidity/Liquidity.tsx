@@ -28,7 +28,7 @@ import { $loadingTokens, $prices } from 'modules/layout/selectors'
 import { $poolsList } from 'modules/pools/selectors'
 
 import { TransactionSettingsGridWrapper } from 'modules/shared/components/TransactionSettings'
-import LiquiditySwapCardContainer from 'modules/shared/components/LiquiditySwapCardContainer'
+import LiquiditySwapCardContainer from 'modules/shared/components/CardContainer'
 import LiquiditySwapTitle from 'modules/shared/components/PageTitileWithLink'
 import LiquidityInputs from 'modules/shared/components/LiquiditySwapInputs'
 import ConfirmLiquidityDialog from 'modules/liquidity/components/ConfirmLiquidityDialog'

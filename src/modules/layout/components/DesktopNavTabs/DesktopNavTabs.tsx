@@ -22,7 +22,7 @@ export const NavTabs = () => {
   let tabValue = NAV_LINKS.findIndex(({ href }) => router.pathname === href)
 
   if (tabValue === -1) {
-    tabValue = 2
+    tabValue = ['/my-pools'].includes(router.pathname) ? 2 : 3
   }
 
   return (

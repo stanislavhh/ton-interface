@@ -14,7 +14,6 @@ To build use:
 
 ## Features(modules):
 
-
 ### Layout module
 responsible for connecting all modules and layout components, such as: header, mobile navigation, content layouts
 redux for layout includes common things like transaction settings, tokens and their prices etc.
@@ -58,13 +57,18 @@ Both lists have an action view details which leads you to pool statistics page.
 Both lists have an action 'add liquidity' that opens dialog where you already have preselected tokens and fee according to pool (I also could simply move user to liquidity page with preselected tokens and fee, but showing the dialog seemed more native approach to me).
 The flow for adding liquidity is the same as in adding liquidity module. actually it uses mostly the same peace of code and state.
 
+My list has an action 'remove liquidity' where you can select the amount in % of how much liquidity you will remove and can see calculation changes.
 
-My list also has an action 'remove liquidity' where you can select the amount in % of how much liquidity you will remove and can see calculation changes.
+Both lists have an action 'view details' that redirects us to pool view.
 
+Pool view includes pool details card where we can add or remove activity (remove visible only if you have liquidity in pool) and pool transactions list. 
 #####NOTE: 
 Mocks for pools and tokens are inconsistent. So you might not see logos for some pools in the list. It also means that adding liquidity for some pools is not possible.
 But it shouldn't be the case for consistent&real data.
 
+
+## Testing
+there are 2 main coins - TON & aave which have mocked balance & pools, so I suggest using them.
 
 ## Initial Code structure
 I split code my modules, so it could be scalable for future features

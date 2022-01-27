@@ -7,5 +7,5 @@ export const getMockedTransactions = () =>
       .toString(36)
       .substr(2, 5)
       .concat(Math.random().toString(36).substr(2, 5), Math.random().toString(36).substr(2, 5)),
-    date: new Date(+new Date() - Math.floor(Math.random() * 10000000000)).toLocaleDateString(),
+    date: new Date(+new Date() - Math.floor(Math.random() * 10000000000)).toString(),
   }))

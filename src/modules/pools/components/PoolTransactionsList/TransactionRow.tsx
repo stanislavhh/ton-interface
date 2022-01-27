@@ -50,7 +50,11 @@ export const TransactionRow = ({ data, style, index }: TransactionsRowProps) => 
           value={usdFormatter.format(Number(totalValue))}
         />
         <RowColumn {...transactionsGridConfig.address} className={classes.column} value={address} />
-        <RowColumn {...transactionsGridConfig.date} className={classes.date} value={date} />
+        <RowColumn
+          {...transactionsGridConfig.date}
+          className={classes.date}
+          value={new Date(date).toLocaleDateString()}
+        />
       </Grid>
     </Box>
   )

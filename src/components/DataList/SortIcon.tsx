@@ -27,7 +27,7 @@ const useStyles = makeStyles(() => ({
 export const SortIcon = ({ field, order, setOrder }: SortIconProps) => {
   const classes = useStyles()
 
-  const nextOrder = order === '' ? SortOrders.DESC : order === SortOrders.DESC ? SortOrders.ASC : ''
+  const nextOrder = order === SortOrders.DESC ? SortOrders.ASC : SortOrders.DESC
 
   const onSortClick = () => setOrder(nextOrder, field)
 

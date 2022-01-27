@@ -60,6 +60,10 @@ export const useDataSorting = (data: any[], options: SortOption[]) => {
           return a[option.field] - b[option.field]
         }
 
+        if (option.type === 'date') {
+          return +new Date(a[option.field]) - +new Date(b[option.field])
+        }
+
         if (a[option.field] < b[option.field]) return -1
         if (a[option.field] > b[option.field]) return 1
         return 0

@@ -147,7 +147,6 @@ export const PoolInfo = () => {
               label={getLabel('Est. daily income')}
               value={usdFormatter.format(dailyIncome)}
             />
-
             {renderLiquidityButtons()}
           </Grid>
         </>

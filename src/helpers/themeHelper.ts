@@ -24,7 +24,7 @@ export const xsButton = {
   borderRadius: BORDER_RADIUS6,
   minWidth: '40px',
   boxShadow: 'none',
-  background: COLOR_WHITE,
+  background: 'rgba(255, 255, 255, 0.9)',
 }
 
 export const theme = createTheme({

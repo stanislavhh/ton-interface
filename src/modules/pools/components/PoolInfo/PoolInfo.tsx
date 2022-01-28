@@ -39,7 +39,7 @@ export const PoolInfo = () => {
   const poolInUsersList = isPoolInUsersWalletList(pool)
 
   const commonRowProps = {
-    variant: 'body2' as Variant,
+    variant: 'h6' as Variant,
     variantValue: 'body2' as Variant,
     className: classes.rowInfo,
   }
@@ -105,6 +105,7 @@ export const PoolInfo = () => {
             />
             <RatesInfo
               {...commonRowProps}
+              variant="body2"
               labelClassName={classes.infoLabel}
               i0Symbol={token0?.symbol}
               i1Symbol={token1?.symbol}

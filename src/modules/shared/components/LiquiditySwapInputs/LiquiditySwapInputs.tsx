@@ -17,8 +17,8 @@ const useStyles = makeStyles((theme) => ({
   iconContainer: {
     zIndex: 1,
     position: 'absolute',
-    top: 'calc(50% + 4px)',
-    left: '40%',
+    top: 'calc(50%)',
+    left: '35%',
     [theme.breakpoints.down('xs')]: {
       left: '20%',
     },

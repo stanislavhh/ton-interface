@@ -1,7 +1,7 @@
 // Providers
 import { ThemeProvider } from '@material-ui/core'
 import { Provider } from 'react-redux'
-import { BrowserRouter } from 'react-router-dom'
+import { HashRouter } from 'react-router-dom'
 
 // Layout
 import { Layout } from 'modules/layout'
@@ -14,13 +14,13 @@ import { theme } from 'helpers/themeHelper'
 
 export const Main = (): JSX.Element => {
   return (
-    <BrowserRouter>
+    <HashRouter>
       <ThemeProvider theme={theme}>
         <Provider store={store}>
           <Layout />
         </Provider>
       </ThemeProvider>
-    </BrowserRouter>
+    </HashRouter>
   )
 }
 

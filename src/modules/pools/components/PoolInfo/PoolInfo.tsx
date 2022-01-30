@@ -1,12 +1,12 @@
 import { useState } from 'react'
 import CardContainer from 'modules/shared/components/CardContainer'
-import { Avatar, Box, CircularProgress, Grid, Icon, Typography } from '@material-ui/core'
+import { Avatar, Box, Grid, Icon, Typography } from '@material-ui/core'
 import { isPoolInUsersWalletList } from 'modules/pools/utils'
 import { RowInfo, RatesInfo } from 'modules/shared/components/LiquiditySwapInfo'
 import { feeTierToPercentage } from 'modules/liquidity/utils'
 import { usdFormatter } from 'helpers/formatterHelper'
 import { useAppDispatch, useAppSelector } from 'hooks'
-import { $loadingPools, $selectedPool } from 'modules/pools/selectors'
+import { $selectedPool } from 'modules/pools/selectors'
 import { Variant } from '@material-ui/core/styles/createTypography'
 import { WalletPoolsSelector } from 'modules/pools/types'
 import { usePoolInfoStyles as useStyles } from 'modules/pools/components/PoolInfo/styles'
@@ -17,9 +17,8 @@ import { Dialogs } from 'modules/pools/enums'
 export const PoolInfo = () => {
   const dispatch = useAppDispatch()
   const pool = useAppSelector($selectedPool)
-  const loading = useAppSelector($loadingPools)
   const [swap, toggleSwap] = useState(false)
-  const classes = useStyles({ swap, loading })
+  const classes = useStyles({ swap })
   const {
     feeTier,
     liquidity,
@@ -85,73 +84,55 @@ export const PoolInfo = () => {
 
   return (
     <CardContainer xs={12} md={6} lg={5} className="" cardClass={classes.card}>
-      {loading ? (
-        <CircularProgress size={32} />
-      ) : (
-        <>
-          <Grid container className={classes.poolCardContainer}>
-            {renderSwapIcon()}
-            <RowInfo
-              {...commonRowProps}
-              label={getLabel('Fee Tier')}
-              tooltip="Fee tier is setup automatically based on users choice. You may change it in tiers popup."
-              value={`${feeTierToPercentage(feeTier)} %`}
-            />
-            <RowInfo
-              {...commonRowProps}
-              label={getLabel('APR')}
-              tooltip="Estimated on trading volume, fee tier and liquidity"
-              value={`${apr} %`}
-            />
-            <RatesInfo
-              {...commonRowProps}
-              variant="body2"
-              labelClassName={classes.infoLabel}
-              i0Symbol={token0?.symbol}
-              i1Symbol={token1?.symbol}
-              rate={String(rate)}
-            />
-            <RowInfo {...commonRowProps} label={getLabel('Liquidity')} value={usdFormatter.format(Number(liquidity))} />
-            <RowInfo
-              {...commonRowProps}
-              label={getLabel('Volume 24h')}
-              value={usdFormatter.format(Number(volumeUSD))}
-            />
-            <RowInfo {...commonRowProps} label={getLabel('Locked')}>
-              <Box display="flex" alignItems="center">
-                <Avatar src={token0LogoURI} className={classes.avatar} />
-                <Typography variant="body2">{Number(totalValueLockedToken0).toFixed(4)}</Typography>
-              </Box>
-            </RowInfo>
-            <RowInfo
-              {...commonRowProps}
-              value={`${Number(totalValueLockedToken1).toFixed(4)}`}
-              label={getLabel('Locked')}
-            >
-              <Box display="flex" alignItems="center">
-                <Avatar src={token1LogoURI} className={classes.avatar} />
-                <Typography variant="body2">{Number(totalValueLockedToken1).toFixed(4)}</Typography>
-              </Box>
-            </RowInfo>
-            {renderLiquidityButtons()}
-          </Grid>
-          <Grid container className={classes.myCardContainer}>
-            {renderSwapIcon()}
-            <RowInfo
-              {...commonRowProps}
-              label={getLabel('My Liquidity')}
-              value={usdFormatter.format(Number(myLiquidity))}
-            />
-            <RowInfo {...commonRowProps} label={getLabel('Share of pool')} value={`${poolShare} %`} />
-            <RowInfo
-              {...commonRowProps}
-              label={getLabel('Est. daily income')}
-              value={usdFormatter.format(dailyIncome)}
-            />
-            {renderLiquidityButtons()}
-          </Grid>
-        </>
-      )}
+      <Grid container className={classes.poolCardContainer}>
+        {renderSwapIcon()}
+        <RowInfo
+          {...commonRowProps}
+          label={getLabel('Fee Tier')}
+          tooltip="Fee tier is setup automatically based on users choice. You may change it in tiers popup."
+          value={`${feeTierToPercentage(feeTier)} %`}
+        />
+        <RowInfo
+          {...commonRowProps}
+          label={getLabel('APR')}
+          tooltip="Estimated on trading volume, fee tier and liquidity"
+          value={`${apr} %`}
+        />
+        <RatesInfo
+          {...commonRowProps}
+          variant="body2"
+          labelClassName={classes.infoLabel}
+          i0Symbol={token0?.symbol}
+          i1Symbol={token1?.symbol}
+          rate={String(rate)}
+        />
+        <RowInfo {...commonRowProps} label={getLabel('Liquidity')} value={usdFormatter.format(Number(liquidity))} />
+        <RowInfo {...commonRowProps} label={getLabel('Volume 24h')} value={usdFormatter.format(Number(volumeUSD))} />
+        <RowInfo {...commonRowProps} label={getLabel('Locked')}>
+          <Box display="flex" alignItems="center">
+            <Avatar src={token0LogoURI} className={classes.avatar} />
+            <Typography variant="body2">{Number(totalValueLockedToken0).toFixed(4)}</Typography>
+          </Box>
+        </RowInfo>
+        <RowInfo {...commonRowProps} value={`${Number(totalValueLockedToken1).toFixed(4)}`} label={getLabel('Locked')}>
+          <Box display="flex" alignItems="center">
+            <Avatar src={token1LogoURI} className={classes.avatar} />
+            <Typography variant="body2">{Number(totalValueLockedToken1).toFixed(4)}</Typography>
+          </Box>
+        </RowInfo>
+        {renderLiquidityButtons()}
+      </Grid>
+      <Grid container className={classes.myCardContainer}>
+        {renderSwapIcon()}
+        <RowInfo
+          {...commonRowProps}
+          label={getLabel('My Liquidity')}
+          value={usdFormatter.format(Number(myLiquidity))}
+        />
+        <RowInfo {...commonRowProps} label={getLabel('Share of pool')} value={`${poolShare} %`} />
+        <RowInfo {...commonRowProps} label={getLabel('Est. daily income')} value={usdFormatter.format(dailyIncome)} />
+        {renderLiquidityButtons()}
+      </Grid>
     </CardContainer>
   )
 }

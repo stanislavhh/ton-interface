@@ -3,14 +3,10 @@ import { iconsTransition } from 'helpers/themeHelper'
 
 type StyleProps = {
   swap: boolean
-  loading: boolean
 }
 
 export const usePoolInfoStyles = makeStyles((theme) => ({
   card: {
-    display: ({ loading }: StyleProps) => (loading ? 'flex' : 'block'),
-    alignItems: ({ loading }: StyleProps) => (loading ? 'center' : 'none'),
-    justifyContent: ({ loading }: StyleProps) => (loading ? 'center' : 'none'),
     height: '100%',
     boxSizing: 'border-box',
     paddingTop: theme.spacing(5),

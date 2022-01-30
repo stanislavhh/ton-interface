@@ -14,6 +14,7 @@ import { $transactionSettings } from 'modules/layout/selectors'
 import { PoolInfo } from 'modules/pools/components/PoolInfo'
 import { PoolTransactionsList } from 'modules/pools/components/PoolTransactionsList'
 import LPAvatar from 'modules/shared/components/LPAvatar'
+import { PoolNotFound } from 'modules/pools/components/PoolNotFound'
 
 export const Pool = () => {
   const dispatch = useAppDispatch()
@@ -54,7 +55,8 @@ export const Pool = () => {
         showBackdrop={removingLiquidity}
         confirm={() => dispatch(removeLiquidityFromPool())}
       />
-      {!loading && (
+      {}
+      {Boolean(pool) ? (
         <>
           <Grid item xs={12} md={6} lg={5}>
             <Box display="flex" alignItems="flex-end" ml={3}>
@@ -65,12 +67,13 @@ export const Pool = () => {
             </Box>
           </Grid>
           {renderTransactionsTitle({ xs: 'none', md: 'block' })}
+          <PoolInfo />
+          {renderTransactionsTitle({ xs: 'block', md: 'none' })}
+          <PoolTransactionsList />
         </>
+      ) : (
+        <PoolNotFound loading={loading} />
       )}
-
-      <PoolInfo />
-      {renderTransactionsTitle({ xs: 'block', md: 'none' })}
-      <PoolTransactionsList />
     </Grid>
   )
 }

@@ -85,6 +85,7 @@ export const PoolInfo = () => {
   return (
     <CardContainer xs={12} md={6} lg={5} className="" cardClass={classes.card}>
       <Grid container className={classes.poolCardContainer}>
+        <Typography variant="subtitle1">Pool Info</Typography>
         {renderSwapIcon()}
         <RowInfo
           {...commonRowProps}
@@ -123,6 +124,7 @@ export const PoolInfo = () => {
         {renderLiquidityButtons()}
       </Grid>
       <Grid container className={classes.myCardContainer}>
+        <Typography variant="subtitle1">My Pool Info</Typography>
         {renderSwapIcon()}
         <RowInfo
           {...commonRowProps}

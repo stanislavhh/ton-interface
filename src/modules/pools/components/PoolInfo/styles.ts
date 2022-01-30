@@ -9,7 +9,7 @@ export const usePoolInfoStyles = makeStyles((theme) => ({
   card: {
     height: '100%',
     boxSizing: 'border-box',
-    paddingTop: theme.spacing(5),
+    paddingTop: theme.spacing(3),
     position: 'relative',
     minHeight: '400px',
     transformStyle: 'preserve-3d',
@@ -24,7 +24,7 @@ export const usePoolInfoStyles = makeStyles((theme) => ({
   myCardContainer: {
     position: 'absolute',
     padding: theme.spacing(3),
-    paddingTop: theme.spacing(5),
+    paddingTop: theme.spacing(3),
     boxSizing: 'border-box',
     top: 0,
     left: 0,

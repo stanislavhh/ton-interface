@@ -1,5 +1,5 @@
 import { ReactNode } from 'react'
-import { Card, Grid, GridSize, GridProps, makeStyles } from '@material-ui/core'
+import { Card, Grid, GridProps, makeStyles } from '@material-ui/core'
 
 export interface CardContainerProps extends GridProps {
   children: ReactNode | ReactNode[]
@@ -17,7 +17,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }))
 
-export const CardContainer = ({ children, cardClass = '', md = 9, ...rest }: CardContainerProps) => {
+export const CardContainer = ({ children, cardClass = '', md = 8, ...rest }: CardContainerProps) => {
   const classes = useStyles()
   return (
     <Grid item xs={12} md={md} className={classes.cardContainer} {...rest}>

@@ -7,6 +7,7 @@ export interface PageTitleWithLinkProps {
   secondaryTitle: string | ReactNode
   to: string
   md?: GridSize
+  sm?: GridSize
 }
 
 const useStyles = makeStyles((theme) => ({
@@ -20,10 +21,10 @@ const useStyles = makeStyles((theme) => ({
   },
 }))
 
-export const PageTitleWithLink = ({ secondaryTitle, md = 10, title, to }: PageTitleWithLinkProps) => {
+export const PageTitleWithLink = ({ secondaryTitle, md = 8, sm = 12, title, to }: PageTitleWithLinkProps) => {
   const classes = useStyles()
   return (
-    <Grid item xs={12} md={md} className={classes.titleContainer}>
+    <Grid item xs={12} sm={sm} md={md} className={classes.titleContainer}>
       <Typography variant="h1" className={classes.title}>
         {title}
       </Typography>

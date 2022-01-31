@@ -90,7 +90,7 @@ export const LiquiditySwapInput = ({
           fullWidth
           label={
             <Box className={classes.inputLabelBox}>
-              <Typography variant="body1" className={classes.inputLabel}>
+              <Typography variant="body2" className={classes.inputLabel}>
                 {label}
               </Typography>
               <Box>

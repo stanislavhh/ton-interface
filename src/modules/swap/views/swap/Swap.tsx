@@ -1,4 +1,4 @@
-import { useCallback, useMemo } from 'react'
+import { useMemo } from 'react'
 import { Grid, Icon, makeStyles } from '@material-ui/core'
 import { iconsTransition } from 'helpers/themeHelper'
 import {
@@ -113,9 +113,8 @@ export const Swap = () => {
         onClose={closeDialog}
         loading={loadingTokens}
       />
-      <Grid item md={1} />
-      <LiquiditySwapTitle title="Swap" to="/liquidity" secondaryTitle="+ Add Liquidity" />
-      <LiquiditySwapCardContainer>
+      <LiquiditySwapTitle title="Swap" to="/liquidity" sm={10} secondaryTitle="Add Liquidity" />
+      <LiquiditySwapCardContainer sm={10}>
         <TransactionSettingsGridWrapper />
         <SwapInputs
           input0Props={i0Props}

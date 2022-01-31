@@ -139,9 +139,8 @@ export const Liquidity = () => {
         onClose={closeDialog}
         loading={loadingTokens}
       />
-      <Grid item md={1} />
-      <LiquiditySwapTitle title="+ Add Liquidity" to="/" secondaryTitle="Swap" />
-      <LiquiditySwapCardContainer>
+      <LiquiditySwapTitle title="Add Liquidity" to="/" secondaryTitle="Swap" sm={10} />
+      <LiquiditySwapCardContainer sm={10}>
         <TransactionSettingsGridWrapper />
         <LiquidityInputs
           input0Props={i0Props}

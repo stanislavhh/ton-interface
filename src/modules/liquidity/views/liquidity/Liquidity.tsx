@@ -37,8 +37,13 @@ import NotificationBox from 'components/NotificationBox'
 import BackdropLoader from 'components/BackdropLoader'
 import { useAmountChangeHandler } from 'modules/shared/hooks/useAmountChangeHandler'
 import { useLiquidityPrimaryButton } from 'modules/liquidity/hooks'
+import { LiquiditySwapImg } from 'modules/shared/components/LiquiditySwapImg'
+import { PaperPlaneImg } from 'modules/shared/components/PaperPlaneImg'
 
 const useStyles = makeStyles((theme) => ({
+  mainContainer: {
+    position: 'relative',
+  },
   iconPlus: {
     fontWeight: 'bold',
   },
@@ -128,7 +133,7 @@ export const Liquidity = () => {
   )
 
   return (
-    <Grid container justifyContent="center">
+    <Grid container justifyContent="center" className={classes.mainContainer}>
       <BackdropLoader open={confirmingTokenTransactions} text="Confirm transaction" />
       <ConfirmLiquidityDialog open={dialog.type === Dialogs.CONFIRM_LIQUIDITY} />
       <TokensListDialog
@@ -178,6 +183,8 @@ export const Liquidity = () => {
           <LiquidityInfo />
         </Grid>
       </LiquiditySwapCardContainer>
+      <LiquiditySwapImg />
+      <PaperPlaneImg />
     </Grid>
   )
 }

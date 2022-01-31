@@ -21,7 +21,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }))
 
-export const PageTitleWithLink = ({ secondaryTitle, md = 8, sm = 12, title, to }: PageTitleWithLinkProps) => {
+export const PageTitleWithLink = ({ secondaryTitle, md = 7, sm = 12, title, to }: PageTitleWithLinkProps) => {
   const classes = useStyles()
   return (
     <Grid item xs={12} sm={sm} md={md} className={classes.titleContainer}>

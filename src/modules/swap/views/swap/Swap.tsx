@@ -32,8 +32,13 @@ import ConfirmTransactionButton from 'modules/shared/components/ConfirmTransacti
 import LiquiditySwapCardContainer from 'modules/shared/components/CardContainer'
 import LiquiditySwapTitle from 'modules/shared/components/PageTitileWithLink'
 import { useAmountChangeHandler } from 'modules/shared/hooks'
+import { LiquiditySwapImg } from 'modules/shared/components/LiquiditySwapImg'
+import { PaperPlaneImg } from 'modules/shared/components/PaperPlaneImg'
 
 const useStyles = makeStyles((theme) => ({
+  mainContainer: {
+    position: 'relative',
+  },
   refreshIcon: {
     fontWeight: 'bold',
     ...iconsTransition,
@@ -103,7 +108,7 @@ export const Swap = () => {
   )
 
   return (
-    <Grid container justifyContent="center">
+    <Grid container justifyContent="center" className={classes.mainContainer}>
       <SwapConfirmDialog onClose={closeDialog} open={dialog.type === Dialogs.SWAP_CONFIRM} />
       <TokensListDialog
         onTokenSelect={onTokenSelect}
@@ -138,6 +143,8 @@ export const Swap = () => {
           </Grid>
         </Grid>
       </LiquiditySwapCardContainer>
+      <LiquiditySwapImg />
+      <PaperPlaneImg />
     </Grid>
   )
 }

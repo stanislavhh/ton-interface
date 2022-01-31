@@ -1,0 +1,1 @@
+export { PaperPlaneImg } from './PaperPlaneImg'

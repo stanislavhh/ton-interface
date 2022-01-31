@@ -17,7 +17,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }))
 
-export const CardContainer = ({ children, cardClass = '', md = 8, ...rest }: CardContainerProps) => {
+export const CardContainer = ({ children, cardClass = '', md = 7, ...rest }: CardContainerProps) => {
   const classes = useStyles()
   return (
     <Grid item xs={12} md={md} className={classes.cardContainer} {...rest}>

@@ -18,10 +18,14 @@ import { Dialogs as LiquidityDialogs } from 'modules/liquidity'
 import { $dialog } from 'modules/liquidity/selectors'
 import { WalletPoolsSelector } from 'modules/pools/types'
 import { $transactionSettings } from 'modules/layout/selectors'
+import { PoolsImg } from 'modules/pools/components/PoolsImg'
 
 const useStyles = makeStyles((theme) => ({
+  mainContainer: {
+    position: 'relative',
+  },
   card: {
-    minHeight: '400px',
+    minHeight: '500px',
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
@@ -59,7 +63,7 @@ export const MyPools = () => {
   }
 
   return (
-    <Grid container justifyContent="center">
+    <Grid container justifyContent="center" className={classes.mainContainer}>
       <AddLiquidityDialog
         open={dialog.type === Dialogs.ADD_LIQUIDITY && liquidityDialog.type !== LiquidityDialogs.CONFIRM_LIQUIDITY}
         onClose={closeDialog}
@@ -104,6 +108,7 @@ export const MyPools = () => {
           </Typography>
         )}
       </CardContainer>
+      <PoolsImg />
     </Grid>
   )
 }

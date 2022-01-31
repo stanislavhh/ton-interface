@@ -13,8 +13,12 @@ import { Dialogs } from 'modules/pools/enums'
 import { Dialogs as LiquidityDialogs } from 'modules/liquidity/enums'
 import { useWatchAddLiquidityDialog } from 'modules/pools/hooks'
 import { $dialog } from 'modules/liquidity/selectors'
+import { PoolsImg } from 'modules/pools/components/PoolsImg'
 
 const useStyles = makeStyles((theme) => ({
+  mainContainer: {
+    position: 'relative',
+  },
   card: {
     minHeight: '400px',
     display: 'flex',
@@ -41,7 +45,7 @@ export const AllPools = () => {
   }
 
   return (
-    <Grid container justifyContent="center">
+    <Grid container justifyContent="center" className={classes.mainContainer}>
       <AddLiquidityDialog
         open={dialog.type === Dialogs.ADD_LIQUIDITY && liquidityDialog.type !== LiquidityDialogs.CONFIRM_LIQUIDITY}
         onClose={closeDialog}
@@ -61,6 +65,7 @@ export const AllPools = () => {
           />
         )}
       </CardContainer>
+      <PoolsImg />
     </Grid>
   )
 }

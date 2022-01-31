@@ -1,0 +1,1 @@
+export { PoolsImg } from './PoolsImg'

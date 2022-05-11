@@ -1,15 +1,17 @@
-#TON  interface
+# TON interface
+
+This is a UI solution for blockchain protocol v3 that includes a couple of features, like token swap, adding/removing liquidity, watching pools.
 
 ## Install & Run
 To run project install modules:
-###`yarn install`
+### `yarn install`
 
 Then you can start `dev`:
-###`yarn dev`
+### `yarn dev`
 
 ## Build
 To build use: 
-###`yarn build`
+### `yarn build`
 
 ## Features(modules):
 
